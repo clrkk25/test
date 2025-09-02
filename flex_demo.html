@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex布局对齐方式演示</title>
+    <style>
+        .container {
+            width: 500px;
+            height: 300px;
+            border: 2px solid #333;
+            margin: 20px auto;
+            display: flex;
+            /* justify-content 控制主轴(水平方向)对齐方式 */
+            justify-content: center;
+            /* align-items 控制交叉轴(垂直方向)对齐方式 */
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .item {
+            width: 80px;
+            height: 80px;
+            background-color: #4CAF50;
+            margin: 5px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .control-group {
+            margin: 15px 0;
+        }
+
+        button {
+            margin: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .current-setting {
+            margin: 15px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <div class="control-group">
+            <h3>主轴对齐方式 (justify-content)</h3>
+            <button onclick="setJustify('flex-start')">Flex Start</button>
+            <button onclick="setJustify('center')">Center</button>
+            <button onclick="setJustify('flex-end')">Flex End</button>
+            <button onclick="setJustify('space-between')">Space Between</button>
+            <button onclick="setJustify('space-around')">Space Around</button>
+        </div>
+        
+        <div class="control-group">
+            <h3>交叉轴对齐方式 (align-items)</h3>
+            <button onclick="setAlign('flex-start')">Flex Start</button>
+            <button onclick="setAlign('center')">Center</button>
+            <button onclick="setAlign('flex-end')">Flex End</button>
+            <button onclick="setAlign('stretch')">Stretch</button>
+        </div>
+        
+        <div class="current-setting">
+            <p>当前设置: justify-content: <span id="current-justify">center</span>, align-items: <span id="current-align">center</span></p>
+        </div>
+    </div>
+
+    <div class="container" id="flex-container">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+    </div>
+
+    <script>
+        // 获取容器元素
+        const container = document.getElementById('flex-container');
+        const justifySpan = document.getElementById('current-justify');
+        const alignSpan = document.getElementById('current-align');
+
+        // 设置主轴对齐方式的函数
+        function setJustify(value) {
+            container.style.justifyContent = value;
+            justifySpan.textContent = value;
+        }
+
+        // 设置交叉轴对齐方式的函数
+        function setAlign(value) {
+            container.style.alignItems = value;
+            alignSpan.textContent = value;
+        }
+    </script>
+</body>
+</html>

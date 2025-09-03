@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>酒店反馈表单</title>
+  </head>
+  <body>
+    <header>
+      <h1>酒店反馈表单</h1>
+      <p>
+        感谢您选择入住我们酒店。请提供您最近住宿的反馈意见。
+      </p>
+    </header>
+    <main>
+      <form method="POST" action="`https://hotel-feedback.freecodecamp.org`">
+        <fieldset>
+          <legend>个人信息</legend>
+          <label for="full-name">姓名（必填）：</label>
+          <input type="text" id="full-name" name="name" placeholder="例如：张三" required size="20">
+
+          <br>
+          <label for="email">电子邮箱（必填）：</label>
+          <input
+            placeholder="example@email.com"
+            required
+            id="email"
+            type="email"
+            name="email"
+            size="20"
+          />
+
+          <br>
+          <label for="age">年龄（可选）：</label>
+          <input type="number" name="age" id="age" min="3" max="100" />
+        </fieldset>
+
+        <fieldset>
+          <legend>这是您第一次入住我们酒店吗？</legend>
+          <label for="yes-option">是</label>
+          <input id="yes-option" type="radio" name="hotel-stay" />
+          <label for="no-option">否</label>
+          <input id="no-option" type="radio" name="hotel-stay" />
+        </fieldset>
+
+        <fieldset>
+          <legend>
+            您选择入住我们酒店的原因是什么？（可多选）
+          </legend>
+
+          <label for="ads">社交媒体广告</label>
+          <input type="checkbox" id="ads" name="ads" value="ads" />
+
+          <br>
+          <label for="recommendation">个人推荐</label>
+          <input
+            type="checkbox"
+            id="recommendation"
+            name="recommendation"
+            value="recommendation"
+          />
+
+          <br>
+          <label for="location">地理位置</label>
+          <input type="checkbox" id="location" name="location" value="location" />
+           
+          <br>
+          <label for="price">价格</label>
+          <input type="checkbox" id="price" name="price" value="price" />
+
+          <br>
+          <label for="reputation">声誉</label>
+          <input
+            checked
+            type="checkbox"
+            id="reputation"
+            name="reputation"
+            value="reputation"
+          />
+
+        </fieldset>
+
+        <fieldset>
+          <legend>评分</legend>
+
+          <label for="service">服务质量如何？</label>
+
+          <select name="service" id="service">
+            <option value="poor">差</option>
+            <option value="satisfactory">一般</option>
+            <option value="good">好</option>
+            <option value="very-good">很好</option>
+            <option selected value="excellent">优秀</option>
+          </select>
+
+          <br>
+          <label for="food">餐饮质量如何？</label>
+
+          <select name="food" id="food">
+            <option value="poor">差</option>
+            <option value="satisfactory">一般</option>
+            <option value="good">好</option>
+            <option value="very-good">很好</option>
+            <option selected value="excellent">优秀</option>
+          </select>
+        </fieldset>
+
+        <label for="comments">其他意见或建议？</label>
+        <br>
+
+        <textarea id="comments" name="comments" rows="10" cols="30"></textarea>
+        <br>
+        <button type="submit">提交</button>
+      </form>
+    </main>
+  </body>
+</html>

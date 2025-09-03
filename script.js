@@ -20,9 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('touchstart', function(e) {
             console.log(`用户触摸了链接: ${this.textContent}`);
             
-            // 防止默认的触摸行为
-            e.preventDefault();
-            
             // 在触摸设备上也添加波纹效果
             const touch = e.touches[0];
             const mockEvent = {
@@ -30,16 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 clientY: touch.clientY
             };
             createRipple(mockEvent, this);
-        });
-        
-        // 防止触摸后的鼠标事件
-        link.addEventListener('touchend', function(e) {
-            e.preventDefault();
-        });
-        
-        // 添加触摸取消事件处理
-        link.addEventListener('touchcancel', function(e) {
-            e.preventDefault();
         });
         
         // 添加触摸移动事件处理，防止在滚动时触发波纹效果

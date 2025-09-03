@@ -29,6 +29,28 @@ document.addEventListener('DOMContentLoaded', function() {
             createRipple(mockEvent, this);
         });
         
+        // 添加触摸结束事件处理
+        link.addEventListener('touchend', function(e) {
+            // 获取链接的href属性
+            const href = this.getAttribute('href');
+            
+            // 如果链接有href属性，则在短暂延迟后跳转
+            if (href) {
+                setTimeout(() => {
+                    window.open(href, '_blank');
+                }, 300); // 延迟300ms以确保波纹效果完成
+            }
+        });
+        
+        // 添加触摸取消事件处理
+        link.addEventListener('touchcancel', function(e) {
+            // 移除可能已创建的波纹效果
+            const ripple = this.querySelector('.ripple');
+            if (ripple) {
+                ripple.remove();
+            }
+        });
+        
         // 添加触摸移动事件处理，防止在滚动时触发波纹效果
         link.addEventListener('touchmove', function(e) {
             // 移除可能已创建的波纹效果

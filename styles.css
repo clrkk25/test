@@ -1,0 +1,57 @@
+/* 项目主页样式表 */
+
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 页面主容器 */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+/* 头部样式 */
+header {
+    padding: 20px;
+    text-align: center;
+}
+
+/* 导航样式 */
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    padding: 15px 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: #e0e0e0;
+}
+
+/* 底部样式 */
+footer {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    background-color: #ddd;
+}

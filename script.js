@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('touchstart', function(e) {
             console.log(`用户触摸了链接: ${this.textContent}`);
             
+            // 防止默认的触摸行为
+            e.preventDefault();
+            
             // 在触摸设备上也添加波纹效果
             const touch = e.touches[0];
             const mockEvent = {
@@ -33,11 +36,23 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('touchend', function(e) {
             e.preventDefault();
         });
+        
+        // 添加触摸取消事件处理
+        link.addEventListener('touchcancel', function(e) {
+            e.preventDefault();
+        });
     });
 });
 
 // 创建点击波纹效果
 function createRipple(event, element) {
+    // 移除已存在的波纹效果
+    const existingRipple = element.getElementsByClassName("ripple")[0];
+    if (existingRipple) {
+        existingRipple.remove();
+    }
+    
+    // 创建新的波纹元素
     const circle = document.createElement("span");
     const diameter = Math.max(element.clientWidth, element.clientHeight);
     const radius = diameter / 2;
@@ -47,10 +62,10 @@ function createRipple(event, element) {
     circle.style.top = `${event.clientY - element.offsetTop - radius}px`;
     circle.classList.add("ripple");
     
-    const ripple = element.getElementsByClassName("ripple")[0];
-    if (ripple) {
-        ripple.remove();
-    }
-    
     element.appendChild(circle);
+    
+    // 在动画结束后移除波纹元素
+    setTimeout(() => {
+        circle.remove();
+    }, 600);
 }

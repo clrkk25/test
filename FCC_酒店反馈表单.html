@@ -3,6 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <title>酒店反馈表单</title>
+    <!-- 引入 EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+      // 初始化 EmailJS
+      (function() {
+        // 替换为你的 EmailJS 用户ID
+        emailjs.init('dlwkJq-O8PAN5rFLU'); 
+      })();
+
+      // 处理表单提交
+      function sendEmail(e) {
+        e.preventDefault(); // 阻止默认提交行为
+
+        // 获取表单元素
+        const form = e.target;
+        
+        // 替换为你的 EmailJS 服务ID 和 模板ID
+        const serviceID = 'service_qrxvnkx';
+        const templateID = 'template_jpfma0s';
+
+        // 使用 EmailJS 发送邮件
+        emailjs.sendForm(serviceID, templateID, form)
+          .then(function() {
+            console.log('邮件发送成功!');
+            alert('感谢您的反馈！');
+            form.reset(); // 重置表单
+          }, function(error) {
+            console.log('邮件发送失败:', error);
+            alert('发送失败，请稍后重试。');
+          });
+      }
+
+      // 页面加载完成后绑定事件
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', sendEmail);
+      });
+    </script>
   </head>
   <body>
     <header>
@@ -12,7 +50,8 @@
       </p>
     </header>
     <main>
-      <form method="POST" action="`https://hotel-feedback.freecodecamp.org`">
+      <!-- 移除 action 属性，因为我们将在 JavaScript 中处理提交 -->
+      <form method="POST">
         <fieldset>
           <legend>个人信息</legend>
           <label for="full-name">姓名（必填）：</label>

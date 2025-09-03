@@ -41,13 +41,22 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('touchcancel', function(e) {
             e.preventDefault();
         });
+        
+        // 添加触摸移动事件处理，防止在滚动时触发波纹效果
+        link.addEventListener('touchmove', function(e) {
+            // 移除可能已创建的波纹效果
+            const ripple = this.querySelector('.ripple');
+            if (ripple) {
+                ripple.remove();
+            }
+        });
     });
 });
 
 // 创建点击波纹效果
 function createRipple(event, element) {
     // 移除已存在的波纹效果
-    const existingRipple = element.getElementsByClassName("ripple")[0];
+    const existingRipple = element.querySelector(".ripple");
     if (existingRipple) {
         existingRipple.remove();
     }

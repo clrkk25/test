@@ -81,6 +81,12 @@ nav a {
     position: relative;
     overflow: hidden;
     min-height: 60px; /* 确保链接有最小高度，防止内容被压缩 */
+    
+    /* 文本处理：允许换行并添加省略号 */
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+    hyphens: auto;
 }
 
 nav a:hover {
@@ -143,6 +149,7 @@ footer {
     nav a {
         padding: 15px;
         font-size: 0.9rem;
+        min-height: 55px;
     }
 }
 
@@ -168,8 +175,12 @@ footer {
     
     nav a {
         padding: 12px;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         min-height: 50px; /* 在小屏幕上保持合适的高度 */
+        
+        /* 在小屏幕上进一步优化文本显示 */
+        word-break: break-word;
+        hyphens: auto;
     }
     
     footer {
@@ -186,7 +197,7 @@ footer {
     
     nav a {
         padding: 10px;
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         min-height: 45px; /* 在超小屏幕上保持合适的高度 */
     }
     

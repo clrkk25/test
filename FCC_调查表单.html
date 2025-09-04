@@ -1,47 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8" />
-  <title>Survey Form</title>
-
-
-
+  <title>调查表单</title>
 </head>
 
-
 <body>
-  <h1 id="title">Title</h1>
-  <p id="description">description</p>
+  <h1 id="title">标题</h1>
+  <p id="description">描述</p>
+  
   <form id="survey-form">
-    <label id="name-label">Name</label>
+    <label id="name-label">姓名</label>
     <input required placeholder="Alice" id="name" type="text" name="name" /><br>
-    <label id="email-label">Email</label>
+    <label id="email-label">邮箱</label>
     <input required placeholder="Alice@qq.com" id="email" type="email" name="email" /><br>
-    <label id="number-label">Number</label>
+    <label id="number-label">年龄</label>
     <input required placeholder="18" id="number" type="number" name="number" min="13" max="120" /><br>
+    
     <select id="dropdown">
-      <option>option1</option>
-      <option>option2</option>
-      <option>option3</option>
+      <option>选项1</option>
+      <option>选项2</option>
+      <option>选项3</option>
     </select>
     <br>
-    <label><input type="radio" name="radio-group" value="option1" required> Option 1</label><br>
-    <label><input type="radio" name="radio-group" value="option2"> Option 2</label><br>
+    
+    <label><input type="radio" name="radio-group" value="option1" required> 选项1</label><br>
+    <label><input type="radio" name="radio-group" value="option2"> 选项2</label><br>
     <br>
-    <label><input type="checkbox" name="interests" value="coding"> Coding</label><br>
-    <label><input type="checkbox" name="interests" value="design"> Design</label><br>
+    
+    <label><input type="checkbox" name="interests" value="coding"> 编程</label><br>
+    <label><input type="checkbox" name="interests" value="design"> 设计</label><br>
     <br>
-    <input id="submit" type="submit" value="submit" name="submit">
+    
+    <input id="submit" type="submit" value="提交" name="submit">
     <br>
-    <textarea id="comments" placeholder="Enter your comments here..."></textarea>
-
-
-
-
+    <textarea id="comments" placeholder="在这里输入您的评论..."></textarea>
   </form>
 </body>
-
 
 </html>

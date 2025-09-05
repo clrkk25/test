@@ -18,13 +18,27 @@
     <label id="number-label">年龄</label>
     <input required placeholder="18" id="number" type="number" name="number" min="13" max="120" /><br>
     
+    <label for="dropdown">职业</label>
     <select id="dropdown">
-      <option>选项1</option>
-      <option>选项2</option>
-      <option>选项3</option>
+      <option value="student">学生</option>
+      <option value="teacher">教师</option>
+      <option value="engineer">工程师</option>
+      <option value="other">其他</option>
     </select>
     <br>
     
+    <label>您会向朋友推荐我们的产品吗？</label><br>
+    <label><input type="radio" name="recommend" value="definitely" required> 一定会</label><br>
+    <label><input type="radio" name="recommend" value="maybe"> 可能会</label><br>
+    <label><input type="radio" name="recommend" value="not-sure"> 不确定</label><br>
+    <br>
+    
+    <label>您的兴趣爱好有哪些？（可多选）</label><br>
+    <label><input type="checkbox" name="interests" value="reading"> 阅读</label><br>
+    <label><input type="checkbox" name="interests" value="sports"> 运动</label><br>
+    <label><input type="checkbox" name="interests" value="music"> 音乐</label><br>
+    <label><input type="checkbox" name="interests" value="travel"> 旅行</label><br>
+    <br>
     <label><input type="radio" name="radio-group" value="option1" required> 选项1</label><br>
     <label><input type="radio" name="radio-group" value="option2"> 选项2</label><br>
     <br>
@@ -33,9 +47,9 @@
     <label><input type="checkbox" name="interests" value="design"> 设计</label><br>
     <br>
     
-    <input id="submit" type="submit" value="提交" name="submit">
-    <br>
     <textarea id="comments" placeholder="在这里输入您的评论..."></textarea>
+    <br>
+    <input id="submit" type="submit" value="提交" name="submit">
   </form>
 </body>
 

@@ -50,6 +50,7 @@ h1::after {
   transition: background-color 0.3s ease;
 }
 
+
 .card-links a:hover {
   background-color: orangered;
 }

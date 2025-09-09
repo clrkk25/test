@@ -176,9 +176,9 @@ footer {
     }
     
     nav a {
-        padding: 12px;
+        padding: 8px 100px;
         font-size: 0.85rem;
-        min-height: 50px; /* 在小屏幕上保持合适的高度 */
+        min-height: 45px; /* 在小屏幕上保持合适的高度 */
         
         /* 在小屏幕上进一步优化文本显示 */
         word-break: break-word;
@@ -198,9 +198,9 @@ footer {
     }
     
     nav a {
-        padding: 10px;
+        padding: 6px 8px;
         font-size: 0.75rem;
-        min-height: 45px; /* 在超小屏幕上保持合适的高度 */
+        min-height: 40px; /* 在超小屏幕上保持合适的高度 */
     }
     
     footer {

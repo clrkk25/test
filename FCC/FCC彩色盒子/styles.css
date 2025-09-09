@@ -1,0 +1,29 @@
+body{
+  background-color:#f4f4f4;
+}
+
+.color-box{
+  width:auto;
+  height:50px;
+}
+
+.color1{
+  background-color:#f4f4f4;
+}
+
+.color2{
+  background-color:rgb(151,151,151);
+}
+
+.color3{
+  background-color:brown;
+}
+
+.color4{
+  background-color:hsl(210, 90%, 60%);
+}
+
+.color5{
+  background-color:black;
+}
+

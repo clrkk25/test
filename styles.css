@@ -172,13 +172,13 @@ footer {
     nav ul {
         grid-template-columns: 1fr;
         gap: 10px;
-        padding: 10px;
+        padding: 10px 30px;
     }
     
     nav a {
-        padding: 8px 100px;
+        padding: 8px 10px;
         font-size: 0.85rem;
-        min-height: 45px; /* 在小屏幕上保持合适的高度 */
+        min-height: 50px; /* 在小屏幕上保持合适的高度 */
         
         /* 在小屏幕上进一步优化文本显示 */
         word-break: break-word;
@@ -198,9 +198,9 @@ footer {
     }
     
     nav a {
-        padding: 6px 8px;
+        padding: 10px;
         font-size: 0.75rem;
-        min-height: 40px; /* 在超小屏幕上保持合适的高度 */
+        min-height: 45px; /* 在超小屏幕上保持合适的高度 */
     }
     
     footer {

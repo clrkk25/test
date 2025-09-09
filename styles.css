@@ -172,7 +172,7 @@ footer {
     nav ul {
         grid-template-columns: 1fr;
         gap: 10px;
-        padding: 10px 30px;
+        padding: 10px 30px0+36;
     }
     
     nav a {

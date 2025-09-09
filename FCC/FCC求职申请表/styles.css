@@ -1,0 +1,117 @@
+/* 基本样式重置 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 容器样式 */
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+/* 表单标题样式 */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 表单元素通用样式 */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* 单选按钮组样式 */
+.radio-group {
+  border: none;
+  margin: 10px 0;
+}
+
+/* 单选按钮组标题样式 */
+.radio-group legend {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* 单选按钮样式 */
+.radio-group input[type="radio"] {
+  width: auto;
+  margin: 0 5px 0 0;
+}
+
+/* 单选按钮标签样式 */
+.radio-group label {
+  display: inline-block;
+  margin-right: 15px;
+  font-weight: normal;
+}
+
+/* 表单元素获得焦点时的样式 */
+input:focus,
+textarea:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* 表单元素无效时的样式 */
+input:invalid,
+select:invalid,
+textarea:invalid {
+  border-color: red;
+}
+
+/* 表单元素有效时的样式 */
+input:valid,
+select:valid,
+textarea:valid {
+  border-color: green;
+}
+
+/* 提交按钮样式 */
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* 提交按钮悬停效果 */
+button:hover {
+  background-color: #45a049;
+}
+
+/* 选中的单选按钮样式 */
+.radio-group input[type="radio"]:checked {
+  border-color: brown;
+  background-color: brown;
+  box-shadow: 0 0 5px brown;
+}
+
+/* 选中的单选按钮关联标签样式 */
+.radio-group input[type="radio"]:checked + label {
+  color: white;
+}
+
+/* 第一个输入字段的特殊样式 */
+input:first-of-type {
+  background-color: #e6f3ff;
+  border: 2px solid #0066cc;
+  padding: 10px;
+  border-radius: 5px;
+}
+

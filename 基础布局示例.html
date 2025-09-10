@@ -26,8 +26,6 @@
             margin: 0 auto;
         }
 
-        
-
         header {
             margin: 20px 0;
             padding: 20px;
@@ -124,7 +122,7 @@
 
         /* 预览区域 */
         .preview-container {
-            background: e9ecef;
+            background: #e9ecef;
             min-height: 300px; /* 增大外部容器高度 */
             display: flex;
             align-items: center;
@@ -378,7 +376,7 @@
         <!-- 预览区域 -->
         <div class="preview-container">
             <div class="preview-box" id="previewBox">
-                <p class="pcolor">Flex布局示例 - 内容居中对齐</p>
+                <p>Flex布局示例 - 内容居中对齐</p>
             </div>
         </div>
         
@@ -479,14 +477,7 @@
             </div>
             
             <div id="layoutDescription">
-                <p><strong>Flex布局（弹性布局）</strong>是CSS3中一种新的布局模式，用于在容器中分配空间和对齐元素。</p>
-                <p>主要特点：</p>
-                <ul>
-                    <li>适合一维布局（行或列）</li>
-                    <li>可以轻松实现元素的水平和垂直居中</li>
-                    <li>具有良好的灵活性和响应式特性</li>
-                    <li>通过justify-content和align-items属性控制对齐方式</li>
-                </ul>
+                <p><strong>Flex布局（弹性布局）</strong>是CSS3中一种新的布局模式，用于在容器中分配空间和对齐元素。</p><p>主要特点：</p><ul><li>适合一维布局（行或列）</li><li>可以轻松实现元素的水平和垂直居中</li><li>具有良好的灵活性和响应式特性</li><li>通过justify-content和align-items属性控制对齐方式</li></ul>
             </div>
         </div>
         
@@ -589,106 +580,100 @@
         function switchLayout(layoutType) {
             // 更新按钮状态
             layoutButtons.forEach(btn => {
-                if (btn.dataset.layout === layoutType) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+                btn.classList.toggle('active', btn.dataset.layout === layoutType);
             });
 
-            // 隐藏所有布局容器
-            previewBox.style.display = 'none';
-            alignmentControls.style.display = 'none';
+            // 显示对应的对齐选项
+            flexControls.classList.toggle('hidden', layoutType !== 'flex');
+            gridControls.classList.toggle('hidden', layoutType !== 'grid');
+            absoluteControls.classList.toggle('hidden', layoutType !== 'absolute');
 
-            // 根据布局类型显示对应的容器和控件
-            previewBox.style.display = 'flex';
-            alignmentControls.style.display = 'block';
-                
-                // 显示对应的对齐选项
-                flexControls.style.display = layoutType === 'flex' ? 'block' : 'none';
-                gridControls.style.display = layoutType === 'grid' ? 'block' : 'none';
-                absoluteControls.style.display = layoutType === 'absolute' ? 'block' : 'none';
-
-                // 获取当前布局配置
-                const layout = layouts[layoutType];
-                
-                // 重置previewBox样式
-                previewBox.style.cssText = '';
-                
-                // 应用新样式
-                Object.assign(previewBox.style, layout.styles);
-                
-                // 更新内容
-                if (layout.innerHTML) {
-                    previewBox.innerHTML = layout.innerHTML;
-                } else {
-                    previewBox.innerHTML = `<p>${layout.name}示例 - 内容居中对齐</p>`;
-                }
-                
-                // 更新代码显示
-                codeDisplay.textContent = layout.code;
-                
-                // 更新布局说明
-                layoutDescription.innerHTML = layout.description;
+            // 获取当前布局配置
+            const layout = layouts[layoutType];
+            
+            // 重置previewBox样式
+            previewBox.style.cssText = '';
+            
+            // 应用新样式
+            Object.assign(previewBox.style, layout.styles);
+            
+            // 更新内容
+            if (layout.innerHTML) {
+                previewBox.innerHTML = layout.innerHTML;
+            } else {
+                previewBox.innerHTML = `<p>${layout.name}示例 - 内容居中对齐</p>`;
             }
+            
+            // 更新代码显示
+            codeDisplay.textContent = layout.code;
+            
+            // 更新布局说明
+            layoutDescription.innerHTML = layout.description;
+        }
 
         /**
          * 更新Flex布局的对齐方式
          */
         function updateFlexAlignment() {
-            if (document.querySelector('.layout-btn.active').dataset.layout === 'flex') {
-                previewBox.style.justifyContent = flexJustify.value;
-                previewBox.style.alignItems = flexAlign.value;
-                
-                // 更新代码显示
-                const code = `/* Flex布局 */
+            // 检查当前是否为Flex布局
+            if (document.querySelector('.layout-btn.active')?.dataset.layout !== 'flex') return;
+            
+            // 应用新的对齐方式
+            previewBox.style.justifyContent = flexJustify.value;
+            previewBox.style.alignItems = flexAlign.value;
+            
+            // 更新代码显示
+            const code = `/* Flex布局 */
 .preview-box {
     display: flex;
     justify-content: ${flexJustify.value};
     align-items: ${flexAlign.value};
     background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
 }`;
-                codeDisplay.textContent = code;
-            }
+            codeDisplay.textContent = code;
         }
 
         /**
          * 更新Grid布局的对齐方式
          */
         function updateGridAlignment() {
-            if (document.querySelector('.layout-btn.active').dataset.layout === 'grid') {
-                previewBox.style.placeItems = gridAlign.value;
-                
-                // 更新代码显示
-                const code = `/* Grid布局 */
+            // 检查当前是否为Grid布局
+            if (document.querySelector('.layout-btn.active')?.dataset.layout !== 'grid') return;
+            
+            // 应用新的对齐方式
+            previewBox.style.placeItems = gridAlign.value;
+            
+            // 更新代码显示
+            const code = `/* Grid布局 */
 .preview-box {
     display: grid;
     place-items: ${gridAlign.value};
     background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
 }`;
-                codeDisplay.textContent = code;
-            }
+            codeDisplay.textContent = code;
         }
 
         /**
          * 更新绝对定位布局的位置
          */
         function updateAbsolutePosition() {
-            if (document.querySelector('.layout-btn.active').dataset.layout === 'absolute') {
-                const x = absoluteX.value;
-                const y = absoluteY.value;
-                
-                // 更新内容
-                previewBox.innerHTML = `<p class="absolute-content">绝对定位布局示例</p>`;
-                
-                // 更新样式
-                const content = previewBox.querySelector('.absolute-content');
-                content.style.top = `${y}%`;
-                content.style.left = `${x}%`;
-                content.style.transform = `translate(-${x}%, -${y}%)`;
-                
-                // 更新代码显示
-                const code = `/* 绝对定位布局 */
+            // 检查当前是否为绝对定位布局
+            if (document.querySelector('.layout-btn.active')?.dataset.layout !== 'absolute') return;
+            
+            const x = absoluteX.value;
+            const y = absoluteY.value;
+            
+            // 更新内容
+            previewBox.innerHTML = `<p class="absolute-content">绝对定位布局示例</p>`;
+            
+            // 更新样式
+            const content = previewBox.querySelector('.absolute-content');
+            content.style.top = `${y}%`;
+            content.style.left = `${x}%`;
+            content.style.transform = `translate(-${x}%, -${y}%)`;
+            
+            // 更新代码显示
+            const code = `/* 绝对定位布局 */
 .preview-box {
     position: relative;
     background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
@@ -701,8 +686,7 @@
     transform: translate(-${x}%, -${y}%);
     margin: 0;
 }`;
-                codeDisplay.textContent = code;
-            }
+            codeDisplay.textContent = code;
         }
 
         // 为按钮添加点击事件
@@ -718,6 +702,10 @@
         gridAlign.addEventListener('change', updateGridAlignment);
         absoluteX.addEventListener('change', updateAbsolutePosition);
         absoluteY.addEventListener('change', updateAbsolutePosition);
+        
+        // 为对齐选项添加input事件监听器，实现实时预览
+        absoluteX.addEventListener('input', updateAbsolutePosition);
+        absoluteY.addEventListener('input', updateAbsolutePosition);
 
         // 初始化页面
         switchLayout('flex');

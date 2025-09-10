@@ -5,35 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ES6 特性示例</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
             padding: 20px;
-            background-color: #f5f5f5;
+            line-height: 1.6;
         }
         
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
             background-color: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
         h1 {
-            color: #333;
-            text-align: center;
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 10px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         h2 {
-            color: #4CAF50;
+            color: #3498db;
             margin-top: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
         }
         
         h3 {
-            color: #2196F3;
+            color: #27ae60;
             margin-top: 25px;
         }
         
@@ -51,6 +71,13 @@
             padding: 20px;
             margin: 20px 0;
             border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .example:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
         }
         
         code {
@@ -61,13 +88,14 @@
             font-family: 'Courier New', monospace;
             white-space: pre-wrap;
             margin: 15px 0;
+            overflow-x: auto;
         }
         
         button {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
@@ -75,10 +103,19 @@
             margin: 10px 2px;
             cursor: pointer;
             border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         button:hover {
-            background-color: #45a049;
+            background: linear-gradient(135deg, #2980b9 0%, #2573a7 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
         
         .output {
@@ -102,11 +139,60 @@
             margin: 15px 0;
             border-radius: 0 4px 4px 0;
         }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            padding: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            button {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ES6 常用特性详解</h1>
+        <header>
+            <h1>ES6 常用特性详解</h1>
+        </header>
         
         <div class="concept">
             <h2>JavaScript 作用域概念</h2>
@@ -248,6 +334,10 @@ console.log(person1.sayHello()); // 你好，我是赵六
             <button onclick="runClassExample()">运行类示例</button>
             <div id="classOutput"></div>
         </div>
+        
+        <footer>
+            <p>ES6 特性示例 &copy; 2023</p>
+        </footer>
     </div>
 
     <script>

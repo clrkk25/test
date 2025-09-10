@@ -1,51 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
-    <title>Hello World</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基础布局示例</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Flex布局示例 */
+        .text1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            border: 2px solid #fff;
+        }
+
+        /* 绝对定位布局示例 */
+        .test2 {
+            position: relative;
+            background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+            color: white;
+            border: 2px dashed #fff;
+        }
+
+        .test2 p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Grid布局示例 */
+        .test3 {
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: 2px dotted #fff;
+        }
+
+        /* 响应式设计 */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 15px;
+                font-size: 1rem;
+            }
+        }
+
+        /* 悬停效果 */
+        header:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 
 <body>
-    <header class="text1">
-        <p>text1</p>
-    </header>
-    <header class="test2">
-        <p>test2</p>
-    </header>
-    <header class="test3">
-        <p>test3</p>
-    </header>
-
+    <div class="container">
+        <header class="text1">
+            <p>Flex布局示例</p>
+        </header>
+        <header class="test2">
+            <p>绝对定位布局示例</p>
+        </header>
+        <header class="test3">
+            <p>Grid布局示例</p>
+        </header>
+    </div>
 </body>
-<style>
-    .text1 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        /* 添加边框 */
-        border: 2px solid #000;
-        margin: 10px;
-    }
-
-    .test2 {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        /* 添加边框 */
-        border: 2px dashed #000;
-        padding: 20px;
-    }
-
-    .test3 {
-        display: grid;
-        place-items: center;
-        /* 添加边框 */
-        border: 2px dotted #000;
-        margin: 10px;
-        padding: 20px;
-    }
-</style>
 
 </html>

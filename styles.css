@@ -19,14 +19,12 @@
     color: #fff;
 }
 
-
-
 /* 头部样式 */
 header {
     padding: 40px 20px;
     text-align: center;
     animation: fadeInDown 1s ease-out;
-    width: 100%; /* 确保头部在移动端也能占满宽度 */
+    width: 100%;
 }
 
 header h1 {
@@ -47,7 +45,7 @@ main {
 
 /* 导航样式 */
 nav {
-    width: 100%; /* 确保导航在移动端也能占满宽度 */
+    width: 100%;
 }
 
 nav ul {
@@ -58,7 +56,7 @@ nav ul {
     padding: 20px;
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto; /* 居中显示 */
+    margin: 0 auto;
 }
 
 nav li {
@@ -66,11 +64,12 @@ nav li {
     justify-content: center;
 }
 
+/* 优化导航链接样式 */
 nav a {
     text-decoration: none;
     color: #333;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #fff;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
@@ -82,30 +81,35 @@ nav a {
     width: 100%;
     position: relative;
     overflow: hidden;
-    min-height: 60px; /* 确保链接有最小高度，防止内容被压缩 */
+    min-height: 60px;
     
-    /* 文本处理：允许换行并添加省略号 */
+    /* 文本处理 */
     white-space: normal;
     word-wrap: break-word;
-    word-break: break-all;
+    word-break: break-word;
     hyphens: auto;
+    
+    /* 添加边框以增强视觉效果 */
+    border: 2px solid transparent;
 }
 
+/* 链接悬停效果优化 */
 nav a:hover {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #fff;
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    border-color: rgba(255,255,255,0.3);
 }
 
+/* 链接激活效果优化 */
 nav a:active {
     background: #3a383883;
     color: #fff;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
     transform: translateY(5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
-
 
 /* 波纹效果样式 */
 .ripple {
@@ -161,6 +165,7 @@ footer {
         padding: 15px;
         font-size: 0.9rem;
         min-height: 55px;
+        border-radius: 10px;
     }
 }
 
@@ -181,17 +186,16 @@ footer {
     nav ul {
         grid-template-columns: 1fr;
         gap: 10px;
-        padding: 10px 30px0+36;
+        padding: 10px;
     }
     
     nav a {
-        padding: 8px 10px;
-        font-size: 0.85rem;
-        min-height: 50px; /* 在小屏幕上保持合适的高度 */
-        
-        /* 在小屏幕上进一步优化文本显示 */
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        min-height: 50px;
         word-break: break-word;
         hyphens: auto;
+        border-radius: 8px;
     }
     
     footer {
@@ -208,8 +212,8 @@ footer {
     
     nav a {
         padding: 10px;
-        font-size: 0.75rem;
-        min-height: 45px; /* 在超小屏幕上保持合适的高度 */
+        font-size: 0.8rem;
+        min-height: 45px;
     }
     
     footer {

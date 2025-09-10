@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS网格对齐方式演示器</title>
+    <title>CSS Grid 布局演示</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
         header {
@@ -36,129 +41,141 @@
         h1 {
             color: #2c3e50;
             margin-bottom: 10px;
-        }
-        
-        .description {
-            color: #7f8c8d;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         .controls {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
             justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .control-group {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            flex: 1;
-            min-width: 300px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-width: 200px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .control-group:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .control-group h3 {
-            margin-bottom: 15px;
             color: #3498db;
+            margin-bottom: 10px;
             text-align: center;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f1f1f1;
-        }
-        
-        .buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
         }
         
         button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
             font-size: 14px;
-            flex: 1;
-            min-width: 100px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         button:hover {
-            background: #2980b9;
+            background: linear-gradient(135deg, #2980b9 0%, #2573a7 100%);
             transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         
-        button.active {
-            background: #16a085;
-            box-shadow: 0 0 0 2px white, 0 0 0 4px #16a085;
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .current-setting {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         
         .demo-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
         }
         
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 120px);
-            gap: 15px;
-            height: 300px;
-            padding: 15px;
-            background: #ecf0f1;
-            border: 2px dashed #bdc3c7;
-            border-radius: 5px;
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
         .grid-item {
-            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            background-color: #4CAF50;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.2rem;
             font-weight: bold;
-            font-size: 24px;
-            border-radius: 5px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
         
         .grid-item:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
+        
+        .grid-item:nth-child(1) { background-color: #FF5722; }
+        .grid-item:nth-child(2) { background-color: #E91E63; }
+        .grid-item:nth-child(3) { background-color: #9C27B0; }
+        .grid-item:nth-child(4) { background-color: #3F51B5; }
+        .grid-item:nth-child(5) { background-color: #2196F3; }
+        .grid-item:nth-child(6) { background-color: #00BCD4; }
+        .grid-item:nth-child(7) { background-color: #4CAF50; }
+        .grid-item:nth-child(8) { background-color: #8BC34A; }
+        .grid-item:nth-child(9) { background-color: #FFC107; }
         
         .code-display {
-            background: #2c3e50;
-            color: #ecf0f1;
+            background-color: #2d2d2d;
+            color: #f8f8f2;
             padding: 20px;
-            border-radius: 5px;
-            margin-top: 20px;
+            border-radius: 8px;
             font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
             overflow-x: auto;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         
-        .code-display code {
-            display: block;
-            white-space: pre;
-            line-height: 1.5;
-        }
-        
-        .property-name {
-            color: #3498db;
-        }
-        
-        .value-name {
-            color: #2ecc71;
+        .code-display h3 {
+            color: #f8f8f2;
+            margin-bottom: 15px;
+            text-align: center;
         }
         
         footer {
@@ -166,17 +183,56 @@
             margin-top: 30px;
             color: #7f8c8d;
             font-size: 0.9rem;
+            padding: 20px 0;
         }
         
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
             .controls {
                 flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-group {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(5, 80px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(9, 60px);
             }
             
             button {
-                min-width: 80px;
+                padding: 8px 12px;
                 font-size: 12px;
-                padding: 8px 10px;
+                margin: 3px;
             }
         }
     </style>
@@ -184,143 +240,123 @@
 <body>
     <div class="container">
         <header>
-            <h1>CSS网格对齐方式演示器</h1>
-            <p class="description">通过此工具可视化探索CSS Grid的不同对齐方式。点击下方按钮查看每种对齐属性的效果，并实时生成对应的CSS代码。</p>
+            <h1>CSS Grid 布局演示</h1>
         </header>
         
         <div class="controls">
             <div class="control-group">
-                <h3>justify-content</h3>
-                <div class="buttons">
-                    <button data-property="justify-content" data-value="start">start</button>
-                    <button data-property="justify-content" data-value="end">end</button>
-                    <button data-property="justify-content" data-value="center">center</button>
-                    <button data-property="justify-content" data-value="stretch">stretch</button>
-                    <button data-property="justify-content" data-value="space-between">space-between</button>
-                    <button data-property="justify-content" data-value="space-around">space-around</button>
-                    <button data-property="justify-content" data-value="space-evenly">space-evenly</button>
-                </div>
+                <h3>网格列数</h3>
+                <button onclick="updateGrid('grid-template-columns', 'repeat(1, 1fr)')">1列</button>
+                <button onclick="updateGrid('grid-template-columns', 'repeat(2, 1fr)')">2列</button>
+                <button onclick="updateGrid('grid-template-columns', 'repeat(3, 1fr)')">3列</button>
+                <button onclick="updateGrid('grid-template-columns', 'repeat(4, 1fr)')">4列</button>
             </div>
             
             <div class="control-group">
-                <h3>align-content</h3>
-                <div class="buttons">
-                    <button data-property="align-content" data-value="start">start</button>
-                    <button data-property="align-content" data-value="end">end</button>
-                    <button data-property="align-content" data-value="center">center</button>
-                    <button data-property="align-content" data-value="stretch">stretch</button>
-                    <button data-property="align-content" data-value="space-between">space-between</button>
-                    <button data-property="align-content" data-value="space-around">space-around</button>
-                    <button data-property="align-content" data-value="space-evenly">space-evenly</button>
-                </div>
+                <h3>网格行数</h3>
+                <button onclick="updateGrid('grid-template-rows', 'repeat(1, 100px)')">1行</button>
+                <button onclick="updateGrid('grid-template-rows', 'repeat(2, 100px)')">2行</button>
+                <button onclick="updateGrid('grid-template-rows', 'repeat(3, 100px)')">3行</button>
+                <button onclick="updateGrid('grid-template-rows', 'repeat(4, 100px)')">4行</button>
             </div>
             
             <div class="control-group">
-                <h3>justify-items</h3>
-                <div class="buttons">
-                    <button data-property="justify-items" data-value="start">start</button>
-                    <button data-property="justify-items" data-value="end">end</button>
-                    <button data-property="justify-items" data-value="center">center</button>
-                    <button data-property="justify-items" data-value="stretch">stretch</button>
-                </div>
+                <h3>间隙大小</h3>
+                <button onclick="updateGrid('gap', '0px')">无间隙</button>
+                <button onclick="updateGrid('gap', '5px')">小间隙</button>
+                <button onclick="updateGrid('gap', '10px')">中等间隙</button>
+                <button onclick="updateGrid('gap', '20px')">大间隙</button>
             </div>
             
             <div class="control-group">
-                <h3>align-items</h3>
-                <div class="buttons">
-                    <button data-property="align-items" data-value="start">start</button>
-                    <button data-property="align-items" data-value="end">end</button>
-                    <button data-property="align-items" data-value="center">center</button>
-                    <button data-property="align-items" data-value="stretch">stretch</button>
-                </div>
+                <h3>对齐方式</h3>
+                <button onclick="updateGrid('justify-items', 'start')">左对齐</button>
+                <button onclick="updateGrid('justify-items', 'center')">居中</button>
+                <button onclick="updateGrid('justify-items', 'end')">右对齐</button>
+                <button onclick="updateGrid('justify-items', 'stretch')">拉伸</button>
             </div>
         </div>
         
+        <div class="current-setting">
+            当前设置: <span id="currentSettings">grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 100px); gap: 10px;</span>
+        </div>
+        
         <div class="demo-container">
-            <div class="grid-container">
+            <div class="grid-container" id="gridContainer">
                 <div class="grid-item">1</div>
                 <div class="grid-item">2</div>
                 <div class="grid-item">3</div>
                 <div class="grid-item">4</div>
                 <div class="grid-item">5</div>
                 <div class="grid-item">6</div>
-            </div>
-            
-            <div class="code-display">
-                <code id="css-code">.grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 120px);
-    gap: 15px;
-    
-    /* 对齐属性将显示在这里 */
-}</code>
+                <div class="grid-item">7</div>
+                <div class="grid-item">8</div>
+                <div class="grid-item">9</div>
             </div>
         </div>
         
+        <div class="code-display">
+            <h3>当前CSS代码</h3>
+            <div id="codeDisplay">.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 100px);
+  gap: 10px;
+}</div>
+        </div>
+        
         <footer>
-            <p>CSS Grid对齐方式演示 &copy; 2023</p>
+            <p>CSS Grid 布局演示 &copy; 2023</p>
         </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const gridContainer = document.querySelector('.grid-container');
-            const cssCode = document.getElementById('css-code');
-            const buttons = document.querySelectorAll('button');
+        // 存储当前的网格样式
+        const currentStyles = {
+            'grid-template-columns': 'repeat(3, 1fr)',
+            'grid-template-rows': 'repeat(3, 100px)',
+            'gap': '10px',
+            'justify-items': 'stretch'
+        };
+        
+        // 更新网格样式
+        function updateGrid(property, value) {
+            // 更新存储的样式
+            currentStyles[property] = value;
             
-            // 初始激活第一个按钮
-            document.querySelector('[data-property="justify-content"][data-value="start"]').classList.add('active');
-            document.querySelector('[data-property="align-content"][data-value="start"]').classList.add('active');
-            document.querySelector('[data-property="justify-items"][data-value="stretch"]').classList.add('active');
-            document.querySelector('[data-property="align-items"][data-value="stretch"]').classList.add('active');
+            // 获取网格容器元素
+            const gridContainer = document.getElementById('gridContainer');
             
-            // 更新CSS代码显示
-            function updateCssCode() {
-                const styles = window.getComputedStyle(gridContainer);
-                const justifyContent = styles.justifyContent;
-                const alignContent = styles.alignContent;
-                const justifyItems = styles.justifyItems;
-                const alignItems = styles.alignItems;
-                
-                cssCode.textContent = `.grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 120px);
-    gap: 15px;
-    
-    /* 对齐属性 */
-    justify-content: ${justifyContent};
-    align-content: ${alignContent};
-    justify-items: ${justifyItems};
-    align-items: ${alignItems};
+            // 应用新的样式
+            gridContainer.style[property] = value;
+            
+            // 更新当前设置显示
+            updateCurrentSettingsDisplay();
+            
+            // 更新代码显示
+            updateCodeDisplay();
+        }
+        
+        // 更新当前设置显示
+        function updateCurrentSettingsDisplay() {
+            const settingsText = Object.entries(currentStyles)
+                .map(([key, value]) => `${key}: ${value};`)
+                .join(' ');
+            
+            document.getElementById('currentSettings').textContent = settingsText;
+        }
+        
+        // 更新代码显示
+        function updateCodeDisplay() {
+            const codeText = `.grid-container {
+  display: grid;
+  ${Object.entries(currentStyles)
+    .map(([key, value]) => `  ${key}: ${value};`)
+    .join('\n')}
 }`;
-            }
             
-            // 初始更新代码显示
-            updateCssCode();
-            
-            // 为所有按钮添加点击事件
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const property = this.dataset.property;
-                    const value = this.dataset.value;
-                    
-                    // 移除同组按钮的active类
-                    const groupButtons = document.querySelectorAll(`[data-property="${property}"]`);
-                    groupButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // 为当前按钮添加active类
-                    this.classList.add('active');
-                    
-                    // 应用样式到网格容器
-                    gridContainer.style[property] = value;
-                    
-                    // 更新CSS代码显示
-                    updateCssCode();
-                });
-            });
-        });
+            document.getElementById('codeDisplay').textContent = codeText;
+        }
     </script>
 </body>
 </html>

@@ -3,100 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flex布局对齐方式演示</title>
+    <title>Flex 布局演示</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .control-group {
+            margin: 20px 0;
+        }
+        
+        .control-group h3 {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #2980b9 0%, #2573a7 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .demo-container {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .current-setting {
+            text-align: center;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #e3f2fd;
+            border-radius: 4px;
+            color: #1976d2;
+        }
+        
         .container {
             width: 500px;
             height: 300px;
-            border: 2px solid #333;
-            margin: 20px auto;
+            background-color: #ecf0f1;
             display: flex;
-            /* justify-content 控制主轴(水平方向)对齐方式 */
-            justify-content: center;
-            /* align-items 控制交叉轴(垂直方向)对齐方式 */
-            align-items: center;
-            background-color: #f0f0f0;
+            margin: 20px auto;
+            border: 2px dashed #bdc3c7;
+            border-radius: 5px;
+            padding: 10px;
         }
-
+        
         .item {
             width: 80px;
             height: 80px;
-            background-color: #4CAF50;
-            margin: 5px;
-            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-        }
-
-        .controls {
-            text-align: center;
-            margin: 20px;
-        }
-
-        .control-group {
-            margin: 15px 0;
-        }
-
-        button {
-            margin: 5px;
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-
-        .current-setting {
-            margin: 15px 0;
+            color: white;
             font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .code-display {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                width: 100%;
+                height: 250px;
+            }
+            
+            .item {
+                width: 60px;
+                height: 60px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            button {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .container {
+                height: 200px;
+            }
+            
+            .item {
+                width: 50px;
+                height: 50px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="controls">
-        <div class="control-group">
-            <h3>主轴对齐方式 (justify-content)</h3>
-            <button onclick="setJustify('flex-start')">Flex Start</button>
-            <button onclick="setJustify('center')">Center</button>
-            <button onclick="setJustify('flex-end')">Flex End</button>
-            <button onclick="setJustify('space-between')">Space Between</button>
-            <button onclick="setJustify('space-around')">Space Around</button>
-        </div>
+    <div class="container">
+        <header>
+            <h1>Flex 布局演示</h1>
+        </header>
         
-        <div class="control-group">
-            <h3>交叉轴对齐方式 (align-items)</h3>
-            <button onclick="setAlign('flex-start')">Flex Start</button>
-            <button onclick="setAlign('center')">Center</button>
-            <button onclick="setAlign('flex-end')">Flex End</button>
-            <button onclick="setAlign('stretch')">Stretch</button>
+        <div class="controls">
+            <div class="control-group">
+                <h3>主轴对齐方式 (justify-content)</h3>
+                <button onclick="updateFlex('justify-content', 'flex-start')">flex-start</button>
+                <button onclick="updateFlex('justify-content', 'flex-end')">flex-end</button>
+                <button onclick="updateFlex('justify-content', 'center')">center</button>
+                <button onclick="updateFlex('justify-content', 'space-between')">space-between</button>
+                <button onclick="updateFlex('justify-content', 'space-around')">space-around</button>
+                <button onclick="updateFlex('justify-content', 'space-evenly')">space-evenly</button>
+            </div>
+            
+            <div class="control-group">
+                <h3>交叉轴对齐方式 (align-items)</h3>
+                <button onclick="updateFlex('align-items', 'flex-start')">flex-start</button>
+                <button onclick="updateFlex('align-items', 'flex-end')">flex-end</button>
+                <button onclick="updateFlex('align-items', 'center')">center</button>
+                <button onclick="updateFlex('align-items', 'baseline')">baseline</button>
+                <button onclick="updateFlex('align-items', 'stretch')">stretch</button>
+            </div>
         </div>
         
         <div class="current-setting">
-            <p>当前设置: justify-content: <span id="current-justify">center</span>, align-items: <span id="current-align">center</span></p>
+            当前设置: <span id="currentSetting">justify-content: flex-start; align-items: stretch;</span>
         </div>
-    </div>
-
-    <div class="container" id="flex-container">
-        <div class="item">1</div>
-        <div class="item">2</div>
-        <div class="item">3</div>
+        
+        <div class="demo-container">
+            <h2>Flex 容器演示</h2>
+            <div class="container" id="flexContainer">
+                <div class="item">1</div>
+                <div class="item">2</div>
+                <div class="item">3</div>
+            </div>
+        </div>
+        
+        <div class="code-display" id="codeDisplay">
+.container {
+  width: 500px;
+  height: 300px;
+  background-color: #ecf0f1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+        </div>
+        
+        <footer>
+            <p>Flex 布局演示 &copy; 2023</p>
+        </footer>
     </div>
 
     <script>
-        // 获取容器元素
-        const container = document.getElementById('flex-container');
-        const justifySpan = document.getElementById('current-justify');
-        const alignSpan = document.getElementById('current-align');
-
-        // 设置主轴对齐方式的函数
-        function setJustify(value) {
-            container.style.justifyContent = value;
-            justifySpan.textContent = value;
+        let currentStyles = {
+            'justify-content': 'flex-start',
+            'align-items': 'stretch'
+        };
+        
+        function updateFlex(property, value) {
+            // 更新当前样式对象
+            currentStyles[property] = value;
+            
+            // 获取flex容器元素
+            const flexContainer = document.getElementById('flexContainer');
+            
+            // 应用新样式
+            flexContainer.style[property] = value;
+            
+            // 更新当前设置显示
+            const currentSettingElement = document.getElementById('currentSetting');
+            currentSettingElement.textContent = `${property}: ${value};`;
+            
+            // 更新代码显示区域
+            updateCodeDisplay();
         }
-
-        // 设置交叉轴对齐方式的函数
-        function setAlign(value) {
-            container.style.alignItems = value;
-            alignSpan.textContent = value;
+        
+        function updateCodeDisplay() {
+            const codeDisplay = document.getElementById('codeDisplay');
+            let code = '.container {\n  width: 500px;\n  height: 300px;\n  background-color: #ecf0f1;\n  display: flex;\n';
+            
+            // 添加当前样式
+            for (const [property, value] of Object.entries(currentStyles)) {
+                code += `  ${property}: ${value};\n`;
+            }
+            
+            code += '}';
+            codeDisplay.textContent = code;
         }
     </script>
 </body>

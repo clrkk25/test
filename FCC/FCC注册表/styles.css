@@ -81,6 +81,8 @@ a{
     height: auto;
     min-height: 100vh;
     padding: 10px;
+    /* 允许垂直滚动 */
+    overflow-y: auto;
   }
   
   h1 {
@@ -94,10 +96,11 @@ a{
   }
   
   form {
-    width: 100%;
-    max-width: none;
-    min-width: unset;
-    margin: 0;
+    /* 保持固定宽度，避免左右滚动 */
+    width: 90%;
+    max-width: 500px;
+    min-width: 300px;
+    margin: 0 auto;
     padding: 10px;
   }
   
@@ -112,9 +115,9 @@ a{
   }
   
   input[type="submit"] {
-    width: 100%;
-    min-width: unset;
-    margin: 1em 0;
+    width: 60%;
+    min-width: 300px;
+    margin: 1em auto;
     height: 2.5em;
     font-size: 1.2rem;
   }
@@ -127,6 +130,8 @@ a{
 @media screen and (max-width: 480px) {
   body {
     padding: 5px;
+    /* 允许垂直滚动 */
+    overflow-y: auto;
   }
   
   h1 {
@@ -138,6 +143,10 @@ a{
   }
   
   form {
+    /* 保持固定宽度，避免左右滚动 */
+    width: 95%;
+    max-width: 500px;
+    min-width: 300px;
     padding: 5px;
   }
   
@@ -154,6 +163,10 @@ a{
   select {
     margin: 5px 0 0 0;
     min-height: 2.5em;
+  }
+  
+  input[type="submit"] {
+    min-width: 250px;
   }
 }
 

@@ -11,19 +11,22 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: #333;
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        
 
         header {
             margin: 20px 0;
@@ -70,6 +73,249 @@
             border: 2px dotted #fff;
         }
 
+        /* 控制面板样式 */
+        .control-panel {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .control-panel h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .layout-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .layout-btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            min-width: 120px;
+        }
+
+        .layout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .layout-btn.active {
+            background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 预览区域 */
+        .preview-container {
+            background: e9ecef;
+            min-height: 300px; /* 增大外部容器高度 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-box {
+            width: 100%; /* 减小内部div尺寸 */
+            height: 300px; /* 减小内部div尺寸 */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
+            transition: all 0.5s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 代码显示区域 */
+        .code-display {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            border-radius: 10px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin: 25px 0;
+            overflow-x: auto;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #444;
+        }
+
+        /* 布局说明 */
+        .layout-info {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid #e9ecef;
+        }
+
+        .layout-info h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .layout-info p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .layout-info ul {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .layout-info li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* 对齐选项控制区域 */
+        .alignment-controls {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        .control-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            background: white;
+            font-size: 1rem;
+            color: #495057;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+        }
+
+        .control-group select:focus {
+            border-color: #3498db;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .axis-controls {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .axis-control {
+            flex: 1;
+        }
+
+        .layout-btn.overlay-active {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        }
+        
+        /* 覆盖布局示例 */
+        .overlay-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .background-div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: rgba(155, 89, 182, 0.7);
+        }
+
+        .overlay-div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+        
+        .absolute-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+        }
+        
+        /* 工具类 */
+        .flex-space-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .no-margin {
+            margin: 0;
+        }
+        
+        .hidden {
+            display: none;
+        }
+
         /* 响应式设计 */
         @media screen and (max-width: 768px) {
             body {
@@ -80,6 +326,24 @@
                 padding: 15px;
                 font-size: 1rem;
             }
+            
+            .control-panel, .preview-container, .layout-info {
+                padding: 15px;
+            }
+            
+            .layout-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .preview-container {
+                min-height: 200px;
+            }
+            
+            .preview-box {
+                width: 80%;
+                height: 120px;
+            }
         }
 
         /* 悬停效果 */
@@ -87,21 +351,377 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
+        
+        .main-title {
+            text-align: center;
+            color: #2c3e50;
+            margin: 30px 0;
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        footer {
+            text-align: center;
+            padding: 25px 0;
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
     </style>
 </head>
 
 <body>
     <div class="container">
-        <header class="text1">
-            <p>Flex布局示例</p>
-        </header>
-        <header class="test2">
-            <p>绝对定位布局示例</p>
-        </header>
-        <header class="test3">
-            <p>Grid布局示例</p>
-        </header>
+        <h1 class="main-title">基础布局示例</h1>
+        
+        <!-- 预览区域 -->
+        <div class="preview-container">
+            <div class="preview-box" id="previewBox">
+                <p class="pcolor">Flex布局示例 - 内容居中对齐</p>
+            </div>
+        </div>
+        
+        
+        
+        <!-- 布局说明和切换按钮 -->
+        <div class="layout-info">
+            <div class="flex-space-between">
+                <h3>布局说明</h3>
+                <div class="layout-selector no-margin">
+                    <button class="layout-btn active" data-layout="flex">Flex布局</button>
+                    <button class="layout-btn" data-layout="absolute">绝对定位布局</button>
+                    <button class="layout-btn" data-layout="grid">Grid布局</button>
+                </div>
+            </div>
+            
+            <!-- 对齐选项控制区域 -->
+            <div class="alignment-controls" id="alignmentControls">
+                <!-- Flex布局对齐选项 -->
+                <div id="flexControls">
+                    <div class="control-group">
+                        <label for="flexJustify">主轴对齐 (justify-content)</label>
+                        <select id="flexJustify">
+                            <option value="flex-start">起始对齐</option>
+                            <option value="flex-end">末尾对齐</option>
+                            <option value="center" selected>居中对齐</option>
+                            <option value="space-between">两端对齐</option>
+                            <option value="space-around">均匀分布</option>
+                            <option value="space-evenly">完全均匀分布</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="flexAlign">交叉轴对齐 (align-items)</label>
+                        <select id="flexAlign">
+                            <option value="flex-start">起始对齐</option>
+                            <option value="flex-end">末尾对齐</option>
+                            <option value="center" selected>居中对齐</option>
+                            <option value="baseline">基线对齐</option>
+                            <option value="stretch">拉伸</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Grid布局对齐选项 -->
+                <div id="gridControls" class="hidden">
+                    <div class="control-group">
+                        <label for="gridAlign">网格对齐 (place-items)</label>
+                        <select id="gridAlign">
+                            <option value="start">起始对齐</option>
+                            <option value="end">末尾对齐</option>
+                            <option value="center" selected>居中对齐</option>
+                            <option value="stretch">拉伸</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- 绝对定位布局参数 -->
+                <div id="absoluteControls" class="hidden">
+                    <div class="axis-controls">
+                        <div class="axis-control">
+                            <div class="control-group">
+                                <label for="absoluteX">X轴位置 (left)</label>
+                                <select id="absoluteX">
+                                    <option value="0">0%</option>
+                                    <option value="10">10%</option>
+                                    <option value="20">20%</option>
+                                    <option value="30">30%</option>
+                                    <option value="40">40%</option>
+                                    <option value="50" selected>50%</option>
+                                    <option value="60">60%</option>
+                                    <option value="70">70%</option>
+                                    <option value="80">80%</option>
+                                    <option value="90">90%</option>
+                                    <option value="100">100%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="axis-control">
+                            <div class="control-group">
+                                <label for="absoluteY">Y轴位置 (top)</label>
+                                <select id="absoluteY">
+                                    <option value="0">0%</option>
+                                    <option value="10">10%</option>
+                                    <option value="20">20%</option>
+                                    <option value="30">30%</option>
+                                    <option value="40">40%</option>
+                                    <option value="50" selected>50%</option>
+                                    <option value="60">60%</option>
+                                    <option value="70">70%</option>
+                                    <option value="80">80%</option>
+                                    <option value="90">90%</option>
+                                    <option value="100">100%</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="layoutDescription">
+                <p><strong>Flex布局（弹性布局）</strong>是CSS3中一种新的布局模式，用于在容器中分配空间和对齐元素。</p>
+                <p>主要特点：</p>
+                <ul>
+                    <li>适合一维布局（行或列）</li>
+                    <li>可以轻松实现元素的水平和垂直居中</li>
+                    <li>具有良好的灵活性和响应式特性</li>
+                    <li>通过justify-content和align-items属性控制对齐方式</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 代码显示区域 -->
+        <div class="code-display" id="codeDisplay">
+/* Flex布局 */
+.preview-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+}
+        </div>
+        
+        <footer>
+            <p>基础布局示例 &copy; 2023</p>
+        </footer>
     </div>
+
+    <script>
+        // 布局配置信息
+        const layouts = {
+            flex: {
+                name: "Flex布局",
+                description: "<p><strong>Flex布局（弹性布局）</strong>是CSS3中一种新的布局模式，用于在容器中分配空间和对齐元素。</p><p>主要特点：</p><ul><li>适合一维布局（行或列）</li><li>可以轻松实现元素的水平和垂直居中</li><li>具有良好的灵活性和响应式特性</li><li>通过justify-content和align-items属性控制对齐方式</li></ul>",
+                styles: {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    background: "linear-gradient(135deg, #3498db 0%, #2c3e50 100%)"
+                },
+                code: `/* Flex布局 */
+.preview-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+}`
+            },
+            absolute: {
+                name: "绝对定位布局",
+                description: "<p><strong>绝对定位布局</strong>通过position属性将元素从正常文档流中移除，并相对于其最近的定位祖先元素进行定位。</p><p>主要特点：</p><ul><li>元素脱离正常文档流</li><li>通过top、right、bottom、left属性精确定位</li><li>不占据空间，可能覆盖其他元素</li><li>适用于创建特殊布局效果</li></ul>",
+                styles: {
+                    position: "relative",
+                    background: "linear-gradient(135deg, #27ae60 0%, #219653 100%)"
+                },
+                innerHTML: '<p class="absolute-content">绝对定位布局示例</p>',
+                code: `/* 绝对定位布局 */
+.preview-box {
+    position: relative;
+    background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+}
+
+.preview-box p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}`
+            },
+            grid: {
+                name: "Grid布局",
+                description: "<p><strong>Grid布局（网格布局）</strong>是CSS3中强大的二维布局系统，可以同时控制行和列的布局。</p><p>主要特点：</p><ul><li>适合二维布局（行和列）</li><li>可以轻松创建复杂的网格结构</li><li>通过grid-template-columns和grid-template-rows定义网格</li><li>使用place-items等属性控制对齐</li></ul>",
+                styles: {
+                    display: "grid",
+                    placeItems: "center",
+                    background: "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)"
+                },
+                code: `/* Grid布局 */
+.preview-box {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}`
+            }
+        };
+
+        // 获取DOM元素
+        const layoutButtons = document.querySelectorAll('.layout-btn');
+        const previewBox = document.getElementById('previewBox');
+        const codeDisplay = document.getElementById('codeDisplay');
+        const layoutDescription = document.getElementById('layoutDescription');
+        const alignmentControls = document.getElementById('alignmentControls');
+        const flexControls = document.getElementById('flexControls');
+        const gridControls = document.getElementById('gridControls');
+        const absoluteControls = document.getElementById('absoluteControls');
+        
+        // 获取对齐选项元素
+        const flexJustify = document.getElementById('flexJustify');
+        const flexAlign = document.getElementById('flexAlign');
+        const gridAlign = document.getElementById('gridAlign');
+        const absoluteX = document.getElementById('absoluteX');
+        const absoluteY = document.getElementById('absoluteY');
+
+        /**
+         * 切换布局
+         * @param {string} layoutType - 布局类型
+         */
+        function switchLayout(layoutType) {
+            // 更新按钮状态
+            layoutButtons.forEach(btn => {
+                if (btn.dataset.layout === layoutType) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // 隐藏所有布局容器
+            previewBox.style.display = 'none';
+            alignmentControls.style.display = 'none';
+
+            // 根据布局类型显示对应的容器和控件
+            previewBox.style.display = 'flex';
+            alignmentControls.style.display = 'block';
+                
+                // 显示对应的对齐选项
+                flexControls.style.display = layoutType === 'flex' ? 'block' : 'none';
+                gridControls.style.display = layoutType === 'grid' ? 'block' : 'none';
+                absoluteControls.style.display = layoutType === 'absolute' ? 'block' : 'none';
+
+                // 获取当前布局配置
+                const layout = layouts[layoutType];
+                
+                // 重置previewBox样式
+                previewBox.style.cssText = '';
+                
+                // 应用新样式
+                Object.assign(previewBox.style, layout.styles);
+                
+                // 更新内容
+                if (layout.innerHTML) {
+                    previewBox.innerHTML = layout.innerHTML;
+                } else {
+                    previewBox.innerHTML = `<p>${layout.name}示例 - 内容居中对齐</p>`;
+                }
+                
+                // 更新代码显示
+                codeDisplay.textContent = layout.code;
+                
+                // 更新布局说明
+                layoutDescription.innerHTML = layout.description;
+            }
+
+        /**
+         * 更新Flex布局的对齐方式
+         */
+        function updateFlexAlignment() {
+            if (document.querySelector('.layout-btn.active').dataset.layout === 'flex') {
+                previewBox.style.justifyContent = flexJustify.value;
+                previewBox.style.alignItems = flexAlign.value;
+                
+                // 更新代码显示
+                const code = `/* Flex布局 */
+.preview-box {
+    display: flex;
+    justify-content: ${flexJustify.value};
+    align-items: ${flexAlign.value};
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+}`;
+                codeDisplay.textContent = code;
+            }
+        }
+
+        /**
+         * 更新Grid布局的对齐方式
+         */
+        function updateGridAlignment() {
+            if (document.querySelector('.layout-btn.active').dataset.layout === 'grid') {
+                previewBox.style.placeItems = gridAlign.value;
+                
+                // 更新代码显示
+                const code = `/* Grid布局 */
+.preview-box {
+    display: grid;
+    place-items: ${gridAlign.value};
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}`;
+                codeDisplay.textContent = code;
+            }
+        }
+
+        /**
+         * 更新绝对定位布局的位置
+         */
+        function updateAbsolutePosition() {
+            if (document.querySelector('.layout-btn.active').dataset.layout === 'absolute') {
+                const x = absoluteX.value;
+                const y = absoluteY.value;
+                
+                // 更新内容
+                previewBox.innerHTML = `<p class="absolute-content">绝对定位布局示例</p>`;
+                
+                // 更新样式
+                const content = previewBox.querySelector('.absolute-content');
+                content.style.top = `${y}%`;
+                content.style.left = `${x}%`;
+                content.style.transform = `translate(-${x}%, -${y}%)`;
+                
+                // 更新代码显示
+                const code = `/* 绝对定位布局 */
+.preview-box {
+    position: relative;
+    background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+}
+
+.preview-box p {
+    position: absolute;
+    top: ${y}%;
+    left: ${x}%;
+    transform: translate(-${x}%, -${y}%);
+    margin: 0;
+}`;
+                codeDisplay.textContent = code;
+            }
+        }
+
+        // 为按钮添加点击事件
+        layoutButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchLayout(btn.dataset.layout);
+            });
+        });
+
+        // 为对齐选项添加事件监听器
+        flexJustify.addEventListener('change', updateFlexAlignment);
+        flexAlign.addEventListener('change', updateFlexAlignment);
+        gridAlign.addEventListener('change', updateGridAlignment);
+        absoluteX.addEventListener('change', updateAbsolutePosition);
+        absoluteY.addEventListener('change', updateAbsolutePosition);
+
+        // 初始化页面
+        switchLayout('flex');
+    </script>
 </body>
 
 </html>

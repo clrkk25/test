@@ -17,6 +17,7 @@
             color: #333;
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
         
         .container {
@@ -107,14 +108,15 @@
             text-align: center;
             font-weight: bold;
             margin: 15px 0;
-            padding: 10px;
+            padding: 15px;
             background-color: #e3f2fd;
             border-radius: 4px;
             color: #1976d2;
+            font-size: 1.1rem;
         }
         
-        .container {
-            width: 500px;
+        .flex-container {
+            width: 100%;
             height: 300px;
             background-color: #ecf0f1;
             display: flex;
@@ -137,6 +139,14 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
+        .item:nth-child(2) {
+            height: 100px;
+        }
+        
+        .item:nth-child(3) {
+            height: 60px;
+        }
+        
         .code-display {
             background-color: #2d2d2d;
             color: #f8f8f2;
@@ -146,6 +156,7 @@
             white-space: pre-wrap;
             margin-top: 20px;
             overflow-x: auto;
+            font-size: 1rem;
         }
         
         footer {
@@ -153,6 +164,7 @@
             margin-top: 30px;
             color: #7f8c8d;
             font-size: 0.9rem;
+            padding: 20px 0;
         }
         
         @media (max-width: 768px) {
@@ -168,7 +180,7 @@
                 font-size: 2rem;
             }
             
-            .container {
+            .flex-container {
                 width: 100%;
                 height: 250px;
             }
@@ -177,6 +189,14 @@
                 width: 60px;
                 height: 60px;
                 font-size: 0.9rem;
+            }
+            
+            .item:nth-child(2) {
+                height: 75px;
+            }
+            
+            .item:nth-child(3) {
+                height: 45px;
             }
         }
         
@@ -199,7 +219,7 @@
                 margin: 10px 0;
             }
             
-            .container {
+            .flex-container {
                 height: 200px;
             }
             
@@ -207,6 +227,14 @@
                 width: 50px;
                 height: 50px;
                 font-size: 0.8rem;
+            }
+            
+            .item:nth-child(2) {
+                height: 60px;
+            }
+            
+            .item:nth-child(3) {
+                height: 40px;
             }
         }
     </style>
@@ -244,7 +272,7 @@
         
         <div class="demo-container">
             <h2>Flex 容器演示</h2>
-            <div class="container" id="flexContainer">
+            <div class="flex-container" id="flexContainer">
                 <div class="item">1</div>
                 <div class="item">2</div>
                 <div class="item">3</div>
@@ -252,8 +280,8 @@
         </div>
         
         <div class="code-display" id="codeDisplay">
-.container {
-  width: 500px;
+.flex-container {
+  width: 100%;
   height: 300px;
   background-color: #ecf0f1;
   display: flex;
@@ -268,11 +296,17 @@
     </div>
 
     <script>
+        // 当前样式对象，用于跟踪所有Flex属性
         let currentStyles = {
             'justify-content': 'flex-start',
             'align-items': 'stretch'
         };
         
+        /**
+         * 更新Flex布局属性
+         * @param {string} property - CSS属性名
+         * @param {string} value - CSS属性值
+         */
         function updateFlex(property, value) {
             // 更新当前样式对象
             currentStyles[property] = value;
@@ -283,19 +317,36 @@
             // 应用新样式
             flexContainer.style[property] = value;
             
-            // 更新当前设置显示
-            const currentSettingElement = document.getElementById('currentSetting');
-            currentSettingElement.textContent = `${property}: ${value};`;
+            // 更新当前设置显示（显示所有当前设置）
+            updateCurrentSettingDisplay();
             
             // 更新代码显示区域
             updateCodeDisplay();
         }
         
+        /**
+         * 更新当前设置显示区域
+         */
+        function updateCurrentSettingDisplay() {
+            const currentSettingElement = document.getElementById('currentSetting');
+            let displayText = '';
+            
+            // 遍历所有当前样式并生成显示文本
+            for (const [property, value] of Object.entries(currentStyles)) {
+                displayText += `${property}: ${value}; `;
+            }
+            
+            currentSettingElement.textContent = displayText;
+        }
+        
+        /**
+         * 更新代码显示区域
+         */
         function updateCodeDisplay() {
             const codeDisplay = document.getElementById('codeDisplay');
-            let code = '.container {\n  width: 500px;\n  height: 300px;\n  background-color: #ecf0f1;\n  display: flex;\n';
+            let code = '.flex-container {\n  width: 100%;\n  height: 300px;\n  background-color: #ecf0f1;\n  display: flex;\n';
             
-            // 添加当前样式
+            // 添加所有当前样式
             for (const [property, value] of Object.entries(currentStyles)) {
                 code += `  ${property}: ${value};\n`;
             }

@@ -1,0 +1,219 @@
+/* 
+ * 酒店反馈表单样式表
+ * 优化视觉设计，提升用户体验
+ */
+
+/* 全局样式重置和基础设置 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 选项1：温暖的酒店风格渐变（默认） */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/*
+ * 其他背景颜色选项（取消注释以使用）：
+ * 
+ * 选项2：清新的蓝绿色调
+ * background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+ * 
+ * 选项3：优雅的紫红色调
+ * background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+ * 
+ * 选项4：奢华的金色调
+ * background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+ * 
+ * 选项5：宁静的海洋色调
+ * background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+ * 
+ * 选项6：经典的深蓝紫色调
+ * background: linear-gradient(135deg, #a6c0fe 0%, #f68084 100%);
+ */
+
+/* 头部样式 */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #5a4a42;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-weight: 300;
+}
+
+header p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* 表单容器 */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* 字段集样式 */
+fieldset {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 25px;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+}
+
+fieldset:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+fieldset legend {
+  font-weight: 600;
+  color: #e67e22;
+  padding: 0 10px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 标签样式 */
+label {
+  display: block;
+  margin: 15px 0 8px 0;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+/* 输入框样式 */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #e67e22;
+  box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+}
+
+/* 单选按钮和复选框样式 */
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+}
+
+/* 单选按钮和复选框标签并排显示 */
+fieldset:nth-of-type(2) label,
+fieldset:nth-of-type(3) label {
+  display: inline-block;
+  margin: 0 20px 0 5px;
+}
+
+fieldset:nth-of-type(2) input[type="radio"],
+fieldset:nth-of-type(3) input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* 下拉选择框样式 */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 15px;
+  padding-right: 40px;
+}
+
+/* 文本域样式 */
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* 提交按钮样式 */
+button[type="submit"] {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+}
+
+button[type="submit"]:active {
+  transform: translateY(-1px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  form {
+    padding: 20px;
+  }
+  
+  fieldset {
+    padding: 20px;
+  }
+  
+  fieldset:nth-of-type(2) label,
+  fieldset:nth-of-type(3) label {
+    display: block;
+    margin: 10px 0;
+  }
+}

@@ -74,3 +74,97 @@ input[type="file"] {
 a{
   color:#dfdfe2;
 }
+
+/* 移动端适配优化 */
+@media screen and (max-width: 768px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    padding: 10px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    margin: 0.5em auto;
+  }
+  
+  p {
+    font-size: 1rem;
+    margin: 0.5em auto 1em;
+  }
+  
+  form {
+    width: 100%;
+    max-width: none;
+    min-width: unset;
+    margin: 0;
+    padding: 10px;
+  }
+  
+  fieldset {
+    padding: 1.5rem 0;
+  }
+  
+  input,
+  textarea,
+  select {
+    font-size: 16px; /* 防止iOS缩放 */
+  }
+  
+  input[type="submit"] {
+    width: 100%;
+    min-width: unset;
+    margin: 1em 0;
+    height: 2.5em;
+    font-size: 1.2rem;
+  }
+  
+  label {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 5px;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  p {
+    font-size: 0.9rem;
+  }
+  
+  form {
+    padding: 5px;
+  }
+  
+  fieldset {
+    padding: 1rem 0;
+  }
+  
+  label {
+    margin: 0.3rem 0;
+  }
+  
+  input,
+  textarea,
+  select {
+    margin: 5px 0 0 0;
+    min-height: 2.5em;
+  }
+}
+
+/* 防止表单元素在iOS Safari中自动缩放 */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,16 @@
+#email{
+  width:500px;
+  padding:50px;
+  margin:50px;
+  border:2px;
+  box-sizing: border-box;
+  
+}
+
+#confidential ,#top-secret{
+  background-color:black;
+  display:inline-block;
+  padding:5px;
+  margin:5px;
+  border:5px;
+}

@@ -2,9 +2,9 @@
   display:flex;
   justify-content : space-between;
   align-self : flex-start;
-  width:400px;
-  height:600px;
-  font-size:50px;
+  width:200px;
+  height:300px;
+  font-size:40px;
   border: 2px solid rgb(16, 16, 19);
   background-color:rgba(255, 0, 0, 0.007);
 }
@@ -26,7 +26,7 @@ body{
    display:block;
  }
   .middle{
-  font-size:100px;
+  font-size:80px;
    display:flex;
    align-self : center;
    flex-direction : column;

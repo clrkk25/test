@@ -1,16 +1,44 @@
-#email{
-  width:500px;
-  padding:50px;
-  margin:50px;
-  border:2px;
+/* 邮件容器样式 */
+#email {
+  width: 500px;
+  padding: 50px;
+  margin: 50px auto;
+  border: 2px solid #333;
   box-sizing: border-box;
-  
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
 }
 
-#confidential ,#top-secret{
-  background-color:black;
-  display:inline-block;
-  padding:5px;
-  margin:5px;
-  border:5px;
+/* 机密标识样式 */
+#confidential, #top-secret {
+  background-color: black;
+  color: white;
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  border: 1px solid black;
+  transform: rotate(2deg);
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 机密标识特殊样式 */
+#top-secret {
+  transform: rotate(-2deg);
+}
+
+/* 模糊文本样式 */
+.blurred {
+  background-color: #333;
+  color: #333;
+  filter: blur(3px);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* 段落样式 */
+p {
+  margin: 15px 0;
+  line-height: 1.5;
 }

@@ -1,47 +1,67 @@
-.card{
-  display:flex;
-  justify-content : space-between;
-  align-self : flex-start;
-  width:200px;
-  height:300px;
-  font-size:40px;
-  border: 2px solid rgb(16, 16, 19);
-  background-color:rgba(255, 0, 0, 0.007);
-}
-body{
-  background-color:#fff;
+.card {
+    display: flex;
+    justify-content: space-between;
+    align-self: flex-start;
+    width: 200px;
+    height: 300px;
+    font-size: 40px;
+    border: 2px solid rgb(16, 16, 19);
+    background-color: rgba(255, 0, 0, 0.007);
 }
 
- #playing-cards{
-   
-   display:flex;
-   justify-content : center;
-   flex-wrap : wrap;
-   gap:20px;
- }
- .left{
-  background-color:#fff
-;
-   align-self : flex-start;
-   display:block;
- }
-  .middle{
-  font-size:80px;
-   display:flex;
-   align-self : center;
-   flex-direction : column;
- }
-   .right{
-   align-self : flex-end;
-   display:flex;
- }
- .card:hover{
+body {
+    background-color: #fff;
+}
+
+#playing-cards {
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.left {
+    background-color: #fff;
+    align-self: flex-start;
+    display: block;
+}
+
+.middle {
+    font-size: 80px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+
+.right {
+    align-self: flex-end;
+    display: flex;
+}
+
+.card:hover {
     transform: translateY(-10px) scale(1.03);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
- }
-  .card:active{
-    transform: translateY(10px) scale(1.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card:active {
+    transform: translateY(10px);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
- }
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+@media screen and (max-width: 768px) {
+    .card {
+        width: 150px;
+        height: 225px;
+        font-size: 30px;
+    }
+
+    .middle {
+        font-size: 60px;
+    }
+
+    
+}

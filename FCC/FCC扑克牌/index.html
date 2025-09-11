@@ -6,32 +6,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Playing Cards</title>
   <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
   <main id="playing-cards">
-    <div class="card one">
+    <div class="card one" tabindex="0">
       <div class="left">♠</div>
       <div class="middle">♠</div>
       <div class="right">♠</div>
     </div>
-    <div class="card two">
+    <div class="card two" tabindex="0">
       <div class="left">♣</div>
       <div class="middle">♣</div>
       <div class="right">♣</div>
     </div>
-    <div class="card three">
+    <div class="card three" tabindex="0">
       <div class="left">♥</div>
       <div class="middle">♥</div>
       <div class="right">♥</div>
     </div>
-    <div class="card four">
+    <div class="card four" tabindex="0">
       <div class="left">♦</div>
       <div class="middle">♦</div>
       <div class="right">♦</div>
     </div>
   </main>
+  
+  <script>
+    // 为每个卡片添加点击事件监听器
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function() {
+        // 添加点击样式类
+        this.classList.add('clicked');
+        
+        // 1秒后移除点击样式类，恢复到正常状态
+        setTimeout(() => {
+          this.classList.remove('clicked');
+        }, 1000);
+      });
+    });
+  </script>
 </body>
 
 </html>

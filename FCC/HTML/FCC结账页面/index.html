@@ -10,21 +10,21 @@
     <h1>结账</h1>
     <section>
         <img src="https://cdn.freecodecamp.org/curriculum/labs/cube.jpg" alt="一个3D立方体">
-        <h2>您的购物车</h2>
+        <h2>您的购物车:魔方 15￥</h2>
 
     </section>
     <section>
         <h2>支付信息</h2>
         <form>
+            <label for="card-name">姓名</label>
             <input required aria-required="true" id="card-name" name="card-name" />
-            <label for="card-name">持卡人姓名</label>
             <br>
-            <input required aria-required="true" id="card-number" name="card-number" />
             <label for="card-number">卡号</label>
+            <input required aria-required="true" id="card-number" name="card-number" />
             <br>
-            <input required aria-required="true" id="aria-required" name="aria-required" />
-            <label for="aria-required">有效期</label>
-
+            <label for="card-password">密码</label>
+            <input required aria-required="true" id="card-password" name="card-password" />
+            <button type="submit">提交</button>
         </form>
     </section>
 

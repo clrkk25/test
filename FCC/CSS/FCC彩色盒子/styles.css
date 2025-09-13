@@ -1,0 +1,134 @@
+/* 
+ * FCC彩色盒子样式表
+ * 优化版本 - 包含现代化布局、响应式设计和交互效果
+ */
+
+/* 重置默认样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 设置页面基础样式 */
+body {
+  background-color: #f4f4f4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  padding: 20px;
+}
+
+/* 主要内容区域 */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 页面标题样式 */
+header h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* 彩色盒子网格布局 */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+/* 彩色盒子样式 */
+.color-box {
+  height: 150px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 彩色盒子悬停效果 */
+.color-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* 彩色盒子焦点效果（键盘导航） */
+.color-box:focus {
+  outline: 3px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* 第一种颜色 - 浅灰色 */
+.color1 {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+}
+
+/* 第二种颜色 - 中灰色 */
+.color2 {
+  background-color: rgb(151,151,151);
+}
+
+/* 第三种颜色 - 棕色 */
+.color3 {
+  background-color: brown;
+}
+
+/* 第四种颜色 - 蓝色 */
+.color4 {
+  background-color: hsl(210, 90%, 60%);
+}
+
+/* 第五种颜色 - 黑色 */
+.color5 {
+  background-color: black;
+}
+
+/* 响应式设计 - 平板设备 */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .color-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+  }
+  
+  .color-box {
+    height: 120px;
+  }
+}
+
+/* 响应式设计 - 手机设备 */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .color-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .color-box {
+    height: 100px;
+  }
+}
+

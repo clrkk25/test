@@ -1,5 +1,6 @@
 #main {
     background-color: rgb(235, 235, 236);
+    
     max-width: 600px;
     /* 设置img-div的最大宽度 */
     margin: 0 auto;
@@ -83,8 +84,3 @@ footer {
     margin-top: 20px;
 }
 
-@media (max-width: 600px) {
-    #main {
-        width: 100%;
-    }
-}

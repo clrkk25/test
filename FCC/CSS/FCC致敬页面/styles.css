@@ -87,5 +87,6 @@ footer {
 @media (max-width: 600px) {
     #main {
         width: 100%;
+        background-color: aqua;
     }
 }

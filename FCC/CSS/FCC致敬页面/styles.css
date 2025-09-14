@@ -1,3 +1,7 @@
+html, body {
+        overflow-x: hidden;
+    }
+
 #main {
     
     background-color: #ebebec;
@@ -86,86 +90,5 @@ footer {
     text-align: center;
     font-size: 13px;
     margin-top: 20px;
-}
-
-/* 移动端适配 */
-/* 超小屏幕设备 (手机竖屏) */
-@media screen and (max-width: 575px) {
-    html, body {
-        overflow-x: hidden; /* 禁止水平滚动 */
-    }
-    
-    #main {
-        max-width: 100%;
-        padding: 10px;
-        margin: 0;
-        border-radius: 0;
-    }
-    
-    #tribute-info-list,
-    #tribute-info-saying {
-        width: 100%;
-        padding: 0 10px;
-    }
-    
-    #title {
-        font-size: 24px;
-        padding: 0 10px;
-    }
-    
-    #img-div {
-        max-width: 100%;
-    }
-}
-
-/* 小屏幕设备 (手机横屏、小平板) */
-@media screen and (min-width: 576px) and (max-width: 767px) {
-    html, body {
-        overflow-x: hidden;
-    }
-    
-    #main {
-        max-width: 100%;
-        padding: 15px;
-        margin: 0;
-        border-radius: 0;
-    }
-    
-    #tribute-info-list,
-    #tribute-info-saying {
-        width: 100%;
-        padding: 0 15px;
-    }
-    
-    #title {
-        font-size: 26px;
-        padding: 0 15px;
-    }
-}
-
-/* 中等屏幕设备 (平板、小屏幕笔记本) */
-@media screen and (min-width: 768px) and (max-width: 1200px) {
-    html, body {
-        overflow-x: hidden;
-        background-color: yellow;
-    }
-    
-    #main {
-        max-width: 100%;
-        padding: 20px;
-        margin: 0 auto;
-        border-radius: 0;
-    }
-    
-    #tribute-info-list,
-    #tribute-info-saying {
-        width: 100%;
-        padding: 0 20px;
-    }
-    
-    #title {
-        font-size: 28px;
-        padding: 0 20px;
-    }
 }
 

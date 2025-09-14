@@ -1,5 +1,5 @@
 #main {
-    background-color: rgb(235, 235, 236);
+        background-color: aqua;
     
     max-width: 600px;
     /* 设置img-div的最大宽度 */
@@ -87,6 +87,5 @@ footer {
 @media (max-width: 800px) {
     #main {
         width: 100%;
-        background-color: aqua;
     }
 }

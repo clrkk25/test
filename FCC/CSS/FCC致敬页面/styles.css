@@ -89,7 +89,7 @@ footer {
 }
 
 /* 移动端适配 */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 1000px) {
     html, body {
         overflow-x: hidden; /* 禁止水平滚动 */
     }

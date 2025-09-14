@@ -1,6 +1,7 @@
 #main {
-    background-color: rgb(235, 235, 236);
 
+    background-color: rgb(235, 235, 236);
+    border: 1px solid black;
     max-width: 600px;
     /* 设置img-div的最大宽度 */
     margin: 0 auto;
@@ -102,7 +103,7 @@ footer {
     
     #tribute-info-list,
     #tribute-info-saying {
-        width: 100%;
+        width: 80%;
         padding: 0 10px;
     }
     

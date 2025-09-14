@@ -1,15 +1,16 @@
 html, body {
-        overflow-x: hidden;
-    }
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
 #main {
-    
     background-color: #ebebec;
-    border: 1px solid black;
+    border: 1px solid #ccc;
     max-width: 600px;
-    /* 设置img-div的最大宽度 */
     margin: 0 auto;
-    /* 居中显示 */
     padding: 20px;
 }
 
@@ -17,78 +18,179 @@ html, body {
     text-align: center;
     font-size: 27px;
     font-weight: bold;
-
+    margin: 10px 0;
 }
 
-#tribute-info-title {
+#img-caption:first-of-type {
     text-align: center;
-    margin: 40px auto;
-}
-
-#img-caption {
-    text-align: center;
-    font-size: 10.8px;
-    margin-bottom: 10px;
-    font-weight: 400;
-    line-height: 1.8;
-    /* 稍微增加行间距 */
-    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 15px 0;
+    color: #333;
 }
 
 #img-div {
     max-width: 600px;
-    /* 设置img-div的最大宽度 */
     margin: 0 auto;
-    /* 居中显示 */
     background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
-
-
 
 #image {
     display: block;
     margin: 0 auto;
     max-width: 100%;
-    /* 让图片占满img-div的宽度 */
     height: auto;
-    /* 保持图片的宽高比 */
+    border-radius: 4px;
+}
+
+#tribute-info-title {
+    text-align: center;
+    margin: 40px auto 20px;
+    font-size: 22px;
+    color: #2c3e50;
 }
 
 #tribute-info {
-
-    text-align: begin;
+    text-align: left;
 }
 
 #tribute-info-list {
     width: 65%;
     margin: 20px auto;
+    padding: 0;
 }
 
 #tribute-info-list li {
-    font-size: 10.8px;
-    margin-bottom: 10px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    text-align: left;
 }
-
-
-
 
 #tribute-info-saying {
     width: 65%;
-    text-align: begin;
-    margin: 10px auto;
-    font-size: 10.8px;
+    text-align: left;
+    margin: 30px auto;
+    font-size: 14px;
     line-height: 1.6;
+    font-style: italic;
+    color: #555;
 }
-
 
 #tribute-info-saying i {
     display: block;
+    margin-bottom: 15px;
+}
+
+#tribute-info-saying i:last-child {
+    margin-bottom: 0;
+    font-weight: bold;
+    text-align: right;
 }
 
 footer {
     text-align: center;
     font-size: 13px;
-    margin-top: 20px;
+    margin-top: 30px;
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 767px) {
+    #main {
+        max-width: 100%;
+        padding: 15px;
+        border: none;
+        box-shadow: none;
+    }
+    
+    #title {
+        font-size: 24px;
+        padding: 0 10px;
+    }
+    
+    #img-caption:first-of-type {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+    
+    #img-div {
+        max-width: 100%;
+        padding: 8px;
+    }
+    
+    #tribute-info-title {
+        font-size: 20px;
+        margin: 30px auto 15px;
+        padding: 0 10px;
+    }
+    
+    #tribute-info-list,
+    #tribute-info-saying {
+        width: 100%;
+        padding: 0 15px;
+        margin: 15px auto;
+    }
+    
+    #tribute-info-list li,
+    #tribute-info-saying {
+        font-size: 13px;
+    }
+    
+    #tribute-info-list li {
+        margin-bottom: 12px;
+    }
+    
+    footer {
+        font-size: 12px;
+        padding: 10px 0;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    html, body {
+        font-size: 14px;
+    }
+    
+    #main {
+        padding: 10px;
+    }
+    
+    #title {
+        font-size: 22px;
+    }
+    
+    #img-caption:first-of-type {
+        font-size: 13px;
+    }
+    
+    #tribute-info-title {
+        font-size: 18px;
+        margin: 25px auto 10px;
+    }
+    
+    #tribute-info-list,
+    #tribute-info-saying {
+        padding: 0 10px;
+    }
+    
+    #tribute-info-list li,
+    #tribute-info-saying {
+        font-size: 12px;
+    }
+    
+    #tribute-info-list li {
+        margin-bottom: 10px;
+    }
+    
+    footer {
+        font-size: 11px;
+        margin-top: 15px;
+    }
 }
 

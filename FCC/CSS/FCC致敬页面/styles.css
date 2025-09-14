@@ -88,7 +88,11 @@ footer {
 }
 
 /* 移动端适配 */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
+    html, body {
+        overflow-x: hidden; /* 禁止水平滚动 */
+    }
+    
     #main {
         max-width: 100%;
         padding: 10px;

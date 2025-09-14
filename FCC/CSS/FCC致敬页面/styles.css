@@ -104,7 +104,7 @@ footer {
     
     #tribute-info-list,
     #tribute-info-saying {
-        width: 90%;
+        width: 100%;
         padding: 0 10px;
     }
     
@@ -133,7 +133,7 @@ footer {
     
     #tribute-info-list,
     #tribute-info-saying {
-        width: 85%;
+        width: 100%;
         padding: 0 15px;
     }
     
@@ -147,7 +147,7 @@ footer {
 @media screen and (min-width: 768px) and (max-width: 1200px) {
     html, body {
         overflow-x: hidden;
-        background-color: red;
+        background-color: yellow;
     }
     
     #main {
@@ -159,7 +159,7 @@ footer {
     
     #tribute-info-list,
     #tribute-info-saying {
-        width: 80%;
+        width: 100%;
         padding: 0 20px;
     }
     

@@ -1,0 +1,144 @@
+#house {
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 400px;
+    background-color:#FF9980;
+    border: 5px solid brown;
+    z-index: 0; /* 确保房子在天空和草坪的上方 */
+}
+
+
+#house div {
+    position: absolute;
+}
+
+
+#roof {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    border: 0 solid #B35900;
+    /* 实现斜向交叉线效果，放大线条和间隔 */
+    background-image:
+        repeating-linear-gradient(45deg, #B35900, #B35900 7px, transparent 7px, transparent 23px),
+        repeating-linear-gradient(-45deg, #B35900, #B35900 7px, transparent 7px, transparent 23px);
+    /* 移除之前的旋转变换 */
+}
+
+
+#chimney {
+    top: 0;
+    left: 75%;
+    transform: translate(-50%, -100%);
+    width: 15%;
+    height: 20%;
+    z-index: -1;
+    background-color:#E6E6E6;
+    /* 实现分割线效果，放大线条和间隔 */
+    background-image:
+        repeating-linear-gradient(0deg, black, black 2%, #E6E6E6 2%, #E6E6E6 12.5%);
+    /* 移除之前的旋转变换 */
+    border: 1px solid;
+}
+
+
+
+#window-1 {
+    bottom: 40%;
+    left: 20%;
+    transform: translate(-50%, 0);
+    width: 20%;
+    height: 20%;
+    background-color: #FFFFB3;
+    border: 5px solid #B35900;
+    /* 实现分割线效果，放大线条和间隔 */
+    background-image:
+        repeating-linear-gradient(90deg, #FFFFB3, #FFFFB3 48%, #B35900 48%, #B35900 52%);
+    /* 移除之前的旋转变换 */
+
+}
+
+#window-2 {
+    bottom: 40%;
+    left: 80%;
+    transform: translate(-50%, 0);
+    width: 20%;
+    height: 20%;
+    background-color: #FFFFB3;
+    border: 5px solid #B35900;
+    /* 实现分割线效果，放大线条和间隔 */
+    background-image:
+        repeating-linear-gradient(90deg, #FFFFB3, #FFFFB3 48%, #B35900 48%, #B35900 52%);
+    /* 移除之前的旋转变换 */
+}
+
+#door {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 25%;
+    height: 45%;
+    background-color: #E6E6E6;
+    border: 5px solid #B35900;
+}
+
+#door-handle {
+    bottom: 40%;
+    left: 75%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #B35900;
+}
+#doormat {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-55%, 115%) skewX(-20deg); /* 添加skewX实现平行四边形效果 */
+    width: 25%;
+    height: 10%;
+    background-color: #85E085;
+    border: 2px solid black;
+    display: flex; /* 使用flex布局使文字居中 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    overflow: hidden; /* 防止文字溢出 */
+    font-size: 20px; /* 设置字体大小 */
+}
+
+#doormat em {
+    display: block;
+    transform: skewX(20deg); /* 反向倾斜文字，使其保持正常方向 */
+    text-align: center;
+    line-height: 100%; /* 垂直居中文字 */
+    font-style: normal; /* 可选：将斜体改为正常字体 */
+}
+#sky {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    min-height: 500px;
+    height: calc(50% + 40px); /* 400px * 10% = 40px */
+    background-color: rgb(135, 206, 250);
+    z-index: -1; /* 确保在house后方 */
+}
+
+#lawn {
+    position: absolute;
+    top: calc(50% + 40px); /* 从房子底部往上10%的位置开始 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+
+    min-height: 500px;
+    height: calc(50% - 40px);
+    background-color: green;
+    z-index: -1; /* 确保在house后方 */
+}
+

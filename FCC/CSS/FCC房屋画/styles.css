@@ -132,7 +132,21 @@
     align-items: center; /* 垂直居中 */
     justify-content: center; /* 水平居中 */
     overflow: hidden; /* 防止文字溢出 */
-    font-size: 20px; /* 设置字体大小 */
+    font-size: 2.5vw; /* 使用视口宽度单位，使字体大小根据屏幕宽度自适应 */
+}
+
+/* 在小屏幕上设置最小字体大小 */
+@media screen and (max-width: 480px) {
+    #doormat {
+        font-size: 12px; /* 手机设备上最小字体 */
+    }
+}
+
+/* 在大屏幕上设置最大字体大小 */
+@media screen and (min-width: 1200px) {
+    #doormat {
+        font-size: 30px; /* 大屏幕设备上最大字体 */
+    }
 }
 
 #doormat em {

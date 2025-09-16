@@ -3,12 +3,37 @@
     display: block;
     top: 50%;
     left: 50%;
+    
     transform: translate(-50%, -50%);
     width: 500px;
     height: 400px;
     background-color:#FF9980;
     border: 5px solid brown;
     z-index: 0; /* 确保房子在天空和草坪的上方 */
+}
+
+/* 平板设备优化 */
+@media screen and (max-width: 768px) {
+    #house {
+        width: 400px;
+        height: 320px;
+    }
+}
+
+/* 手机设备优化 */
+@media screen and (max-width: 480px) {
+    #house {
+        width: 300px;
+        height: 240px;
+    }
+}
+
+/* 小屏幕手机优化 */
+@media screen and (max-width: 320px) {
+    #house {
+        width: 250px;
+        height: 200px;
+    }
 }
 
 
@@ -122,7 +147,7 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 100%;
     min-height: 500px;
     height: calc(50% + 40px); /* 400px * 10% = 40px */
     background-color: rgb(135, 206, 250);
@@ -134,11 +159,52 @@
     top: calc(50% + 40px); /* 从房子底部往上10%的位置开始 */
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-
+    width: 100%;
     min-height: 500px;
     height: calc(50% - 40px);
     background-color: green;
     z-index: -1; /* 确保在house后方 */
+}
+
+/* 平板设备优化 */
+@media screen and (max-width: 768px) {
+    #sky, #lawn {
+        width: 100%;
+        min-height: 400px;
+    }
+}
+
+/* 手机设备优化 */
+@media screen and (max-width: 480px) {
+    #sky, #lawn {
+        width: 100%;
+        min-height: 300px;
+    }
+    
+    #sky {
+        height: calc(50% + 30px); /* 调整高度计算 */
+    }
+    
+    #lawn {
+        top: calc(50% + 30px);
+        height: calc(50% - 30px);
+    }
+}
+
+/* 小屏幕手机优化 */
+@media screen and (max-width: 320px) {
+    #sky, #lawn {
+        width: 100%;
+        min-height: 250px;
+    }
+    
+    #sky {
+        height: calc(50% + 25px); /* 调整高度计算 */
+    }
+    
+    #lawn {
+        top: calc(50% + 25px);
+        height: calc(50% - 25px);
+    }
 }
 

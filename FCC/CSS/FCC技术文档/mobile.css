@@ -1,0 +1,128 @@
+/* 移动端优化样式 */
+@media screen and (max-width: 768px) {
+  /* 确保html和body占满整个视口 */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 容器调整为适应小屏幕 */
+  .container {
+    width: 100%;
+    position: relative;
+    min-height: 100%;
+  }
+  
+  /* 移除body的overflow:hidden，改用其他方式控制滚动 */
+  body {
+    overflow: hidden; /* 只隐藏横向滚动 */
+  }
+  /* 标题保持在顶部 */
+  #title {
+    position: relative;
+    font-size: 25px;
+    width: 100vw;
+    height: 80px;
+    text-align: center;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+    margin: 0;
+    padding: 0 0 10px ;
+    box-sizing: border-box;
+  }
+
+  /* 导航切换按钮样式 */
+  .nav-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #333;
+    color: white;
+    border: none;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  /* 导航栏调整为侧边弹出式 */
+  #navbar {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 0;
+    margin-left: 20px;
+    height: calc(100vh - 80px);
+    background-color: #e0e0e0;
+    overflow-y: auto;
+    z-index: 1000;
+    box-sizing: border-box;
+    transition: width 0.3s ease; /* 添加过渡动画 */
+  }
+  
+  /* 导航栏展开状态 */
+  #navbar.navbar-open {
+    width: 100%;
+  }
+
+  #navbar header {
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+    display: block;
+  }
+
+  /* 主内容区域调整 */
+  #main-doc {
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    left: 0;
+    height: calc(100vh - 80px);
+
+    box-sizing: border-box;
+    transition: all 0.3s ease; /* 添加过渡动画 */
+    background-color: #f0f0f0;
+  }
+
+  /* 导航链接样式调整 */
+  .nav-link {
+    display: block;
+    padding-top: 10px;
+    margin: 5px 0;
+    background-color: #d0d0d0;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+  }
+
+  /* 主内容区域的标题样式调整 */
+  #main-doc header {
+    font-size: 1.5em;
+    scroll-margin-top: calc(60px * 2);
+  }
+
+  /* 段落样式调整 */
+  #main-doc p {
+    font-size: 1em;
+    line-height: 1.5;
+    margin: 10px 0;
+  }
+
+  /* 代码块样式调整 */
+  #main-doc code {
+    font-size: 0.9em;
+    padding: 8px;
+    margin: 10px 0;
+    padding-left: 80px;
+  }
+
+  /* 列表样式调整 */
+  #main-doc ul {
+    padding-left: 20px;
+  }
+}

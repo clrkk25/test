@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML链接target属性详解</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .example {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .example-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        a {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        a:hover {
+            background-color: #2980b9;
+        }
+        .explanation {
+            background-color: #e8f4fc;
+            padding: 20px;
+            border-left: 5px solid #3498db;
+            margin: 25px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+        }
+        .security-note {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .framework-example {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 1px solid #eee;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HTML链接target属性详解</h1>
+        
+        <div class="explanation">
+            <h2>什么是target属性？</h2>
+            <p><code>target</code>属性用于指定链接在何处显示链接的资源。它定义了链接内容在浏览器中的打开方式。</p>
+            <p>target属性可以应用于<code>&lt;a&gt;</code>、<code>&lt;form&gt;</code>等元素。</p>
+        </div>
+
+        <h2>target属性值及使用场景</h2>
+        
+        <table>
+            <tr>
+                <th>target值</th>
+                <th>行为描述</th>
+                <th>使用场景</th>
+                <th>示例代码</th>
+            </tr>
+            <tr>
+                <td><code>_self</code></td>
+                <td>在当前窗口/标签页打开（默认值）</td>
+                <td>网站内部链接，页面跳转</td>
+                <td><code>&lt;a href="page.html" target="_self"&gt;链接&lt;/a&gt;</code></td>
+            </tr>
+            <tr>
+                <td><code>_blank</code></td>
+                <td>在新窗口/标签页打开</td>
+                <td>外部链接，希望保留当前页面</td>
+                <td><code>&lt;a href="https://example.com" target="_blank"&gt;链接&lt;/a&gt;</code></td>
+            </tr>
+            <tr>
+                <td><code>_parent</code></td>
+                <td>在父框架中打开</td>
+                <td>框架集布局中使用</td>
+                <td><code>&lt;a href="page.html" target="_parent"&gt;链接&lt;/a&gt;</code></td>
+            </tr>
+            <tr>
+                <td><code>_top</code></td>
+                <td>在顶层窗口打开</td>
+                <td>跳出框架集时使用</td>
+                <td><code>&lt;a href="page.html" target="_top"&gt;链接&lt;/a&gt;</code></td>
+            </tr>
+        </table>
+
+        <h2>详细示例</h2>
+
+        <div class="example">
+            <div class="example-title">1. _self（默认行为）</div>
+            <p>在当前窗口/标签页中打开链接，这是默认行为：</p>
+            <a href="视频播放器.html" target="_self">在当前窗口打开视频播放器</a>
+            <p>特点：</p>
+            <ul>
+                <li>当前页面会被新页面替换</li>
+                <li>浏览器后退按钮可以返回原页面</li>
+                <li>不创建新窗口或标签页</li>
+                <li>适用于网站内部导航</li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <div class="example-title">2. _blank（新窗口打开）</div>
+            <p>在新窗口或标签页中打开链接：</p>
+            <a href="视频播放器.html" target="_blank">在新窗口打开视频播放器</a>
+            <p>特点：</p>
+            <ul>
+                <li>保留当前页面不变</li>
+                <li>在新窗口/标签页中打开链接</li>
+                <li>适用于外部链接</li>
+                <li>用户可以同时查看两个页面</li>
+            </ul>
+        </div>
+
+        <div class="security-note">
+            <h3>安全提醒</h3>
+            <p>使用<code>target="_blank"</code>时，建议同时添加<code>rel="noopener noreferrer"</code>属性：</p>
+            <p><code>&lt;a href="https://example.com" target="_blank" rel="noopener noreferrer"&gt;安全链接&lt;/a&gt;</code></p>
+            <p>原因：</p>
+            <ul>
+                <li><code>noopener</code>：防止新页面通过<code>window.opener</code>访问原页面，提高安全性</li>
+                <li><code>noreferrer</code>：不发送referrer信息，保护用户隐私</li>
+            </ul>
+        </div>
+
+        <div class="framework-example">
+            <h3>框架布局中的使用示例</h3>
+            <p>在框架（frameset）布局中，target属性有特殊用途：</p>
+            <pre>&lt;frameset rows="20%,80%"&gt;
+  &lt;frame src="header.html" name="header"&gt;
+  &lt;frame src="content.html" name="content"&gt;
+&lt;/frameset&gt;
+
+&lt;!-- 在header框架中点击链接，在content框架中显示内容 --&gt;
+&lt;a href="page.html" target="content"&gt;在内容框架中打开&lt;/a&gt;</pre>
+        </div>
+
+        <h2>实际应用场景</h2>
+        
+        <div class="example">
+            <h3>网站导航</h3>
+            <p>内部链接通常使用默认方式（_self）：</p>
+            <pre>&lt;nav&gt;
+  &lt;a href="home.html"&gt;首页&lt;/a&gt;
+  &lt;a href="about.html"&gt;关于我们&lt;/a&gt;
+  &lt;a href="contact.html"&gt;联系我们&lt;/a&gt;
+&lt;/nav&gt;</pre>
+        </div>
+
+        <div class="example">
+            <h3>外部资源链接</h3>
+            <p>外部链接建议使用_blank并添加安全属性：</p>
+            <pre>&lt;div class="external-links"&gt;
+  &lt;a href="https://www.example.com" target="_blank" rel="noopener noreferrer"&gt;访问示例网站&lt;/a&gt;
+  &lt;a href="https://github.com" target="_blank" rel="noopener noreferrer"&gt;访问GitHub&lt;/a&gt;
+&lt;/div&gt;</pre>
+        </div>
+
+        <div class="example">
+            <h3>文档下载</h3>
+            <p>文档下载链接通常在新窗口打开：</p>
+            <pre>&lt;a href="document.pdf" target="_blank" rel="noopener noreferrer"&gt;下载PDF文档&lt;/a&gt;</pre>
+        </div>
+
+        <footer>
+            <p>了解target属性的不同值及其使用场景，可以帮助您更好地控制链接的打开方式，提升用户体验。</p>
+        </footer>
+    </div>
+</body>
+</html>

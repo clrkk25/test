@@ -1,0 +1,108 @@
+:root{
+    --color0: #e0e0e0;
+    --color1: #70d070;
+    --color2: #50b050;
+    --color3: #309030;
+    --color4: #107010;
+    --color5: #005000;
+    --solid-border: 2px solid black;
+    --dashed-border: 2px dashed black;
+}
+table{
+    position: absolute;
+    top: 40vh;
+    left:45vw;
+    width: 50vw;
+    height: 40vh;
+    transform: translate(-50%,-50%);
+    border-collapse: collapse;
+}
+
+
+.time{
+    height: 20px;
+}
+
+#legend{
+    position: absolute;
+    top: 75vh;
+    left: 50vw;
+    width: 5vw;
+    transform: translateX(-50%);
+    align-items: center;
+}
+
+#legend span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#legend-gradient{
+    border: 1px solid black;
+    height: 20px;
+    background-image: linear-gradient(to right, 
+        var(--color0) 0%, var(--color0) 16.67%,
+        var(--color1) 16.67%, var(--color1) 33.33%,
+        var(--color2) 33.33%, var(--color2) 50%,
+        var(--color3) 50%, var(--color3) 66.67%,
+        var(--color4) 66.67%, var(--color4) 83.33%,
+        var(--color5) 83.33%, var(--color5) 100%
+    );
+}
+
+
+
+
+
+
+.sharp td{
+    width: 15%;
+    height: 20px;
+    border-top: var(--dashed-border);
+    border-bottom: var(--solid-border);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.half td{
+    width: 15%;
+    height: 20px;
+    border-top: var(--solid-border);
+    border-bottom: var(--dashed-border);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.sharp td.time-label,
+.half td.time-label {
+    width: 60px;
+    text-align: right;
+    padding-right: 10px;
+    font-weight: bold;
+    vertical-align: middle;
+    border: none; /* 确保没有边框 */
+    transform: translateY(-50%);
+}
+
+
+.available-0{
+    background-color: var(--color0);
+}
+.available-1{
+    background-color: var(--color1);
+}
+.available-2{
+    background-color: var(--color2);
+}
+.available-3{
+    background-color: var(--color3);
+}
+.available-4{
+    background-color: var(--color4);
+}
+.available-5{
+    background-color: var(--color5);
+}
+
+
+

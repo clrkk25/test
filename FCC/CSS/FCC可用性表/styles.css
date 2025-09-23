@@ -1,0 +1,184 @@
+:root{
+    --color0: #e0e0e0;
+    --color1: #70d070;
+    --color2: #50b050;
+    --color3: #309030;
+    --color4: #107010;
+    --color5: #005000;
+    --solid-border: 2px solid black;
+    --dashed-border: 2px dashed black;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    min-height: 100vh;
+}
+
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.time{
+    height: 35px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+#legend{
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#legend span{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+#legend-gradient{
+    border: 1px solid black;
+    height: 25px;
+    background-image: linear-gradient(to right, 
+        var(--color0) 0%, var(--color0) 16.67%,
+        var(--color1) 16.67%, var(--color1) 33.33%,
+        var(--color2) 33.33%, var(--color2) 50%,
+        var(--color3) 50%, var(--color3) 66.67%,
+        var(--color4) 66.67%, var(--color4) 83.33%,
+        var(--color5) 83.33%, var(--color5) 100%
+    );
+}
+
+tr.sharp td, tr.half td {
+    width: calc(90% / 5);
+    height: 25px;
+    border-top: var(--dashed-border);
+    border-bottom: var(--solid-border);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+tr.sharp td{
+    border-top: var(--dashed-border);
+    border-bottom: var(--solid-border);
+}
+
+tr.half td{
+    border-top: var(--solid-border);
+    border-bottom: var(--dashed-border);
+}
+
+.sharp td.time-label,
+.half td.time-label {
+    width: 10%;
+    text-align: right;
+    padding-right: 5px;
+    font-weight: bold;
+    vertical-align: middle;
+    border: none;
+    font-size: 0.8rem;
+}
+
+.available-0{
+    background-color: var(--color0);
+}
+.available-1{
+    background-color: var(--color1);
+}
+.available-2{
+    background-color: var(--color2);
+}
+.available-3{
+    background-color: var(--color3);
+}
+.available-4{
+    background-color: var(--color4);
+}
+.available-5{
+    background-color: var(--color5);
+}
+
+/* 移动端优化 */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 5px;
+    }
+    
+    main {
+        padding: 5px;
+    }
+    
+    .time {
+        height: 30px;
+        font-size: 0.8rem;
+    }
+    
+    tr.sharp td, tr.half td {
+        height: 20px;
+    }
+    
+    .sharp td.time-label,
+    .half td.time-label {
+        font-size: 0.7rem;
+        padding-right: 3px;
+    }
+    
+    #legend {
+        max-width: 100%;
+    }
+    
+    #legend span {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    
+    #legend-gradient {
+        height: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .time {
+        height: 25px;
+        font-size: 0.7rem;
+    }
+    
+    tr.sharp td, tr.half td {
+        height: 18px;
+    }
+    
+    .sharp td.time-label,
+    .half td.time-label {
+        font-size: 0.6rem;
+        padding-right: 2px;
+    }
+    
+    #legend span {
+        font-size: 0.8rem;
+        margin-bottom: 3px;
+    }
+    
+    #legend-gradient {
+        height: 15px;
+    }
+}
+
+
+

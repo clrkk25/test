@@ -1,7 +1,48 @@
 // 项目主页脚本文件
 
+// 保存文件夹状态到localStorage
+function saveFolderState(folderPath, isExpanded) {
+    const folderStates = JSON.parse(localStorage.getItem('folderStates') || '{}');
+    folderStates[folderPath] = isExpanded;
+    localStorage.setItem('folderStates', JSON.stringify(folderStates));
+}
+
+// 从localStorage获取文件夹状态
+function getFolderState(folderPath) {
+    const folderStates = JSON.parse(localStorage.getItem('folderStates') || '{}');
+    return folderStates[folderPath];
+}
+
+// 恢复所有文件夹状态
+function restoreFolderStates() {
+    const folderStates = JSON.parse(localStorage.getItem('folderStates') || '{}');
+    
+    // 遍历所有文件夹
+    const folders = document.querySelectorAll('.folder');
+    folders.forEach(folder => {
+        const folderPath = folder.getAttribute('data-folder');
+        if (folderPath && folderStates[folderPath] !== undefined) {
+            const folderLink = folder.querySelector('.folder-link');
+            const subFolder = folderLink.nextElementSibling;
+            
+            if (folderStates[folderPath]) {
+                // 展开文件夹
+                folderLink.classList.add('expanded');
+                subFolder.style.display = 'block';
+            } else {
+                // 关闭文件夹
+                folderLink.classList.remove('expanded');
+                subFolder.style.display = 'none';
+            }
+        }
+    });
+}
+
 // 页面加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
+    // 恢复之前保存的文件夹状态
+    restoreFolderStates();
+    
     // 获取所有文件夹链接
     const folderLinks = document.querySelectorAll('.folder-link');
     
@@ -22,6 +63,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 subFolder.style.display = 'block';
             } else {
                 subFolder.style.display = 'none';
+            }
+            
+            // 保存当前文件夹状态
+            const folder = this.closest('.folder');
+            if (folder) {
+                const folderPath = folder.getAttribute('data-folder');
+                const isExpanded = this.classList.contains('expanded');
+                saveFolderState(folderPath, isExpanded);
             }
         });
     });
@@ -55,18 +104,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 ripple.remove();
             }, 600);
         });
-    });
-    
-    // 默认关闭根目录文件夹（BASIC和FCC）
-    const rootFolders = document.querySelectorAll('.folder');
-    rootFolders.forEach(folder => {
-        const folderName = folder.getAttribute('data-folder');
-        if (folderName === 'BASIC' || folderName === 'FCC') {
-            const folderLink = folder.querySelector('.folder-link');
-            const subFolder = folderLink.nextElementSibling;
-            // 确保文件夹默认关闭
-            folderLink.classList.remove('expanded');
-            subFolder.style.display = 'none';
-        }
     });
 });

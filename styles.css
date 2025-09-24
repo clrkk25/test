@@ -7,6 +7,14 @@
     box-sizing: border-box;
 }
 
+/* 引入字体 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Jekyll适配 */
+.base-url::after {
+  content: "{{ site.baseurl }}";
+}
+
 /* 页面主容器 */
 .container {
     display: flex;

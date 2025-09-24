@@ -1,0 +1,35 @@
+title: 前端开发示例项目
+email: your-email@example.com
+description: >-
+  一个包含HTML、CSS、JavaScript和React示例的前端开发项目。
+baseurl: ""
+url: ""
+
+# Build settings
+plugins:
+  - jekyll-feed
+
+# Exclude from processing.
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - test/
+  - src/
+  - README.md
+  - package.json
+  - package-lock.json
+
+# Include in processing.
+include:
+  - BASIC/
+  - FCC/
+  - src/
+  - test/

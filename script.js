@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // 可以在这里添加交互功能
     console.log('项目主页已加载');
     
-    // 为所有导航链接添加点击事件跟踪
-    const navLinks = document.querySelectorAll('nav a');
+    // 为所有导航链接添加点击事件跟踪（仅针对非文件夹链接）
+    const navLinks = document.querySelectorAll('nav a:not(.folder-link)');
     navLinks.forEach(link => {
         // 添加鼠标点击事件
         link.addEventListener('click', function(e) {
@@ -62,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 获取链接的href属性
                 const href = this.getAttribute('href');
                 
-                // 如果链接有href属性，则在短暂延迟后跳转
-                if (href) {
+                // 如果链接有href属性且不是#，则在短暂延迟后跳转
+                if (href && href !== '#') {
                     e.preventDefault(); // 阻止默认行为
                     setTimeout(() => {
-                        window.open(href, '_blank');
+                        window.location.href = href; // 使用当前窗口跳转而不是新窗口
                     }, 300); // 延迟300ms以确保波纹效果完成
                 }
             } else {

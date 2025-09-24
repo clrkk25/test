@@ -87,6 +87,71 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // 处理文件夹展开/折叠功能
+    const folderLinks = document.querySelectorAll('.folder-link');
+    
+    // 为每个文件夹链接添加点击事件监听器
+    folderLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // 阻止默认链接行为
+            e.preventDefault();
+            
+            // 获取下一个兄弟元素（即子文件夹列表）
+            const subFolder = this.nextElementSibling;
+            
+            // 检查是否存在子文件夹
+            if (subFolder && subFolder.classList.contains('sub-folder')) {
+                // 切换显示状态
+                if (subFolder.style.display === 'none' || subFolder.style.display === '') {
+                    // 展开动画效果
+                    subFolder.style.display = 'block';
+                    subFolder.style.maxHeight = '0';
+                    subFolder.style.overflow = 'hidden';
+                    this.classList.add('open');
+                    
+                    // 触发重排
+                    subFolder.offsetHeight;
+                    subFolder.style.transition = 'max-height 0.2s ease';
+                    subFolder.style.maxHeight = subFolder.scrollHeight + 'px';
+                    
+                    // 动画结束后清除maxHeight限制
+                    setTimeout(() => {
+                        if (this.classList.contains('open')) {
+                            subFolder.style.maxHeight = 'none';
+                        }
+                    }, 200);
+                } else {
+                    // 折叠动画效果
+                    subFolder.style.maxHeight = subFolder.scrollHeight + 'px';
+                    subFolder.style.transition = 'max-height 0.2s ease';
+                    subFolder.offsetHeight; // 触发重排
+                    subFolder.style.maxHeight = '0';
+                    this.classList.remove('open');
+                    
+                    // 动画结束后隐藏元素
+                    setTimeout(() => {
+                        if (!this.classList.contains('open')) {
+                            subFolder.style.display = 'none';
+                        }
+                    }, 200);
+                }
+            }
+        });
+    });
+    
+    // 初始化：默认展开根目录文件夹
+    const rootFolders = document.querySelectorAll('[data-folder="BASIC"], [data-folder="FCC"]');
+    rootFolders.forEach(folder => {
+        const link = folder.querySelector('.folder-link');
+        const subFolder = link.nextElementSibling;
+        
+        if (subFolder) {
+            subFolder.style.display = 'block';
+            subFolder.style.maxHeight = 'none';
+            link.classList.add('open');
+        }
+    });
 });
 
 // 创建点击波纹效果

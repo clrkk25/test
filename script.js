@@ -57,15 +57,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // 默认展开根目录文件夹
+    // 默认关闭根目录文件夹（BASIC和FCC）
     const rootFolders = document.querySelectorAll('.folder');
     rootFolders.forEach(folder => {
         const folderName = folder.getAttribute('data-folder');
         if (folderName === 'BASIC' || folderName === 'FCC') {
             const folderLink = folder.querySelector('.folder-link');
             const subFolder = folderLink.nextElementSibling;
-            folderLink.classList.add('expanded');
-            subFolder.style.display = 'block';
+            // 确保文件夹默认关闭
+            folderLink.classList.remove('expanded');
+            subFolder.style.display = 'none';
         }
     });
 });

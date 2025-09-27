@@ -15,25 +15,17 @@ function getFolderState(folderPath) {
 
 // 恢复所有文件夹状态
 function restoreFolderStates() {
-    const folderStates = JSON.parse(localStorage.getItem('folderStates') || '{}');
-    
     // 遍历所有文件夹
     const folders = document.querySelectorAll('.folder');
     folders.forEach(folder => {
         const folderPath = folder.getAttribute('data-folder');
-        if (folderPath && folderStates[folderPath] !== undefined) {
-            const folderLink = folder.querySelector('.folder-link');
-            const subFolder = folderLink.nextElementSibling;
-            
-            if (folderStates[folderPath]) {
-                // 展开文件夹
-                folderLink.classList.add('expanded');
-                subFolder.style.display = 'block';
-            } else {
-                // 关闭文件夹
-                folderLink.classList.remove('expanded');
-                subFolder.style.display = 'none';
-            }
+        const folderLink = folder.querySelector('.folder-link');
+        const subFolder = folderLink.nextElementSibling;
+        
+        if (folderPath) {
+            // 默认关闭所有文件夹，不使用保存的状态
+            folderLink.classList.remove('expanded');
+            subFolder.style.display = 'none';
         }
     });
 }

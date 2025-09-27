@@ -1,4 +1,4 @@
-/* 项目主页样式表 */
+/* 项目主页样式表 - iOS风格设计 */
 
 /* 全局样式重置 */
 * {
@@ -8,7 +8,7 @@
 }
 
 /* 引入字体 */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 /* 页面主容器 */
 .container {
@@ -17,31 +17,43 @@
     justify-content: space-between;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #f8f9fa;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #1c1c1e;
+    padding: 20px;
 }
 
 /* 头部样式 */
 header {
     padding: 30px 20px;
     text-align: center;
-    animation: fadeInDown 1s ease-out;
     width: 100%;
-    background: rgba(30, 41, 59, 0.7);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 18px;
     margin-bottom: 20px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #007AFF, #5856D6, #AF52DE, #FF2D55);
 }
 
 header h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    letter-spacing: 0.5px;
+    color: #1c1c1e;
+    letter-spacing: -0.5px;
+    margin: 0;
 }
 
 /* 主要内容区域 */
@@ -50,19 +62,21 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
     width: 100%;
+    max-width: 800px;
 }
 
 /* 导航样式 */
 nav {
     width: 100%;
-    background: rgba(30, 41, 59, 0.85);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 18px;
+    padding: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
 }
 
 nav ul {
@@ -70,66 +84,110 @@ nav ul {
     padding: 0;
     margin: 0;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 nav li {
     display: block;
 }
 
-/* 优化导航链接样式 */
-nav a {
+/* 文件夹链接样式 - iOS风格 */
+.folder-link {
     text-decoration: none;
-    color: #f8f9fa;
-    padding: 20px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    color: #1c1c1e;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: rgba(235, 235, 240, 0.9); /* 降低透明度并加深背景色，增加对比 */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
     font-weight: 600;
     width: 100%;
     position: relative;
     overflow: hidden;
-    min-height: 60px;
-    
-    /* 文本处理 */
-    white-space: normal;
-    word-wrap: break-word;
-    word-break: break-word;
-    hyphens: auto;
-    
-    /* 添加边框以增强视觉效果 */
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 56px;
+    border: 1px solid rgba(0, 0, 0, 0.08); /* 加深边框颜色 */
+    margin-bottom: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* 加深阴影 */
 }
 
-/* 链接悬停效果优化 */
-nav a:hover {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #ffffff;
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    border-color: rgba(255, 255, 255, 0.3);
+.folder-link::after {
+    content: "▶";
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    color: #8e8e93;
 }
 
-/* 链接激活效果优化 */
-nav a:active {
-    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-    color: #ffffff;
+.folder-link.expanded::after {
+    transform: rotate(90deg);
+}
+
+.folder-link:hover {
+    background: rgba(225, 225, 230, 0.95); /* 加深悬停背景色 */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 加深悬停阴影 */
+}
+
+.folder-link:active {
+    background: rgba(215, 215, 220, 0.95); /* 加深激活背景色 */
+    transform: translateY(0);
     transition: all 0.1s ease;
-    transform: translateY(2px);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* 子文件夹样式 */
+.sub-folder {
+    margin-top: 8px;
+    padding-left: 15px;
+    border-left: 2px solid rgba(0, 122, 255, 0.4); /* 加深边框颜色 */
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.sub-folder li {
+    margin-bottom: 8px;
+}
+
+.sub-folder li:last-child {
+    margin-bottom: 0;
+}
+
+/* 子文件夹链接样式 */
+.sub-folder a {
+    text-decoration: none;
+    color: #1c1c1e;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: rgba(240, 240, 245, 0.85); /* 降低透明度并加深背景色，增加对比 */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: 500;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    min-height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.06); /* 加深边框颜色 */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04); /* 加深阴影 */
+}
+
+.sub-folder a:hover {
+    background: rgba(230, 230, 235, 0.9); /* 加深悬停背景色 */
+    transform: translateX(5px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); /* 加深悬停阴影 */
+}
+
+.sub-folder a:active {
+    background: rgba(220, 220, 225, 0.9); /* 加深激活背景色 */
+    transform: translateX(3px);
+    transition: all 0.1s ease;
 }
 
 /* 波纹效果样式 */
 .ripple {
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 122, 255, 0.15);
     transform: scale(0);
     animation: ripple 0.6s linear;
 }
@@ -146,9 +204,13 @@ footer {
     padding: 20px;
     text-align: center;
     width: 100%;
-    background: rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    color: #8e8e93;
+    border-radius: 18px;
+    margin-top: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 /* 动画效果 */
@@ -165,66 +227,186 @@ footer {
 
 /* 响应式设计 - 平板设备 */
 @media screen and (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    header {
+        padding: 25px 15px;
+    }
+    
     header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
-    nav ul {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-        padding: 15px;
+    nav {
+        padding: 12px;
     }
     
-    nav a {
-        padding: 15px;
-        font-size: 0.9rem;
-        min-height: 55px;
+    .folder-link {
+        padding: 16px 18px;
+        min-height: 52px;
+        border-radius: 12px;
+        background: rgba(235, 235, 240, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .folder-link:hover {
+        background: rgba(225, 225, 230, 0.95);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .folder-link:active {
+        background: rgba(215, 215, 220, 0.95);
+    }
+    
+    .sub-folder a {
+        padding: 12px 16px;
+        min-height: 46px;
         border-radius: 10px;
+        background: rgba(240, 240, 245, 0.85);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+    
+    .sub-folder a:hover {
+        background: rgba(230, 230, 235, 0.9);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+    
+    .sub-folder a:active {
+        background: rgba(220, 220, 225, 0.9);
+    }
+    
+    .sub-folder {
+        border-left: 2px solid rgba(0, 122, 255, 0.4);
     }
 }
 
 /* 响应式设计 - 手机设备 */
 @media screen and (max-width: 480px) {
-    header {
-        padding: 20px 10px;
-    }
-    
-    header h1 {
-        font-size: 1.5rem;
-    }
-    
-    nav ul {
-        grid-template-columns: 1fr;
-        gap: 10px;
+    .container {
         padding: 10px;
     }
     
-    nav a {
-        padding: 12px;
-        font-size: 0.85rem;
-        min-height: 50px;
+    header {
+        padding: 20px 12px;
+    }
+    
+    header h1 {
+        font-size: 1.6rem;
+    }
+    
+    nav {
+        padding: 10px;
+    }
+    
+    .folder-link {
+        padding: 14px 16px;
+        min-height: 48px;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        background: rgba(235, 235, 240, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .folder-link:hover {
+        background: rgba(225, 225, 230, 0.95);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .folder-link:active {
+        background: rgba(215, 215, 220, 0.95);
+    }
+    
+    .sub-folder {
+        padding-left: 12px;
+        border-left: 2px solid rgba(0, 122, 255, 0.4);
+    }
+    
+    .sub-folder a {
+        padding: 10px 14px;
+        min-height: 42px;
         border-radius: 8px;
+        font-size: 0.9rem;
+        background: rgba(240, 240, 245, 0.85);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+    
+    .sub-folder a:hover {
+        background: rgba(230, 230, 235, 0.9);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+    
+    .sub-folder a:active {
+        background: rgba(220, 220, 225, 0.9);
+    }
+    
+    footer {
+        padding: 15px;
+        font-size: 0.8rem;
     }
 }
 
-/* 文件夹展开/折叠动画 */
-.sub-folder {
-    transition: all 0.3s ease-in-out;
-    overflow: hidden;
-}
-
-/* 文件夹链接样式 */
-.folder-link::after {
-    content: " ▼";
-    font-size: 0.8em;
-    transition: transform 0.3s ease;
-}
-
-.folder-link.expanded::after {
-    transform: rotate(180deg);
-}
-
-/* 子文件夹缩进 */
-.sub-folder li {
-    margin-left: 20px;
+/* 暗色模式支持 */
+@media (prefers-color-scheme: dark) {
+    .container {
+        background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+        color: #f5f5f7;
+    }
+    
+    header {
+        background: rgba(40, 40, 42, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    header h1 {
+        color: #f5f5f7;
+    }
+    
+    nav {
+        background: rgba(40, 40, 42, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .folder-link {
+        background: rgba(50, 50, 52, 0.8); /* 加深背景色 */
+        color: #f5f5f7;
+        border: 1px solid rgba(255, 255, 255, 0.1); /* 加深边框颜色 */
+    }
+    
+    .folder-link:hover {
+        background: rgba(60, 60, 62, 0.95); /* 加深悬停背景色 */
+    }
+    
+    .folder-link:active {
+        background: rgba(70, 70, 72, 0.95); /* 加深激活背景色 */
+    }
+    
+    .sub-folder a {
+        background: rgba(40, 40, 42, 0.7); /* 加深背景色 */
+        color: #f5f5f7;
+        border: 1px solid rgba(255, 255, 255, 0.08); /* 加深边框颜色 */
+    }
+    
+    .sub-folder a:hover {
+        background: rgba(55, 55, 57, 0.9); /* 加深悬停背景色 */
+    }
+    
+    .sub-folder a:active {
+        background: rgba(65, 65, 67, 0.9); /* 加深激活背景色 */
+    }
+    
+    .sub-folder {
+        border-left: 2px solid rgba(0, 122, 255, 0.4); /* 加深边框颜色 */
+    }
+    
+    footer {
+        background: rgba(40, 40, 42, 0.7);
+        color: #a0a0a3;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+    }
 }

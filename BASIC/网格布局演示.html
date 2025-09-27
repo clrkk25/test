@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Grid 布局演示</title>
+    <title>CSS Grid 布局完整演示</title>
     <style>
         * {
             margin: 0;
@@ -43,6 +43,14 @@
             margin-bottom: 10px;
             font-size: 2.5rem;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            color: #666;
+            font-size: 1.1rem;
         }
         
         .controls {
@@ -150,11 +158,11 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         
-        .grid-item:nth-child(1) { background-color: #FF5722; }
+        .grid-item:nth-child(1) { background-color: #FF5722; grid-column: span 2; }
         .grid-item:nth-child(2) { background-color: #E91E63; }
-        .grid-item:nth-child(3) { background-color: #9C27B0; }
+        .grid-item:nth-child(3) { background-color: #9C27B0; grid-row: span 2; }
         .grid-item:nth-child(4) { background-color: #3F51B5; }
-        .grid-item:nth-child(5) { background-color: #2196F3; }
+        .grid-item:nth-child(5) { background-color: #2196F3; grid-column: span 2; grid-row: span 2; }
         .grid-item:nth-child(6) { background-color: #00BCD4; }
         .grid-item:nth-child(7) { background-color: #4CAF50; }
         .grid-item:nth-child(8) { background-color: #8BC34A; }
@@ -176,6 +184,40 @@
             color: #f8f8f2;
             margin-bottom: 15px;
             text-align: center;
+        }
+        
+        .explanation {
+            background-color: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .explanation h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .explanation h3 {
+            color: #3498db;
+            margin: 15px 0 10px;
+        }
+        
+        .explanation ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        .explanation li {
+            margin-bottom: 8px;
+        }
+        
+        .explanation code {
+            background-color: #d1e7ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
         }
         
         footer {
@@ -240,8 +282,32 @@
 <body>
     <div class="container">
         <header>
-            <h1>CSS Grid 布局演示</h1>
+            <h1>CSS Grid 布局完整演示</h1>
+            <p class="description">本演示展示了CSS Grid布局的核心概念和高级功能，包括网格容器、网格项、网格线、网格轨道等</p>
         </header>
+        
+        <div class="explanation">
+            <h2>开发需求说明</h2>
+            <p>本演示旨在全面展示CSS Grid布局的功能和应用，满足以下开发需求：</p>
+            
+            <h3>核心功能需求：</h3>
+            <ul>
+                <li>动态调整网格布局参数（列数、行数、间隙大小、对齐方式）</li>
+                <li>展示网格项的跨越效果（grid-column、grid-row）</li>
+                <li>实时显示当前CSS代码</li>
+                <li>响应式设计适配不同屏幕尺寸</li>
+                <li>直观的用户交互界面</li>
+            </ul>
+            
+            <h3>技术实现需求：</h3>
+            <ul>
+                <li>使用原生HTML、CSS、JavaScript实现，不依赖框架</li>
+                <li>采用语义化HTML结构</li>
+                <li>使用现代CSS特性（Grid、Flexbox、Gradient等）</li>
+                <li>实现良好的用户体验和视觉效果</li>
+                <li>兼容主流浏览器</li>
+            </ul>
+        </div>
         
         <div class="controls">
             <div class="control-group">
@@ -275,6 +341,13 @@
                 <button onclick="updateGrid('justify-items', 'end')">右对齐</button>
                 <button onclick="updateGrid('justify-items', 'stretch')">拉伸</button>
             </div>
+            
+            <div class="control-group">
+                <h3>高级功能</h3>
+                <button onclick="resetGrid()">重置布局</button>
+                <button onclick="applyPreset('layout1')">布局预设1</button>
+                <button onclick="applyPreset('layout2')">布局预设2</button>
+            </div>
         </div>
         
         <div class="current-setting">
@@ -282,12 +355,13 @@
         </div>
         
         <div class="demo-container">
+            <h3 style="text-align: center; margin-bottom: 15px;">网格布局演示区</h3>
             <div class="grid-container" id="gridContainer">
-                <div class="grid-item">1</div>
+                <div class="grid-item">1 (2列)</div>
                 <div class="grid-item">2</div>
-                <div class="grid-item">3</div>
+                <div class="grid-item">3 (2行)</div>
                 <div class="grid-item">4</div>
-                <div class="grid-item">5</div>
+                <div class="grid-item">5 (2列2行)</div>
                 <div class="grid-item">6</div>
                 <div class="grid-item">7</div>
                 <div class="grid-item">8</div>
@@ -305,8 +379,56 @@
 }</div>
         </div>
         
+        <div class="code-display">
+            <h3>网格项HTML代码</h3>
+            <div id="itemHtmlCode">&lt;div class="grid-item"&gt;1 (2列)&lt;/div&gt;
+&lt;div class="grid-item"&gt;2&lt;/div&gt;
+&lt;div class="grid-item"&gt;3 (2行)&lt;/div&gt;
+&lt;div class="grid-item"&gt;4&lt;/div&gt;
+&lt;div class="grid-item"&gt;5 (2列2行)&lt;/div&gt;
+&lt;div class="grid-item"&gt;6&lt;/div&gt;
+&lt;div class="grid-item"&gt;7&lt;/div&gt;
+&lt;div class="grid-item"&gt;8&lt;/div&gt;
+&lt;div class="grid-item"&gt;9&lt;/div&gt;</div>
+        </div>
+        
+        <div class="code-display">
+            <h3>网格项CSS样式代码</h3>
+            <div id="itemCssCode">.grid-item:nth-child(1) {background-color: #FF5722; grid-column: span 2;}
+.grid-item:nth-child(2) {background-color: #E91E63;}
+.grid-item:nth-child(3) {background-color: #9C27B0; grid-row: span 2;}
+.grid-item:nth-child(4) {background-color: #3F51B5;}
+.grid-item:nth-child(5) {background-color: #2196F3; grid-column: span 2; grid-row: span 2;}
+.grid-item:nth-child(6) {background-color: #00BCD4;}
+.grid-item:nth-child(7) {background-color: #4CAF50;}
+.grid-item:nth-child(8) {background-color: #8BC34A;}
+.grid-item:nth-child(9) {background-color: #FFC107;}</div>
+        </div>
+        
+        <div class="explanation">
+            <h2>Grid布局核心概念</h2>
+            
+            <h3>1. 网格容器 (Grid Container)</h3>
+            <p>通过设置 <code>display: grid</code> 或 <code>display: inline-grid</code> 创建网格容器。</p>
+            
+            <h3>2. 网格项 (Grid Item)</h3>
+            <p>网格容器的直接子元素称为网格项。</p>
+            
+            <h3>3. 网格线 (Grid Line)</h3>
+            <p>网格线是网格结构中的分界线，分为垂直网格线（列线）和水平网格线（行线）。</p>
+            
+            <h3>4. 网格轨道 (Grid Track)</h3>
+            <p>两条相邻网格线之间的空间，分为列轨道和行轨道。</p>
+            
+            <h3>5. 网格单元 (Grid Cell)</h3>
+            <p>四个相邻网格线围成的最小区域。</p>
+            
+            <h3>6. 网格区域 (Grid Area)</h3>
+            <p>由任意四条网格线围成的区域，可以包含多个网格单元。</p>
+        </div>
+        
         <footer>
-            <p>CSS Grid 布局演示 &copy; 2023</p>
+            <p>CSS Grid 布局完整演示 &copy; 2023</p>
         </footer>
     </div>
 
@@ -337,6 +459,48 @@
             updateCodeDisplay();
         }
         
+        // 重置网格布局
+        function resetGrid() {
+            currentStyles['grid-template-columns'] = 'repeat(3, 1fr)';
+            currentStyles['grid-template-rows'] = 'repeat(3, 100px)';
+            currentStyles['gap'] = '10px';
+            currentStyles['justify-items'] = 'stretch';
+            
+            const gridContainer = document.getElementById('gridContainer');
+            gridContainer.style.cssText = '';
+            
+            updateCurrentSettingsDisplay();
+            updateCodeDisplay();
+        }
+        
+        // 应用布局预设
+        function applyPreset(preset) {
+            const gridContainer = document.getElementById('gridContainer');
+            
+            switch(preset) {
+                case 'layout1':
+                    currentStyles['grid-template-columns'] = '1fr 2fr 1fr';
+                    currentStyles['grid-template-rows'] = 'repeat(4, 80px)';
+                    currentStyles['gap'] = '15px';
+                    currentStyles['justify-items'] = 'center';
+                    break;
+                case 'layout2':
+                    currentStyles['grid-template-columns'] = 'repeat(4, 1fr)';
+                    currentStyles['grid-template-rows'] = '80px 120px 80px';
+                    currentStyles['gap'] = '5px';
+                    currentStyles['justify-items'] = 'end';
+                    break;
+            }
+            
+            // 应用样式
+            for (let property in currentStyles) {
+                gridContainer.style[property] = currentStyles[property];
+            }
+            
+            updateCurrentSettingsDisplay();
+            updateCodeDisplay();
+        }
+        
         // 更新当前设置显示
         function updateCurrentSettingsDisplay() {
             const settingsText = Object.entries(currentStyles)
@@ -355,8 +519,21 @@
     .join('\n')}
 }`;
             
+            // 更新CSS代码显示
             document.getElementById('codeDisplay').textContent = codeText;
+            
+            // 更新网格项HTML代码显示
+            const itemHtmlCode = Array.from(document.getElementById('gridContainer').children)
+                .map((item, index) => `&lt;div class="grid-item"&gt;${item.textContent}&lt;/div&gt;`)
+                .join('\n');
+            document.getElementById('itemHtmlCode').innerHTML = itemHtmlCode;
         }
+        
+        // 页面加载完成后初始化显示
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentSettingsDisplay();
+            updateCodeDisplay();
+        });
     </script>
 </body>
 </html>

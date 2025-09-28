@@ -18,13 +18,3 @@ function getLoanMessage(annualIncome, creditScore) {
     return "You don't qualify for any loans."
   }
 }
-
-let duplexLoanMsg = getLoanMessage(85000, 850);
-let condoLoanMsg = getLoanMessage(65000, 690);
-let carLoanMsg = getLoanMessage(45000, 660);
-let noLoanMsg = getLoanMessage(25000, 550);
-
-console.log(duplexLoanMsg);
-console.log(condoLoanMsg);
-console.log(carLoanMsg);
-console.log(noLoanMsg);

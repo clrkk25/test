@@ -5,7 +5,6 @@ function isLeapYear(year) {
         }
         else {
             return year + " is not a leap year.";
-
         }
     }
     else {
@@ -14,23 +13,6 @@ function isLeapYear(year) {
         }
         else {
             return year + " is not a leap year.";
-
         }
     }
-
 }
-let year = 4;
-let result = isLeapYear(year);
-console.log(result);
-year = 100;
-result = isLeapYear(year);
-console.log(result);
-year = 400;
-result = isLeapYear(year);
-console.log(result);
-year = 2000;
-result = isLeapYear(year);
-console.log(result);
-year = 1900;
-result = isLeapYear(year);
-console.log(result);

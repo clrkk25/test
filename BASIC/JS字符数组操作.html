@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS字符数组操作详解</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .overview {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+        .method-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .method-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .section-title {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        .example-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .result {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .interactive-section {
+            background: #fff3e0;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 1px solid #ffe0b2;
+        }
+        input, select {
+            padding: 12px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            width: calc(100% - 40px);
+            max-width: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        tr:hover {
+            background: #e8f4f8;
+        }
+        .note {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            input, select {
+                width: calc(100% - 24px);
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JS字符数组操作详解</h1>
+        
+        <div class="overview">
+            <h2>概述</h2>
+            <p>JavaScript中的数组是动态的，可以包含任何类型的元素，包括字符串。字符数组本质上是包含字符元素的数组，可以使用数组的各种方法进行操作。数组操作是JavaScript编程中的重要技能，掌握这些方法对于处理数据集合非常重要。</p>
+            <p>在本教程中，我们将详细介绍JavaScript中数组的各种操作方法，包括增加、删除、修改和查询操作，涵盖push、unshift、splice、concat、pop、shift、slice、索引访问、indexOf、includes、find等方法。</p>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">1. 增加操作 (Create)</h2>
+            <div class="example-card">
+                <h3>1.1 push() 方法</h3>
+                <p>向数组末尾添加一个或多个元素，返回修改后数组的长度，会改变原数组。</p>
+                <div class="code-block">
+let fruits = ['apple', 'banana'];<br>
+let newLength = fruits.push('orange'); // 返回 3<br>
+console.log(fruits); // ['apple', 'banana', 'orange']<br>
+console.log(newLength); // 3<br><br>
+// 添加多个元素<br>
+let numbers = [1, 2, 3];<br>
+numbers.push(4, 5, 6);<br>
+console.log(numbers); // [1, 2, 3, 4, 5, 6]
+                </div>
+                <div class="result" id="push-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoPush()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>1.2 unshift() 方法</h3>
+                <p>向数组开头添加一个或多个元素，返回修改后数组的长度，会改变原数组。</p>
+                <div class="code-block">
+let colors = ['red', 'green'];<br>
+let newLength = colors.unshift('blue'); // 返回 3<br>
+console.log(colors); // ['blue', 'red', 'green']<br>
+console.log(newLength); // 3<br><br>
+// 添加多个元素<br>
+let animals = ['cat', 'dog'];<br>
+animals.unshift('bird', 'fish');<br>
+console.log(animals); // ['bird', 'fish', 'cat', 'dog']
+                </div>
+                <div class="result" id="unshift-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoUnshift()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>1.3 splice() 方法</h3>
+                <p>可以在指定位置添加元素，会改变原数组。</p>
+                <div class="code-block">
+let items = ['first', 'third'];<br>
+// 在索引1处插入' second'<br>
+items.splice(1, 0, 'second');<br>
+console.log(items); // ['first', 'second', 'third']<br><br>
+// 在索引1处插入多个元素<br>
+let letters = ['a', 'd'];<br>
+letters.splice(1, 0, 'b', 'c');<br>
+console.log(letters); // ['a', 'b', 'c', 'd']
+                </div>
+                <div class="result" id="splice-add-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSpliceAdd()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>1.4 concat() 方法</h3>
+                <p>连接一个或多个数组，返回新数组，不会改变原数组。</p>
+                <div class="code-block">
+let arr1 = ['a', 'b'];<br>
+let arr2 = ['c', 'd'];<br>
+let arr3 = ['e', 'f'];<br>
+let newArr = arr1.concat(arr2, arr3);<br>
+console.log(newArr); // ['a', 'b', 'c', 'd', 'e', 'f']<br>
+console.log(arr1); // ['a', 'b'] (原数组未改变)<br><br>
+// 连接数组和单独元素<br>
+let numbers = [1, 2];<br>
+let result = numbers.concat(3, [4, 5], 6);<br>
+console.log(result); // [1, 2, 3, 4, 5, 6]
+                </div>
+                <div class="result" id="concat-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoConcat()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">2. 删除操作 (Delete)</h2>
+            <div class="example-card">
+                <h3>2.1 pop() 方法</h3>
+                <p>删除数组最后一个元素，返回被删除的元素，会改变原数组。</p>
+                <div class="code-block">
+let fruits = ['apple', 'banana', 'orange'];<br>
+let removedElement = fruits.pop(); // 返回 'orange'<br>
+console.log(fruits); // ['apple', 'banana']<br>
+console.log(removedElement); // 'orange'<br><br>
+// 处理空数组<br>
+let emptyArr = [];<br>
+let result = emptyArr.pop();<br>
+console.log(result); // undefined
+                </div>
+                <div class="result" id="pop-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoPop()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>2.2 shift() 方法</h3>
+                <p>删除数组第一个元素，返回被删除的元素，会改变原数组。</p>
+                <div class="code-block">
+let colors = ['red', 'green', 'blue'];<br>
+let removedElement = colors.shift(); // 返回 'red'<br>
+console.log(colors); // ['green', 'blue']<br>
+console.log(removedElement); // 'red'<br><br>
+// 处理空数组<br>
+let emptyArr = [];<br>
+let result = emptyArr.shift();<br>
+console.log(result); // undefined
+                </div>
+                <div class="result" id="shift-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoShift()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>2.3 splice() 方法</h3>
+                <p>可以删除指定位置和数量的元素，会改变原数组。</p>
+                <div class="code-block">
+let items = ['first', 'second', 'third', 'fourth'];<br>
+// 从索引1开始删除2个元素<br>
+let removedElements = items.splice(1, 2);<br>
+console.log(items); // ['first', 'fourth']<br>
+console.log(removedElements); // ['second', 'third']<br><br>
+// 从索引1开始删除到末尾<br>
+let numbers = [1, 2, 3, 4, 5];<br>
+let removed = numbers.splice(2);<br>
+console.log(numbers); // [1, 2]<br>
+console.log(removed); // [3, 4, 5]
+                </div>
+                <div class="result" id="splice-delete-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSpliceDelete()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>2.4 slice() 方法</h3>
+                <p>返回数组的一部分，不会改变原数组。</p>
+                <div class="code-block">
+let fruits = ['apple', 'banana', 'orange', 'grape'];<br>
+// 提取索引1到3的元素（不包括3）<br>
+let citrus = fruits.slice(1, 3);<br>
+console.log(citrus); // ['banana', 'orange']<br>
+console.log(fruits); // ['apple', 'banana', 'orange', 'grape'] (原数组未改变)<br><br>
+// 提取从索引2到末尾的元素<br>
+let fromIndex2 = fruits.slice(2);<br>
+console.log(fromIndex2); // ['orange', 'grape']<br><br>
+// 使用负数索引<br>
+let lastTwo = fruits.slice(-2);<br>
+console.log(lastTwo); // ['orange', 'grape']
+                </div>
+                <div class="result" id="slice-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSlice()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">3. 修改操作 (Update)</h2>
+            <div class="example-card">
+                <h3>3.1 直接赋值修改</h3>
+                <p>通过索引直接修改数组元素。</p>
+                <div class="code-block">
+let colors = ['red', 'green', 'blue'];<br>
+colors[1] = 'yellow';<br>
+console.log(colors); // ['red', 'yellow', 'blue']<br><br>
+// 修改不存在的索引（会扩展数组）<br>
+let numbers = [1, 2, 3];<br>
+numbers[5] = 6;<br>
+console.log(numbers); // [1, 2, 3, undefined, undefined, 6]<br>
+console.log(numbers.length); // 6
+                </div>
+                <div class="result" id="direct-assignment-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoDirectAssignment()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>3.2 splice() 方法</h3>
+                <p>可以替换指定位置的元素，会改变原数组。</p>
+                <div class="code-block">
+let items = ['first', 'second', 'third'];<br>
+// 在索引1处替换1个元素<br>
+let removedElements = items.splice(1, 1, 'newSecond');<br>
+console.log(items); // ['first', 'newSecond', 'third']<br>
+console.log(removedElements); // ['second']<br><br>
+// 在索引1处替换2个元素为多个新元素<br>
+let letters = ['a', 'b', 'c', 'd'];<br>
+letters.splice(1, 2, 'x', 'y', 'z');<br>
+console.log(letters); // ['a', 'x', 'y', 'z', 'd']
+                </div>
+                <div class="result" id="splice-update-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSpliceUpdate()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">4. 查询操作 (Query)</h2>
+            <div class="example-card">
+                <h3>4.1 索引访问</h3>
+                <p>通过索引直接访问数组元素。</p>
+                <div class="code-block">
+let fruits = ['apple', 'banana', 'orange'];<br>
+let firstFruit = fruits[0]; // 'apple'<br>
+let lastFruit = fruits[fruits.length - 1]; // 'orange'<br>
+console.log(firstFruit, lastFruit);<br><br>
+// 访问不存在的索引<br>
+let element = fruits[10];<br>
+console.log(element); // undefined<br><br>
+// 使用at()方法（ES2022新增）<br>
+let lastElement = fruits.at(-1); // 'orange'<br>
+let secondLast = fruits.at(-2); // 'banana'<br>
+console.log(lastElement, secondLast);
+                </div>
+                <div class="result" id="index-access-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoIndexAccess()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>4.2 indexOf() 方法</h3>
+                <p>查找元素在数组中的位置，返回第一个匹配的索引，不存在则返回-1。</p>
+                <div class="code-block">
+let fruits = ['apple', 'banana', 'orange', 'banana'];<br>
+let index1 = fruits.indexOf('banana'); // 1<br>
+let index2 = fruits.indexOf('grape'); // -1<br>
+let index3 = fruits.indexOf('banana', 2); // 从索引2开始查找，返回3<br>
+console.log(index1, index2, index3);<br><br>
+// 检查元素是否存在<br>
+if (fruits.indexOf('orange') !== -1) {<br>
+    console.log('找到了orange');<br>
+} else {<br>
+    console.log('未找到orange');<br>
+}
+                </div>
+                <div class="result" id="index-of-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoIndexOf()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>4.3 includes() 方法</h3>
+                <p>判断数组是否包含某个元素，返回布尔值。</p>
+                <div class="code-block">
+let colors = ['red', 'green', 'blue'];<br>
+let hasGreen = colors.includes('green'); // true<br>
+let hasYellow = colors.includes('yellow'); // false<br>
+let hasGreenFromIndex1 = colors.includes('green', 1); // true<br>
+let hasRedFromIndex1 = colors.includes('red', 1); // false (从索引1开始查找)<br>
+console.log(hasGreen, hasYellow, hasGreenFromIndex1, hasRedFromIndex1);<br><br>
+// 实际应用：检查权限<br>
+let userRoles = ['user', 'editor'];<br>
+let isAdmin = userRoles.includes('admin');<br>
+if (isAdmin) {<br>
+    console.log('具有管理员权限');<br>
+} else {<br>
+    console.log('不具有管理员权限');<br>
+}
+                </div>
+                <div class="result" id="includes-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoIncludes()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>4.4 find() 方法</h3>
+                <p>查找满足条件的第一个元素，返回该元素。</p>
+                <div class="code-block">
+let numbers = [1, 2, 3, 4, 5];<br>
+let evenNumber = numbers.find(num => num % 2 === 0); // 2<br>
+console.log(evenNumber);<br><br>
+// 查找对象数组<br>
+let users = [<br>
+    { id: 1, name: 'Alice' },<br>
+    { id: 2, name: 'Bob' },<br>
+    { id: 3, name: 'Charlie' }<br>
+];<br>
+let user = users.find(u => u.id === 2);<br>
+console.log(user); // { id: 2, name: 'Bob' }<br><br>
+// 未找到时返回undefined<br>
+let notFound = numbers.find(num => num > 10);<br>
+console.log(notFound); // undefined
+                </div>
+                <div class="result" id="find-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoFind()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>4.5 filter() 方法</h3>
+                <p>查找所有满足条件的元素，返回新数组。</p>
+                <div class="code-block">
+let numbers = [1, 2, 3, 4, 5, 6];<br>
+let evenNumbers = numbers.filter(num => num % 2 === 0);<br>
+console.log(evenNumbers); // [2, 4, 6]<br>
+console.log(numbers); // [1, 2, 3, 4, 5, 6] (原数组未改变)<br><br>
+// 过滤对象数组<br>
+let products = [<br>
+    { name: '苹果', price: 5 },<br>
+    { name: '香蕉', price: 3 },<br>
+    { name: '橙子', price: 4 },<br>
+    { name: '葡萄', price: 8 }<br>
+];<br>
+let expensiveProducts = products.filter(p => p.price > 4);<br>
+console.log(expensiveProducts);<br><br>
+// 过滤字符串数组<br>
+let words = ['hello', 'world', 'javascript', 'code'];<br>
+let longWords = words.filter(word => word.length > 5);<br>
+console.log(longWords); // ['javascript']
+                </div>
+                <div class="result" id="filter-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoFilter()">运行示例</button>
+            </div>
+        </div>
+        
+        <h2>交互式示例</h2>
+        <div class="interactive-section">
+            <h3>自定义数组操作</h3>
+            <input type="text" id="input-array" placeholder="输入数组元素，用逗号分隔" value="apple,banana,orange">
+            <select id="array-operation">
+                <option value="push">增加 - push (末尾添加)</option>
+                <option value="unshift">增加 - unshift (开头添加)</option>
+                <option value="pop">删除 - pop (删除末尾)</option>
+                <option value="shift">删除 - shift (删除开头)</option>
+                <option value="spliceAdd">增加 - splice (指定位置插入)</option>
+                <option value="spliceDelete">删除 - splice (指定位置删除)</option>
+                <option value="update">修改 - 直接赋值</option>
+                <option value="find">查询 - find (查找满足条件)</option>
+                <option value="filter">查询 - filter (过滤满足条件)</option>
+            </select>
+            <div id="operation-params">
+                <input type="text" id="param1" placeholder="参数1">
+                <input type="text" id="param2" placeholder="参数2 (可选)">
+            </div>
+            <button onclick="performArrayOperation()">执行操作</button>
+            <div class="result" id="array-interactive-result">
+                结果将在这里显示
+            </div>
+        </div>
+        
+        <h2>数组方法对比表</h2>
+        <table>
+            <tr>
+                <th>方法</th>
+                <th>操作类型</th>
+                <th>描述</th>
+                <th>是否会修改原数组</th>
+                <th>返回值</th>
+            </tr>
+            <tr>
+                <td>push()</td>
+                <td>增加</td>
+                <td>向数组末尾添加元素</td>
+                <td>是</td>
+                <td>新数组长度</td>
+            </tr>
+            <tr>
+                <td>unshift()</td>
+                <td>增加</td>
+                <td>向数组开头添加元素</td>
+                <td>是</td>
+                <td>新数组长度</td>
+            </tr>
+            <tr>
+                <td>splice()</td>
+                <td>增加/删除/修改</td>
+                <td>在指定位置添加/删除/替换元素</td>
+                <td>是</td>
+                <td>被删除的元素组成的数组</td>
+            </tr>
+            <tr>
+                <td>concat()</td>
+                <td>增加</td>
+                <td>连接数组</td>
+                <td>否</td>
+                <td>新数组</td>
+            </tr>
+            <tr>
+                <td>pop()</td>
+                <td>删除</td>
+                <td>删除数组最后一个元素</td>
+                <td>是</td>
+                <td>被删除的元素</td>
+            </tr>
+            <tr>
+                <td>shift()</td>
+                <td>删除</td>
+                <td>删除数组第一个元素</td>
+                <td>是</td>
+                <td>被删除的元素</td>
+            </tr>
+            <tr>
+                <td>slice()</td>
+                <td>删除</td>
+                <td>提取数组的一部分</td>
+                <td>否</td>
+                <td>新数组</td>
+            </tr>
+            <tr>
+                <td>直接赋值</td>
+                <td>修改</td>
+                <td>通过索引修改元素</td>
+                <td>是</td>
+                <td>新值</td>
+            </tr>
+            <tr>
+                <td>indexOf()</td>
+                <td>查询</td>
+                <td>查找元素索引</td>
+                <td>否</td>
+                <td>索引或-1</td>
+            </tr>
+            <tr>
+                <td>includes()</td>
+                <td>查询</td>
+                <td>检查是否包含元素</td>
+                <td>否</td>
+                <td>布尔值</td>
+            </tr>
+            <tr>
+                <td>find()</td>
+                <td>查询</td>
+                <td>查找满足条件的第一个元素</td>
+                <td>否</td>
+                <td>元素或undefined</td>
+            </tr>
+            <tr>
+                <td>filter()</td>
+                <td>查询</td>
+                <td>查找所有满足条件的元素</td>
+                <td>否</td>
+                <td>新数组</td>
+            </tr>
+        </table>
+        
+        <div class="note">
+            <h3>注意事项</h3>
+            <ul>
+                <li>push()和unshift()会修改原数组并返回新长度</li>
+                <li>pop()和shift()会修改原数组并返回被删除的元素</li>
+                <li>splice()功能强大，可以同时实现增加、删除和修改操作</li>
+                <li>slice()和concat()不会修改原数组，而是返回新数组</li>
+                <li>直接通过索引赋值会修改原数组，如果索引超出范围会扩展数组</li>
+                <li>indexOf()只能查找完全匹配的元素，而find()可以根据条件查找</li>
+                <li>includes()返回布尔值，更适合用于条件判断</li>
+                <li>filter()返回所有满足条件的元素，而find()只返回第一个</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 演示push操作
+        function demoPush() {
+            let fruits = ['apple', 'banana'];
+            let newLength = fruits.push('orange');
+            
+            document.getElementById('push-result').innerHTML = 
+                `原始数组: [${fruits.slice(0, -1).map(item => `"${item}"`).join(', ')}]<br>` +
+                `执行 fruits.push('orange') 后:<br>` +
+                `数组: [${fruits.map(item => `"${item}"`).join(', ')}]<br>` +
+                `返回值: ${newLength}`;
+        }
+        
+        // 演示unshift操作
+        function demoUnshift() {
+            let colors = ['red', 'green'];
+            let newLength = colors.unshift('blue');
+            
+            document.getElementById('unshift-result').innerHTML = 
+                `原始数组: [${colors.slice(1).map(item => `"${item}"`).join(', ')}]<br>` +
+                `执行 colors.unshift('blue') 后:<br>` +
+                `数组: [${colors.map(item => `"${item}"`).join(', ')}]<br>` +
+                `返回值: ${newLength}`;
+        }
+        
+        // 演示splice增加操作
+        function demoSpliceAdd() {
+            let items = ['first', 'third'];
+            items.splice(1, 0, 'second');
+            
+            let letters = ['a', 'd'];
+            letters.splice(1, 0, 'b', 'c');
+            
+            document.getElementById('splice-add-result').innerHTML = 
+                `原始数组: ["first", "third"]<br>` +
+                `执行 items.splice(1, 0, 'second') 后:<br>` +
+                `数组: [${items.map(item => `"${item}"`).join(', ')}]<br><br>` +
+                `原始数组: ["a", "d"]<br>` +
+                `执行 letters.splice(1, 0, 'b', 'c') 后:<br>` +
+                `数组: [${letters.map(item => `"${item}"`).join(', ')}]`;
+        }
+        
+        // 演示concat操作
+        function demoConcat() {
+            let arr1 = ['a', 'b'];
+            let arr2 = ['c', 'd'];
+            let arr3 = ['e', 'f'];
+            let newArr = arr1.concat(arr2, arr3);
+            
+            let numbers = [1, 2];
+            let result = numbers.concat(3, [4, 5], 6);
+            
+            document.getElementById('concat-result').innerHTML = 
+                `arr1: [${arr1.map(item => `"${item}"`).join(', ')}]<br>` +
+                `arr2: [${arr2.map(item => `"${item}"`).join(', ')}]<br>` +
+                `arr3: [${arr3.map(item => `"${item}"`).join(', ')}]<br>` +
+                `arr1.concat(arr2, arr3): [${newArr.map(item => `"${item}"`).join(', ')}]<br>` +
+                `arr1未改变: [${arr1.map(item => `"${item}"`).join(', ')}]<br><br>` +
+                `numbers: [${numbers.map(item => `${item}`).join(', ')}]<br>` +
+                `numbers.concat(3, [4, 5], 6): [${result.map(item => `${item}`).join(', ')}]`;
+        }
+        
+        // 演示pop操作
+        function demoPop() {
+            let fruits = ['apple', 'banana', 'orange'];
+            let removedElement = fruits.pop();
+            
+            let emptyArr = [];
+            let result = emptyArr.pop();
+            
+            document.getElementById('pop-result').innerHTML = 
+                `原始数组: ["apple", "banana", "orange"]<br>` +
+                `执行 fruits.pop() 后:<br>` +
+                `数组: [${fruits.map(item => `"${item}"`).join(', ')}]<br>` +
+                `返回值: "${removedElement}"<br><br>` +
+                `对空数组执行 pop(): ${result}`;
+        }
+        
+        // 演示shift操作
+        function demoShift() {
+            let colors = ['red', 'green', 'blue'];
+            let removedElement = colors.shift();
+            
+            let emptyArr = [];
+            let result = emptyArr.shift();
+            
+            document.getElementById('shift-result').innerHTML = 
+                `原始数组: ["red", "green", "blue"]<br>` +
+                `执行 colors.shift() 后:<br>` +
+                `数组: [${colors.map(item => `"${item}"`).join(', ')}]<br>` +
+                `返回值: "${removedElement}"<br><br>` +
+                `对空数组执行 shift(): ${result}`;
+        }
+        
+        // 演示splice删除操作
+        function demoSpliceDelete() {
+            let items = ['first', 'second', 'third', 'fourth'];
+            let removedElements = items.splice(1, 2);
+            
+            let numbers = [1, 2, 3, 4, 5];
+            let removed = numbers.splice(2);
+            
+            document.getElementById('splice-delete-result').innerHTML = 
+                `原始数组: ["first", "second", "third", "fourth"]<br>` +
+                `执行 items.splice(1, 2) 后:<br>` +
+                `数组: [${items.map(item => `"${item}"`).join(', ')}]<br>` +
+                `返回值: [${removedElements.map(item => `"${item}"`).join(', ')}]<br><br>` +
+                `原始数组: [1, 2, 3, 4, 5]<br>` +
+                `执行 numbers.splice(2) 后:<br>` +
+                `数组: [${numbers.map(item => `${item}`).join(', ')}]<br>` +
+                `返回值: [${removed.map(item => `${item}`).join(', ')}]`;
+        }
+        
+        // 演示slice操作
+        function demoSlice() {
+            let fruits = ['apple', 'banana', 'orange', 'grape'];
+            let citrus = fruits.slice(1, 3);
+            let fromIndex2 = fruits.slice(2);
+            let lastTwo = fruits.slice(-2);
+            
+            document.getElementById('slice-result').innerHTML = 
+                `原始数组: [${fruits.map(item => `"${item}"`).join(', ')}]<br>` +
+                `slice(1, 3): [${citrus.map(item => `"${item}"`).join(', ')}]<br>` +
+                `slice(2): [${fromIndex2.map(item => `"${item}"`).join(', ')}]<br>` +
+                `slice(-2): [${lastTwo.map(item => `"${item}"`).join(', ')}]<br>` +
+                `原始数组未改变: [${fruits.map(item => `"${item}"`).join(', ')}]`;
+        }
+        
+        // 演示直接赋值操作
+        function demoDirectAssignment() {
+            let colors = ['red', 'green', 'blue'];
+            colors[1] = 'yellow';
+            
+            let numbers = [1, 2, 3];
+            numbers[5] = 6;
+            
+            document.getElementById('direct-assignment-result').innerHTML = 
+                `原始数组: ["red", "green", "blue"]<br>` +
+                `执行 colors[1] = 'yellow' 后:<br>` +
+                `数组: [${colors.map(item => `"${item}"`).join(', ')}]<br><br>` +
+                `原始数组: [1, 2, 3]<br>` +
+                `执行 numbers[5] = 6 后:<br>` +
+                `数组: [${numbers.map((item, index) => item === undefined && index !== numbers.length-1 ? 'undefined' : `"${item}"`).join(', ')}]<br>` +
+                `数组长度: ${numbers.length}`;
+        }
+        
+        // 演示splice修改操作
+        function demoSpliceUpdate() {
+            let items = ['first', 'second', 'third'];
+            let removedElements = items.splice(1, 1, 'newSecond');
+            
+            let letters = ['a', 'b', 'c', 'd'];
+            letters.splice(1, 2, 'x', 'y', 'z');
+            
+            document.getElementById('splice-update-result').innerHTML = 
+                `原始数组: ["first", "second", "third"]<br>` +
+                `执行 items.splice(1, 1, 'newSecond') 后:<br>` +
+                `数组: [${items.map(item => `"${item}"`).join(', ')}]<br>` +
+                `返回值: [${removedElements.map(item => `"${item}"`).join(', ')}]<br><br>` +
+                `原始数组: ["a", "b", "c", "d"]<br>` +
+                `执行 letters.splice(1, 2, 'x', 'y', 'z') 后:<br>` +
+                `数组: [${letters.map(item => `"${item}"`).join(', ')}]`;
+        }
+        
+        // 演示索引访问操作
+        function demoIndexAccess() {
+            let fruits = ['apple', 'banana', 'orange'];
+            let firstFruit = fruits[0];
+            let lastFruit = fruits[fruits.length - 1];
+            let element = fruits[10];
+            
+            let lastElement = fruits.at(-1);
+            let secondLast = fruits.at(-2);
+            
+            document.getElementById('index-access-result').innerHTML = 
+                `数组: [${fruits.map(item => `"${item}"`).join(', ')}]<br>` +
+                `fruits[0]: "${firstFruit}"<br>` +
+                `fruits[fruits.length - 1]: "${lastFruit}"<br>` +
+                `fruits[10]: ${element}<br><br>` +
+                `使用at()方法:<br>` +
+                `fruits.at(-1): "${lastElement}"<br>` +
+                `fruits.at(-2): "${secondLast}"`;
+        }
+        
+        // 演示indexOf操作
+        function demoIndexOf() {
+            let fruits = ['apple', 'banana', 'orange', 'banana'];
+            let index1 = fruits.indexOf('banana');
+            let index2 = fruits.indexOf('grape');
+            let index3 = fruits.indexOf('banana', 2);
+            
+            document.getElementById('index-of-result').innerHTML = 
+                `数组: [${fruits.map(item => `"${item}"`).join(', ')}]<br>` +
+                `indexOf('banana'): ${index1}<br>` +
+                `indexOf('grape'): ${index2}<br>` +
+                `indexOf('banana', 2): ${index3}<br><br>` +
+                `检查元素是否存在:<br>` +
+                `indexOf('orange') !== -1: ${fruits.indexOf('orange') !== -1}`;
+        }
+        
+        // 演示includes操作
+        function demoIncludes() {
+            let colors = ['red', 'green', 'blue'];
+            let hasGreen = colors.includes('green');
+            let hasYellow = colors.includes('yellow');
+            let hasGreenFromIndex1 = colors.includes('green', 1);
+            let hasRedFromIndex1 = colors.includes('red', 1);
+            
+            let userRoles = ['user', 'editor'];
+            let isAdmin = userRoles.includes('admin');
+            
+            document.getElementById('includes-result').innerHTML = 
+                `数组: [${colors.map(item => `"${item}"`).join(', ')}]<br>` +
+                `includes('green'): ${hasGreen}<br>` +
+                `includes('yellow'): ${hasYellow}<br>` +
+                `includes('green', 1): ${hasGreenFromIndex1}<br>` +
+                `includes('red', 1): ${hasRedFromIndex1}<br><br>` +
+                `实际应用示例:<br>` +
+                `userRoles: [${userRoles.map(item => `"${item}"`).join(', ')}]<br>` +
+                `includes('admin'): ${isAdmin}<br>` +
+                `权限检查: ${isAdmin ? '具有管理员权限' : '不具有管理员权限'}`;
+        }
+        
+        // 演示find操作
+        function demoFind() {
+            let numbers = [1, 2, 3, 4, 5];
+            let evenNumber = numbers.find(num => num % 2 === 0);
+            
+            let users = [
+                { id: 1, name: 'Alice' },
+                { id: 2, name: 'Bob' },
+                { id: 3, name: 'Charlie' }
+            ];
+            let user = users.find(u => u.id === 2);
+            let notFound = numbers.find(num => num > 10);
+            
+            document.getElementById('find-result').innerHTML = 
+                `数组: [${numbers.join(', ')}]<br>` +
+                `find(num => num % 2 === 0): ${evenNumber}<br><br>` +
+                `对象数组: [${users.map(u => `{ id: ${u.id}, name: "${u.name}" }`).join(', ')}]<br>` +
+                `find(u => u.id === 2): { id: ${user.id}, name: "${user.name}" }<br><br>` +
+                `find(num => num > 10): ${notFound}`;
+        }
+        
+        // 演示filter操作
+        function demoFilter() {
+            let numbers = [1, 2, 3, 4, 5, 6];
+            let evenNumbers = numbers.filter(num => num % 2 === 0);
+            
+            let products = [
+                { name: '苹果', price: 5 },
+                { name: '香蕉', price: 3 },
+                { name: '橙子', price: 4 },
+                { name: '葡萄', price: 8 }
+            ];
+            let expensiveProducts = products.filter(p => p.price > 4);
+            
+            let words = ['hello', 'world', 'javascript', 'code'];
+            let longWords = words.filter(word => word.length > 5);
+            
+            document.getElementById('filter-result').innerHTML = 
+                `数组: [${numbers.join(', ')}]<br>` +
+                `filter(num => num % 2 === 0): [${evenNumbers.join(', ')}]<br>` +
+                `原数组未改变: [${numbers.join(', ')}]<br><br>` +
+                `产品数组: [${products.map(p => `{ name: "${p.name}", price: ${p.price} }`).join(', ')}]<br>` +
+                `filter(p => p.price > 4): [${expensiveProducts.map(p => `{ name: "${p.name}", price: ${p.price} }`).join(', ')}]<br><br>` +
+                `单词数组: [${words.map(w => `"${w}"`).join(', ')}]<br>` +
+                `filter(word => word.length > 5): [${longWords.map(w => `"${w}"`).join(', ')}]`;
+        }
+        
+        // 执行自定义数组操作
+        function performArrayOperation() {
+            let inputArray = document.getElementById('input-array').value;
+            let operation = document.getElementById('array-operation').value;
+            let param1 = document.getElementById('param1').value;
+            let param2 = document.getElementById('param2').value;
+            
+            // 解析输入数组
+            let arr = inputArray.split(',').map(item => item.trim());
+            let result;
+            let originalArray = [...arr];
+            
+            switch(operation) {
+                case 'push':
+                    if (param1) {
+                        arr.push(param1);
+                        document.getElementById('array-interactive-result').innerHTML = 
+                            `原始数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                            `执行 push("${param1}") 后:<br>` +
+                            `数组: [${arr.map(item => `"${item}"`).join(', ')}]`;
+                    } else {
+                        document.getElementById('array-interactive-result').innerHTML = "请输入要添加的元素";
+                    }
+                    break;
+                case 'unshift':
+                    if (param1) {
+                        arr.unshift(param1);
+                        document.getElementById('array-interactive-result').innerHTML = 
+                            `原始数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                            `执行 unshift("${param1}") 后:<br>` +
+                            `数组: [${arr.map(item => `"${item}"`).join(', ')}]`;
+                    } else {
+                        document.getElementById('array-interactive-result').innerHTML = "请输入要添加的元素";
+                    }
+                    break;
+                case 'pop':
+                    let removed = arr.pop();
+                    document.getElementById('array-interactive-result').innerHTML = 
+                        `原始数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                        `执行 pop() 后:<br>` +
+                        `数组: [${arr.map(item => `"${item}"`).join(', ')}]<br>` +
+                        `被删除的元素: ${removed ? `"${removed}"` : removed}`;
+                    break;
+                case 'shift':
+                    let shifted = arr.shift();
+                    document.getElementById('array-interactive-result').innerHTML = 
+                        `原始数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                        `执行 shift() 后:<br>` +
+                        `数组: [${arr.map(item => `"${item}"`).join(', ')}]<br>` +
+                        `被删除的元素: ${shifted ? `"${shifted}"` : shifted}`;
+                    break;
+                case 'spliceAdd':
+                    if (param1 && param2) {
+                        let index = parseInt(param1);
+                        arr.splice(index, 0, param2);
+                        document.getElementById('array-interactive-result').innerHTML = 
+                            `原始数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                            `在索引 ${index} 处插入 "${param2}" 后:<br>` +
+                            `数组: [${arr.map(item => `"${item}"`).join(', ')}]`;
+                    } else {
+                        document.getElementById('array-interactive-result').innerHTML = "请输入插入位置和元素";
+                    }
+                    break;
+                case 'spliceDelete':
+                    if (param1) {
+                        let index = parseInt(param1);
+                        let count = param2 ? parseInt(param2) : 1;
+                        let removedElements = arr.splice(index, count);
+                        document.getElementById('array-interactive-result').innerHTML = 
+                            `原始数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                            `从索引 ${index} 开始删除 ${count} 个元素后:<br>` +
+                            `数组: [${arr.map(item => `"${item}"`).join(', ')}]<br>` +
+                            `被删除的元素: [${removedElements.map(item => `"${item}"`).join(', ')}]`;
+                    } else {
+                        document.getElementById('array-interactive-result').innerHTML = "请输入删除位置";
+                    }
+                    break;
+                case 'update':
+                    if (param1 && param2) {
+                        let index = parseInt(param1);
+                        arr[index] = param2;
+                        document.getElementById('array-interactive-result').innerHTML = 
+                            `原始数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                            `将索引 ${index} 的元素修改为 "${param2}" 后:<br>` +
+                            `数组: [${arr.map(item => `"${item}"`).join(', ')}]`;
+                    } else {
+                        document.getElementById('array-interactive-result').innerHTML = "请输入索引和新值";
+                    }
+                    break;
+                case 'find':
+                    if (param1) {
+                        // 尝试将参数解析为数字，否则作为字符串处理
+                        let searchValue = isNaN(param1) ? param1 : Number(param1);
+                        let foundElement = arr.find(item => {
+                            // 尝试将数组元素解析为数字进行比较
+                            let itemValue = isNaN(item) ? item : Number(item);
+                            return itemValue === searchValue;
+                        });
+                        document.getElementById('array-interactive-result').innerHTML = 
+                            `数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                            `查找 "${param1}": ${foundElement ? `"${foundElement}"` : foundElement}`;
+                    } else {
+                        document.getElementById('array-interactive-result').innerHTML = "请输入要查找的值";
+                    }
+                    break;
+                case 'filter':
+                    if (param1) {
+                        // 尝试将参数解析为数字，否则作为字符串处理
+                        let filterValue = isNaN(param1) ? param1 : Number(param1);
+                        let filteredElements = arr.filter(item => {
+                            // 尝试将数组元素解析为数字进行比较
+                            let itemValue = isNaN(item) ? item : Number(item);
+                            return itemValue === filterValue;
+                        });
+                        document.getElementById('array-interactive-result').innerHTML = 
+                            `数组: [${originalArray.map(item => `"${item}"`).join(', ')}]<br>` +
+                            `过滤 "${param1}": [${filteredElements.map(item => `"${item}"`).join(', ')}]`;
+                    } else {
+                        document.getElementById('array-interactive-result').innerHTML = "请输入要过滤的值";
+                    }
+                    break;
+                default:
+                    document.getElementById('array-interactive-result').innerHTML = "未知操作";
+            }
+        }
+        
+        // 根据选择的操作更新参数输入框
+        document.getElementById('array-operation').addEventListener('change', function() {
+            const param1 = document.getElementById('param1');
+            const param2 = document.getElementById('param2');
+            
+            switch(this.value) {
+                case 'push':
+                case 'unshift':
+                    param1.placeholder = '要添加的元素';
+                    param2.placeholder = '参数2 (可选)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'none';
+                    break;
+                case 'pop':
+                case 'shift':
+                    param1.placeholder = '参数1';
+                    param2.placeholder = '参数2 (可选)';
+                    param1.style.display = 'none';
+                    param2.style.display = 'none';
+                    break;
+                case 'spliceAdd':
+                    param1.placeholder = '插入位置';
+                    param2.placeholder = '要插入的元素';
+                    param1.style.display = 'block';
+                    param2.style.display = 'block';
+                    break;
+                case 'spliceDelete':
+                    param1.placeholder = '删除位置';
+                    param2.placeholder = '删除数量 (默认为1)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'block';
+                    break;
+                case 'update':
+                    param1.placeholder = '索引';
+                    param2.placeholder = '新值';
+                    param1.style.display = 'block';
+                    param2.style.display = 'block';
+                    break;
+                case 'find':
+                case 'filter':
+                    param1.placeholder = '查找/过滤的值';
+                    param2.placeholder = '参数2 (可选)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'none';
+                    break;
+                default:
+                    param1.placeholder = '参数1';
+                    param2.placeholder = '参数2 (可选)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'block';
+            }
+        });
+        
+        // 初始化参数输入框
+        document.getElementById('param2').style.display = 'none';
+    </script>
+</body>
+</html>

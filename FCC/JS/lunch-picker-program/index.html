@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Picker Program</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍽️ 午餐选择器</h1>
+            <p>管理您的午餐菜单并随机选择今日午餐</p>
+        </header>
+
+        <main>
+            <section class="menu-section">
+                <h2>当前菜单</h2>
+                <div id="menu-display" class="menu-display">
+                    <p id="menu-items">菜单为空</p>
+                </div>
+            </section>
+
+            <section class="add-section">
+                <h2>添加午餐选项</h2>
+                <form id="add-lunch-form">
+                    <div class="form-group">
+                        <label for="lunch-item">午餐名称:</label>
+                        <input type="text" id="lunch-item" name="lunch-item" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-position">添加位置:</label>
+                        <select id="add-position" name="add-position">
+                            <option value="end">末尾</option>
+                            <option value="start">开头</option>
+                        </select>
+                    </div>
+                    <button type="submit">添加午餐</button>
+                </form>
+            </section>
+
+            <section class="action-section">
+                <h2>操作面板</h2>
+                <div class="buttons">
+                    <button id="random-lunch-btn" class="btn-primary">随机选择午餐</button>
+                    <button id="remove-first-btn" class="btn-secondary">移除首个午餐</button>
+                    <button id="remove-last-btn" class="btn-secondary">移除末个午餐</button>
+                    <button id="show-menu-btn" class="btn-info">显示完整菜单</button>
+                </div>
+            </section>
+
+            <section class="result-section">
+                <h2>操作结果</h2>
+                <div id="result-display" class="result-display">
+                    <p>操作结果将在此显示</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p> Lunch Picker Program &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // 初始化菜单数组
+        let lunches = [];
+
+        // 获取DOM元素
+        const menuDisplay = document.getElementById('menu-items');
+        const resultDisplay = document.getElementById('result-display');
+        const addLunchForm = document.getElementById('add-lunch-form');
+        const randomLunchBtn = document.getElementById('random-lunch-btn');
+        const removeFirstBtn = document.getElementById('remove-first-btn');
+        const removeLastBtn = document.getElementById('remove-last-btn');
+        const showMenuBtn = document.getElementById('show-menu-btn');
+
+        // 更新菜单显示
+        function updateMenuDisplay() {
+            if (lunches.length === 0) {
+                menuDisplay.textContent = '菜单为空';
+            } else {
+                menuDisplay.textContent = lunches.join(', ');
+            }
+        }
+
+        // 显示结果
+        function showResult(message) {
+            resultDisplay.innerHTML = `<p>${message}</p>`;
+            // 滚动到结果区域
+            resultDisplay.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 添加午餐表单提交事件
+        addLunchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const lunchItem = document.getElementById('lunch-item').value;
+            const addPosition = document.getElementById('add-position').value;
+
+            if (lunchItem.trim() !== '') {
+                if (addPosition === 'end') {
+                    lunches = addLunchToEnd(lunches, lunchItem);
+                    showResult(`${lunchItem} 已添加到菜单末尾`);
+                } else {
+                    lunches = addLunchToStart(lunches, lunchItem);
+                    showResult(`${lunchItem} 已添加到菜单开头`);
+                }
+                updateMenuDisplay();
+                addLunchForm.reset();
+            }
+        });
+
+        // 随机选择午餐按钮点击事件
+        randomLunchBtn.addEventListener('click', function() {
+            if (lunches.length === 0) {
+                showResult('菜单为空，无法随机选择');
+            } else {
+                getRandomLunch(lunches);
+                // 注意：getRandomLunch函数内部已经有console.log输出
+                // 这里为了在UI上显示结果，我们重新实现逻辑
+                const randomLunch = lunches[Math.floor(Math.random() * lunches.length)];
+                showResult(`随机选择的午餐是: ${randomLunch}`);
+            }
+        });
+
+        // 移除首个午餐按钮点击事件
+        removeFirstBtn.addEventListener('click', function() {
+            if (lunches.length === 0) {
+                showResult('菜单为空，无法移除');
+            } else {
+                const removedItem = lunches[0];
+                lunches = removeFirstLunch(lunches);
+                showResult(`${removedItem} 已从菜单开头移除`);
+                updateMenuDisplay();
+            }
+        });
+
+        // 移除末个午餐按钮点击事件
+        removeLastBtn.addEventListener('click', function() {
+            if (lunches.length === 0) {
+                showResult('菜单为空，无法移除');
+            } else {
+                const removedItem = lunches[lunches.length - 1];
+                lunches = removeLastLunch(lunches);
+                showResult(`${removedItem} 已从菜单末尾移除`);
+                updateMenuDisplay();
+            }
+        });
+
+        // 显示完整菜单按钮点击事件
+        showMenuBtn.addEventListener('click', function() {
+            showLunchMenu(lunches);
+            // 注意：showLunchMenu函数内部已经有console.log输出
+            // 这里为了在UI上显示结果，我们重新实现逻辑
+            if (lunches.length === 0) {
+                showResult('菜单为空');
+            } else {
+                showResult(`菜单内容: ${lunches.join(', ')}`);
+            }
+        });
+
+        // 初始化菜单显示
+        updateMenuDisplay();
+    </script>
+</body>
+</html>

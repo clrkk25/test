@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS字符串操作详解</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .overview {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+        .method-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .method-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .section-title {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        .example-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .result {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .interactive-section {
+            background: #fff3e0;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 1px solid #ffe0b2;
+        }
+        input, select {
+            padding: 12px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            width: calc(100% - 40px);
+            max-width: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        tr:hover {
+            background: #e8f4f8;
+        }
+        .note {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            input, select {
+                width: calc(100% - 24px);
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JS字符串操作详解</h1>
+        
+        <div class="overview">
+            <h2>概述</h2>
+            <p>JavaScript中的字符串是不可变的，这意味着一旦创建了字符串，就不能更改其内容。对字符串的所有操作都会返回新的字符串，而不是修改原始字符串。理解这一点对于正确使用字符串方法非常重要。</p>
+            <p>在本教程中，我们将详细介绍JavaScript中字符串的各种操作方法，包括拼接、替换、截取、大小写转换、分割与连接、去除空格、字符访问和字符串填充等。</p>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">1. 字符串拼接 (Create)</h2>
+            <div class="example-card">
+                <h3>1.1 使用 + 操作符</h3>
+                <p>最基础的字符串拼接方式，使用加号操作符连接字符串。</p>
+                <div class="code-block">
+let firstName = "John";<br>
+let lastName = "Doe";<br>
+let fullName = firstName + " " + lastName; // "John Doe"<br>
+console.log(fullName);<br><br>
+// 拼接数字和字符串<br>
+let age = 25;<br>
+let message = "我今年" + age + "岁"; // "我今年25岁"<br>
+console.log(message);
+                </div>
+                <div class="result" id="plus-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoPlus()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>1.2 使用 += 操作符</h3>
+                <p>可以将字符串追加到现有字符串变量的末尾。</p>
+                <div class="code-block">
+let greeting = "Hello";<br>
+greeting += " World"; // 等同于 greeting = greeting + " World"<br>
+console.log(greeting); // "Hello World"<br><br>
+// 连续追加<br>
+let sentence = "JavaScript";<br>
+sentence += " is";<br>
+sentence += " awesome!";<br>
+console.log(sentence); // "JavaScript is awesome!"
+                </div>
+                <div class="result" id="plus-equal-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoPlusEqual()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>1.3 使用模板字符串</h3>
+                <p>使用反引号(`)和${}语法，可以更方便地嵌入变量和表达式。</p>
+                <div class="code-block">
+let firstName = "John";<br>
+let lastName = "Doe";<br>
+let fullName = `Hello, ${firstName} ${lastName}!`; // "Hello, John Doe!"<br>
+console.log(fullName);<br><br>
+// 在模板字符串中使用表达式<br>
+let a = 5;<br>
+let b = 10;<br>
+let expression = `a + b = ${a + b}`; // "a + b = 15"<br>
+console.log(expression);<br><br>
+// 多行字符串<br>
+let multiline = `这是第一行<br>
+这是第二行<br>
+这是第三行`;<br>
+console.log(multiline);
+                </div>
+                <div class="result" id="template-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoTemplate()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>1.4 使用concat()方法</h3>
+                <p>concat()方法用于连接两个或多个字符串，返回新的字符串。</p>
+                <div class="code-block">
+let str1 = "Hello";<br>
+let str2 = "World";<br>
+let result = str1.concat(" ", str2); // "Hello World"<br>
+console.log(result);<br><br>
+// 连接多个字符串<br>
+let part1 = "Java";<br>
+let part2 = "Script";<br>
+let part3 = " is";<br>
+let part4 = " fun!";<br>
+let fullString = part1.concat(part2, part3, part4); // "JavaScript is fun!"<br>
+console.log(fullString);<br><br>
+// 原始字符串不会改变<br>
+console.log(str1); // "Hello" (未改变)
+                </div>
+                <div class="result" id="concat-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoConcat()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">2. 字符串替换 (Update)</h2>
+            <div class="example-card">
+                <h3>2.1 使用replace()方法</h3>
+                <p>replace()方法用于替换字符串中的第一个匹配项。</p>
+                <div class="code-block">
+let text = "Hello World";<br>
+let newText = text.replace("World", "JavaScript"); // "Hello JavaScript"<br>
+console.log(newText);<br><br>
+// 替换数字<br>
+let price = "价格: $100";<br>
+let newPrice = price.replace("100", "80"); // "价格: $80"<br>
+console.log(newPrice);<br><br>
+// 原始字符串不会改变<br>
+console.log(text); // "Hello World" (未改变)
+                </div>
+                <div class="result" id="replace-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoReplace()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>2.2 使用replaceAll()方法</h3>
+                <p>replaceAll()方法用于替换字符串中所有匹配的项（ES2021新增）。</p>
+                <div class="code-block">
+let phrase = "apple apple apple";<br>
+let newPhrase = phrase.replaceAll("apple", "orange"); // "orange orange orange"<br>
+console.log(newPhrase);<br><br>
+// 替换特殊字符<br>
+let sentence = "I love C++ and C++ is powerful";<br>
+let newSentence = sentence.replaceAll("C++", "JavaScript");<br>
+console.log(newSentence); // "I love JavaScript and JavaScript is powerful"<br><br>
+// 使用正则表达式<br>
+let text = "cat and Cat and cat";<br>
+let newText = text.replaceAll(/cat/gi, "dog"); // "dog and dog and dog"<br>
+console.log(newText);
+                </div>
+                <div class="result" id="replace-all-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoReplaceAll()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">3. 字符串截取 (Delete)</h2>
+            <div class="example-card">
+                <h3>3.1 使用slice()方法</h3>
+                <p>slice()方法提取字符串的一部分，返回新字符串，不会修改原字符串。</p>
+                <div class="code-block">
+let str = "JavaScript";<br>
+let part1 = str.slice(0, 4); // "Java"<br>
+let part2 = str.slice(4); // "Script"<br>
+let part3 = str.slice(-6, -2); // "Scri"<br>
+console.log(part1, part2, part3);<br><br>
+// 截取邮箱用户名<br>
+let email = "user@example.com";<br>
+let username = email.slice(0, email.indexOf("@"));<br>
+console.log(username); // "user"<br><br>
+// 原始字符串不会改变<br>
+console.log(str); // "JavaScript" (未改变)
+                </div>
+                <div class="result" id="slice-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSlice()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>3.2 使用substring()方法</h3>
+                <p>substring()方法类似于slice()，但不接受负参数。</p>
+                <div class="code-block">
+let str = "JavaScript";<br>
+let part1 = str.substring(0, 4); // "Java"<br>
+let part2 = str.substring(4); // "Script"<br>
+let part3 = str.substring(2, 6); // "vaSc"<br>
+console.log(part1, part2, part3);<br><br>
+// 如果start大于end，会自动交换参数<br>
+let part4 = str.substring(6, 2); // "vaSc" (等同于substring(2, 6))<br>
+console.log(part4);
+                </div>
+                <div class="result" id="substring-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSubstring()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>3.3 使用substr()方法</h3>
+                <p>substr()方法已不推荐使用，但仍然可用。第一个参数是开始位置，第二个参数是要提取的字符数。</p>
+                <div class="code-block">
+let str = "JavaScript";<br>
+let part1 = str.substr(0, 4); // "Java"<br>
+let part2 = str.substr(4); // "Script"<br>
+let part3 = str.substr(-6, 4); // "Scri"<br>
+console.log(part1, part2, part3);<br><br>
+// 注意：substr()方法已被标记为不推荐使用，建议使用slice()替代
+                </div>
+                <div class="result" id="substr-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSubstr()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">4. 大小写转换 (Update)</h2>
+            <div class="example-card">
+                <h3>4.1 toUpperCase()方法</h3>
+                <p>将字符串转换为大写。</p>
+                <div class="code-block">
+let message = "Hello World";<br>
+let upper = message.toUpperCase(); // "HELLO WORLD"<br>
+console.log(upper);<br><br>
+// 处理特殊字符<br>
+let special = "café";<br>
+let upperSpecial = special.toUpperCase(); // "CAFÉ"<br>
+console.log(upperSpecial);<br><br>
+// 原始字符串不会改变<br>
+console.log(message); // "Hello World" (未改变)
+                </div>
+                <div class="result" id="upper-case-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoUpperCase()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>4.2 toLowerCase()方法</h3>
+                <p>将字符串转换为小写。</p>
+                <div class="code-block">
+let message = "Hello World";<br>
+let lower = message.toLowerCase(); // "hello world"<br>
+console.log(lower);<br><br>
+// 处理特殊字符<br>
+let special = "CAFÉ";<br>
+let lowerSpecial = special.toLowerCase(); // "café"<br>
+console.log(lowerSpecial);<br><br>
+// 原始字符串不会改变<br>
+console.log(message); // "Hello World" (未改变)
+                </div>
+                <div class="result" id="lower-case-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoLowerCase()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">5. 分割与连接 (Query/Create)</h2>
+            <div class="example-card">
+                <h3>5.1 使用split()方法</h3>
+                <p>split()方法将字符串分割成字符串数组。</p>
+                <div class="code-block">
+// 按空格分割<br>
+let sentence = "Hello World JavaScript";<br>
+let words = sentence.split(" "); // ["Hello", "World", "JavaScript"]<br>
+console.log(words);<br><br>
+// 按逗号分割<br>
+let csv = "apple,banana,orange";<br>
+let fruits = csv.split(","); // ["apple", "banana", "orange"]<br>
+console.log(fruits);<br><br>
+// 限制分割数量<br>
+let text = "a-b-c-d-e";<br>
+let parts = text.split("-", 3); // ["a", "b", "c"]<br>
+console.log(parts);<br><br>
+// 分割每个字符<br>
+let word = "hello";<br>
+let chars = word.split(""); // ["h", "e", "l", "l", "o"]<br>
+console.log(chars);
+                </div>
+                <div class="result" id="split-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSplit()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>5.2 使用join()方法</h3>
+                <p>join()方法将数组元素连接成字符串。</p>
+                <div class="code-block">
+// 使用空格连接<br>
+let words = ["Hello", "World", "JavaScript"];<br>
+let sentence = words.join(" "); // "Hello World JavaScript"<br>
+console.log(sentence);<br><br>
+// 使用逗号连接<br>
+let fruits = ["apple", "banana", "orange"];<br>
+let csv = fruits.join(","); // "apple,banana,orange"<br>
+console.log(csv);<br><br>
+// 使用其他分隔符<br>
+let numbers = [1, 2, 3, 4, 5];<br>
+let dashed = numbers.join("-"); // "1-2-3-4-5"<br>
+console.log(dashed);<br><br>
+// 不使用分隔符<br>
+let chars = ["h", "e", "l", "l", "o"];<br>
+let word = chars.join(""); // "hello"<br>
+console.log(word);
+                </div>
+                <div class="result" id="join-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoJoin()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>5.3 邮箱掩码示例</h3>
+                <p>结合split()和join()实现邮箱掩码功能。</p>
+                <div class="code-block">
+function maskEmail(email) {<br>
+  let atIndex = email.indexOf("@");<br>
+  let emailArr = email.split('');<br>
+  for(let i = 1; i < atIndex - 1; i++) {<br>
+    emailArr[i] = "*";<br>
+  }<br>
+  return emailArr.join('');<br>
+}<br><br>
+let masked = maskEmail("example@example.com"); // "e******@example.com"<br>
+console.log(masked);<br><br>
+// 更安全的邮箱掩码<br>
+function secureMaskEmail(email) {<br>
+  let [name, domain] = email.split("@");<br>
+  if (name.length <= 2) {<br>
+    return "*@" + domain;<br>
+  }<br>
+  let maskedName = name[0] + "*".repeat(name.length - 2) + name[name.length - 1];<br>
+  return maskedName + "@" + domain;<br>
+}<br><br>
+let secureMasked = secureMaskEmail("john@example.com"); // "j**n@example.com"<br>
+console.log(secureMasked);
+                </div>
+                <div class="result" id="mask-email-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoMaskEmail()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">6. 去除空格 (Delete)</h2>
+            <div class="example-card">
+                <h3>6.1 trim()方法</h3>
+                <p>去除字符串首尾的空白字符。</p>
+                <div class="code-block">
+let textWithSpaces = "  Hello World  ";<br>
+let trimmed = textWithSpaces.trim(); // "Hello World"<br>
+console.log(`"${trimmed}"`);<br><br>
+// 处理制表符和换行符<br>
+let textWithWhitespace = "\t Hello \n World \n";<br>
+let trimmedWhitespace = textWithWhitespace.trim();<br>
+console.log(`"${trimmedWhitespace}"`); // "Hello \n World"<br><br>
+// 原始字符串不会改变<br>
+console.log(`"${textWithSpaces}"`); // "  Hello World  " (未改变)
+                </div>
+                <div class="result" id="trim-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoTrim()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>6.2 trimStart()方法</h3>
+                <p>只去除字符串开头的空白字符。</p>
+                <div class="code-block">
+let textWithSpaces = "  Hello World  ";<br>
+let trimmedStart = textWithSpaces.trimStart(); // "Hello World  "<br>
+console.log(`"${trimmedStart}"`);<br><br>
+// 原始字符串不会改变<br>
+console.log(`"${textWithSpaces}"`); // "  Hello World  " (未改变)
+                </div>
+                <div class="result" id="trim-start-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoTrimStart()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>6.3 trimEnd()方法</h3>
+                <p>只去除字符串结尾的空白字符。</p>
+                <div class="code-block">
+let textWithSpaces = "  Hello World  ";<br>
+let trimmedEnd = textWithSpaces.trimEnd(); // "  Hello World"<br>
+console.log(`"${trimmedEnd}"`);<br><br>
+// 原始字符串不会改变<br>
+console.log(`"${textWithSpaces}"`); // "  Hello World  " (未改变)
+                </div>
+                <div class="result" id="trim-end-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoTrimEnd()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">7. 字符访问 (Query)</h2>
+            <div class="example-card">
+                <h3>7.1 使用charAt()方法</h3>
+                <p>返回指定位置的字符。</p>
+                <div class="code-block">
+let word = "JavaScript";<br>
+let firstChar = word.charAt(0); // "J"<br>
+let lastChar = word.charAt(word.length - 1); // "t"<br>
+let middleChar = word.charAt(4); // "S"<br>
+console.log(firstChar, lastChar, middleChar);<br><br>
+// 访问不存在的索引<br>
+let outOfBounds = word.charAt(100); // "" (空字符串)<br>
+console.log(`"${outOfBounds}"`);
+                </div>
+                <div class="result" id="char-at-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoCharAt()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>7.2 使用索引访问</h3>
+                <p>使用方括号语法直接访问字符（ES5新增）。</p>
+                <div class="code-block">
+let word = "JavaScript";<br>
+let firstChar = word[0]; // "J"<br>
+let lastChar = word[word.length - 1]; // "t"<br>
+let middleChar = word[4]; // "S"<br>
+console.log(firstChar, lastChar, middleChar);<br><br>
+// 访问不存在的索引<br>
+let outOfBounds = word[100]; // undefined<br>
+console.log(outOfBounds);<br><br>
+// 注意：不能通过索引修改字符串<br>
+word[0] = "P";<br>
+console.log(word); // "JavaScript" (未改变)
+                </div>
+                <div class="result" id="index-access-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoIndexAccess()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>7.3 使用at()方法</h3>
+                <p>at()方法支持负索引，可以更方便地访问末尾的字符（ES2022新增）。</p>
+                <div class="code-block">
+let word = "JavaScript";<br>
+let lastChar = word.at(-1); // "t"<br>
+let secondLast = word.at(-2); // "p"<br>
+let firstChar = word.at(0); // "J"<br>
+console.log(lastChar, secondLast, firstChar);<br><br>
+// 与charAt()的对比<br>
+let charAtLast = word.charAt(word.length - 1); // "t"<br>
+let atLast = word.at(-1); // "t"<br>
+console.log(charAtLast, atLast); // 结果相同
+                </div>
+                <div class="result" id="at-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoAt()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">8. 字符串填充 (Update)</h2>
+            <div class="example-card">
+                <h3>8.1 padStart()方法</h3>
+                <p>在字符串开头填充指定字符，直到达到指定长度。</p>
+                <div class="code-block">
+let number = "5";<br>
+let paddedStart = number.padStart(3, "0"); // "005"<br>
+console.log(paddedStart);<br><br>
+// 用于格式化时间<br>
+let hour = "9";<br>
+let formattedHour = hour.padStart(2, "0"); // "09"<br>
+console.log(formattedHour);<br><br>
+// 使用其他字符填充<br>
+let text = "hello";<br>
+let paddedText = text.padStart(10, "*"); // "*****hello"<br>
+console.log(paddedText);<br><br>
+// 如果字符串长度已经足够或超过指定长度<br>
+let longText = "hello world";<br>
+let paddedLong = longText.padStart(5, "*"); // "hello world" (不会截断)<br>
+console.log(paddedLong);
+                </div>
+                <div class="result" id="pad-start-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoPadStart()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>8.2 padEnd()方法</h3>
+                <p>在字符串末尾填充指定字符，直到达到指定长度。</p>
+                <div class="code-block">
+let number = "5";<br>
+let paddedEnd = number.padEnd(3, "0"); // "500"<br>
+console.log(paddedEnd);<br><br>
+// 用于格式化表格<br>
+let name = "John";<br>
+let formattedName = name.padEnd(10, " "); // "John      "<br>
+console.log(`"${formattedName}"`);<br><br>
+// 使用其他字符填充<br>
+let text = "hello";<br>
+let paddedText = text.padEnd(10, "*"); // "hello*****"<br>
+console.log(paddedText);<br><br>
+// 如果字符串长度已经足够或超过指定长度<br>
+let longText = "hello world";<br>
+let paddedLong = longText.padEnd(5, "*"); // "hello world" (不会截断)<br>
+console.log(paddedLong);
+                </div>
+                <div class="result" id="pad-end-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoPadEnd()">运行示例</button>
+            </div>
+        </div>
+        
+        <h2>交互式示例</h2>
+        <div class="interactive-section">
+            <h3>自定义字符串操作</h3>
+            <input type="text" id="input-string" placeholder="输入字符串" value="Hello World">
+            <select id="string-operation">
+                <option value="concat">拼接 - concat</option>
+                <option value="replace">替换 - replace</option>
+                <option value="slice">截取 - slice</option>
+                <option value="toUpperCase">转大写 - toUpperCase</option>
+                <option value="toLowerCase">转小写 - toLowerCase</option>
+                <option value="split">分割 - split</option>
+                <option value="trim">去空格 - trim</option>
+                <option value="padStart">前填充 - padStart</option>
+                <option value="padEnd">后填充 - padEnd</option>
+            </select>
+            <div id="operation-params">
+                <input type="text" id="param1" placeholder="参数1">
+                <input type="text" id="param2" placeholder="参数2 (可选)">
+            </div>
+            <button onclick="performStringOperation()">执行操作</button>
+            <div class="result" id="string-interactive-result">
+                结果将在这里显示
+            </div>
+        </div>
+        
+        <h2>字符串方法对比表</h2>
+        <table>
+            <tr>
+                <th>方法</th>
+                <th>操作类型</th>
+                <th>描述</th>
+                <th>是否会修改原字符串</th>
+                <th>返回值</th>
+            </tr>
+            <tr>
+                <td>+</td>
+                <td>拼接</td>
+                <td>使用加号操作符连接字符串</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>+=</td>
+                <td>拼接</td>
+                <td>将字符串追加到现有字符串</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>concat()</td>
+                <td>拼接</td>
+                <td>连接两个或多个字符串</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>replace()</td>
+                <td>替换</td>
+                <td>替换第一个匹配项</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>replaceAll()</td>
+                <td>替换</td>
+                <td>替换所有匹配项</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>slice()</td>
+                <td>截取</td>
+                <td>提取字符串的一部分</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>substring()</td>
+                <td>截取</td>
+                <td>提取字符串的一部分</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>toUpperCase()</td>
+                <td>转换</td>
+                <td>转换为大写</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>toLowerCase()</td>
+                <td>转换</td>
+                <td>转换为小写</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>split()</td>
+                <td>分割</td>
+                <td>将字符串分割成数组</td>
+                <td>否</td>
+                <td>数组</td>
+            </tr>
+            <tr>
+                <td>join()</td>
+                <td>连接</td>
+                <td>将数组元素连接成字符串</td>
+                <td>否</td>
+                <td>字符串</td>
+            </tr>
+            <tr>
+                <td>trim()</td>
+                <td>清理</td>
+                <td>去除首尾空白字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>trimStart()</td>
+                <td>清理</td>
+                <td>去除开头空白字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>trimEnd()</td>
+                <td>清理</td>
+                <td>去除结尾空白字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>charAt()</td>
+                <td>访问</td>
+                <td>返回指定位置的字符</td>
+                <td>否</td>
+                <td>字符</td>
+            </tr>
+            <tr>
+                <td>[]</td>
+                <td>访问</td>
+                <td>通过索引访问字符</td>
+                <td>否</td>
+                <td>字符或undefined</td>
+            </tr>
+            <tr>
+                <td>at()</td>
+                <td>访问</td>
+                <td>支持负索引的字符访问</td>
+                <td>否</td>
+                <td>字符或undefined</td>
+            </tr>
+            <tr>
+                <td>padStart()</td>
+                <td>填充</td>
+                <td>在开头填充字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>padEnd()</td>
+                <td>填充</td>
+                <td>在末尾填充字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+        </table>
+        
+        <div class="note">
+            <h3>注意事项</h3>
+            <ul>
+                <li>字符串是不可变的，所有操作都返回新字符串，不会修改原字符串</li>
+                <li>模板字符串使用反引号(`)而不是单引号或双引号</li>
+                <li>slice()支持负索引，而substring()不支持</li>
+                <li>substr()方法已被标记为不推荐使用，建议使用slice()替代</li>
+                <li>replaceAll()是ES2021新增方法，旧版本浏览器可能不支持</li>
+                <li>at()方法是ES2022新增方法，支持负索引访问</li>
+                <li>padStart()和padEnd()是ES2017新增方法</li>
+                <li>使用索引访问字符串时，超出范围会返回undefined而不是空字符串</li>
+                <li>split()方法可以限制返回数组的长度</li>
+                <li>join()方法可以使用任意字符串作为分隔符，包括空字符串</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 演示 + 操作符
+        function demoPlus() {
+            let firstName = "John";
+            let lastName = "Doe";
+            let fullName = firstName + " " + lastName;
+            
+            let age = 25;
+            let message = "我今年" + age + "岁";
+            
+            document.getElementById('plus-result').innerHTML = 
+                `firstName: "${firstName}"<br>` +
+                `lastName: "${lastName}"<br>` +
+                `firstName + " " + lastName: "${fullName}"<br><br>` +
+                `age: ${age}<br>` +
+                `"我今年" + age + "岁": "${message}"`;
+        }
+        
+        // 演示 += 操作符
+        function demoPlusEqual() {
+            let greeting = "Hello";
+            greeting += " World";
+            
+            let sentence = "JavaScript";
+            sentence += " is";
+            sentence += " awesome!";
+            
+            document.getElementById('plus-equal-result').innerHTML = 
+                `初始值: "Hello"<br>` +
+                `greeting += " World": "${greeting}"<br><br>` +
+                `逐步拼接过程:<br>` +
+                `"JavaScript" → "JavaScript is" → "JavaScript is awesome!"<br>` +
+                `最终结果: "${sentence}"`;
+        }
+        
+        // 演示模板字符串
+        function demoTemplate() {
+            let firstName = "John";
+            let lastName = "Doe";
+            let fullName = `Hello, ${firstName} ${lastName}!`;
+            
+            let a = 5;
+            let b = 10;
+            let expression = `a + b = ${a + b}`;
+            
+            let multiline = `这是第一行
+这是第二行
+这是第三行`;
+            
+            document.getElementById('template-result').innerHTML = 
+                `firstName: "${firstName}"<br>` +
+                `lastName: "${lastName}"<br>` +
+                `\`Hello, \${firstName} \${lastName}!\`: "${fullName}"<br><br>` +
+                `a: ${a}<br>` +
+                `b: ${b}<br>` +
+                `\`a + b = \${a + b}\`: "${expression}"<br><br>` +
+                `多行字符串:<br>` +
+                `<pre>${multiline}</pre>`;
+        }
+        
+        // 演示concat方法
+        function demoConcat() {
+            let str1 = "Hello";
+            let str2 = "World";
+            let result = str1.concat(" ", str2);
+            
+            let part1 = "Java";
+            let part2 = "Script";
+            let part3 = " is";
+            let part4 = " fun!";
+            let fullString = part1.concat(part2, part3, part4);
+            
+            document.getElementById('concat-result').innerHTML = 
+                `str1: "${str1}"<br>` +
+                `str2: "${str2}"<br>` +
+                `str1.concat(" ", str2): "${result}"<br><br>` +
+                `part1: "${part1}"<br>` +
+                `part2: "${part2}"<br>` +
+                `part3: "${part3}"<br>` +
+                `part4: "${part4}"<br>` +
+                `part1.concat(part2, part3, part4): "${fullString}"<br><br>` +
+                `原始字符串未改变:<br>` +
+                `str1: "${str1}"`;
+        }
+        
+        // 演示replace方法
+        function demoReplace() {
+            let text = "Hello World";
+            let newText = text.replace("World", "JavaScript");
+            
+            let price = "价格: $100";
+            let newPrice = price.replace("100", "80");
+            
+            document.getElementById('replace-result').innerHTML = 
+                `原始字符串: "${text}"<br>` +
+                `text.replace("World", "JavaScript"): "${newText}"<br><br>` +
+                `原始字符串: "${price}"<br>` +
+                `price.replace("100", "80"): "${newPrice}"<br><br>` +
+                `原始字符串未改变:<br>` +
+                `text: "${text}"`;
+        }
+        
+        // 演示replaceAll方法
+        function demoReplaceAll() {
+            let phrase = "apple apple apple";
+            let newPhrase = phrase.replaceAll("apple", "orange");
+            
+            let sentence = "I love C++ and C++ is powerful";
+            let newSentence = sentence.replaceAll("C++", "JavaScript");
+            
+            let text = "cat and Cat and cat";
+            let newText = text.replaceAll(/cat/gi, "dog");
+            
+            document.getElementById('replace-all-result').innerHTML = 
+                `原始字符串: "${phrase}"<br>` +
+                `phrase.replaceAll("apple", "orange"): "${newPhrase}"<br><br>` +
+                `原始字符串: "${sentence}"<br>` +
+                `sentence.replaceAll("C++", "JavaScript"): "${newSentence}"<br><br>` +
+                `原始字符串: "${text}"<br>` +
+                `text.replaceAll(/cat/gi, "dog"): "${newText}"`;
+        }
+        
+        // 演示slice方法
+        function demoSlice() {
+            let str = "JavaScript";
+            let part1 = str.slice(0, 4);
+            let part2 = str.slice(4);
+            let part3 = str.slice(-6, -2);
+            
+            let email = "user@example.com";
+            let username = email.slice(0, email.indexOf("@"));
+            
+            document.getElementById('slice-result').innerHTML = 
+                `字符串: "${str}"<br>` +
+                `slice(0, 4): "${part1}"<br>` +
+                `slice(4): "${part2}"<br>` +
+                `slice(-6, -2): "${part3}"<br><br>` +
+                `邮箱: "${email}"<br>` +
+                `slice(0, indexOf("@")): "${username}"<br><br>` +
+                `原始字符串未改变:<br>` +
+                `str: "${str}"`;
+        }
+        
+        // 演示substring方法
+        function demoSubstring() {
+            let str = "JavaScript";
+            let part1 = str.substring(0, 4);
+            let part2 = str.substring(4);
+            let part3 = str.substring(2, 6);
+            let part4 = str.substring(6, 2);
+            
+            document.getElementById('substring-result').innerHTML = 
+                `字符串: "${str}"<br>` +
+                `substring(0, 4): "${part1}"<br>` +
+                `substring(4): "${part2}"<br>` +
+                `substring(2, 6): "${part3}"<br>` +
+                `substring(6, 2) (参数自动交换): "${part4}"`;
+        }
+        
+        // 演示substr方法
+        function demoSubstr() {
+            let str = "JavaScript";
+            let part1 = str.substr(0, 4);
+            let part2 = str.substr(4);
+            let part3 = str.substr(-6, 4);
+            
+            document.getElementById('substr-result').innerHTML = 
+                `字符串: "${str}"<br>` +
+                `substr(0, 4): "${part1}"<br>` +
+                `substr(4): "${part2}"<br>` +
+                `substr(-6, 4): "${part3}"<br><br>` +
+                `注意：substr()方法已被标记为不推荐使用，建议使用slice()替代`;
+        }
+        
+        // 演示toUpperCase方法
+        function demoUpperCase() {
+            let message = "Hello World";
+            let upper = message.toUpperCase();
+            
+            let special = "café";
+            let upperSpecial = special.toUpperCase();
+            
+            document.getElementById('upper-case-result').innerHTML = 
+                `原始字符串: "${message}"<br>` +
+                `toUpperCase(): "${upper}"<br><br>` +
+                `特殊字符: "${special}"<br>` +
+                `toUpperCase(): "${upperSpecial}"<br><br>` +
+                `原始字符串未改变:<br>` +
+                `message: "${message}"`;
+        }
+        
+        // 演示toLowerCase方法
+        function demoLowerCase() {
+            let message = "Hello World";
+            let lower = message.toLowerCase();
+            
+            let special = "CAFÉ";
+            let lowerSpecial = special.toLowerCase();
+            
+            document.getElementById('lower-case-result').innerHTML = 
+                `原始字符串: "${message}"<br>` +
+                `toLowerCase(): "${lower}"<br><br>` +
+                `特殊字符: "${special}"<br>` +
+                `toLowerCase(): "${lowerSpecial}"<br><br>` +
+                `原始字符串未改变:<br>` +
+                `message: "${message}"`;
+        }
+        
+        // 演示split方法
+        function demoSplit() {
+            let sentence = "Hello World JavaScript";
+            let words = sentence.split(" ");
+            
+            let csv = "apple,banana,orange";
+            let fruits = csv.split(",");
+            
+            let text = "a-b-c-d-e";
+            let parts = text.split("-", 3);
+            
+            let word = "hello";
+            let chars = word.split("");
+            
+            document.getElementById('split-result').innerHTML = 
+                `字符串: "${sentence}"<br>` +
+                `split(" "): [${words.map(w => `"${w}"`).join(', ')}]<br><br>` +
+                `字符串: "${csv}"<br>` +
+                `split(","): [${fruits.map(f => `"${f}"`).join(', ')}]<br><br>` +
+                `字符串: "${text}"<br>` +
+                `split("-", 3): [${parts.map(p => `"${p}"`).join(', ')}]<br><br>` +
+                `字符串: "${word}"<br>` +
+                `split(""): [${chars.map(c => `"${c}"`).join(', ')}]`;
+        }
+        
+        // 演示join方法
+        function demoJoin() {
+            let words = ["Hello", "World", "JavaScript"];
+            let sentence = words.join(" ");
+            
+            let fruits = ["apple", "banana", "orange"];
+            let csv = fruits.join(",");
+            
+            let numbers = [1, 2, 3, 4, 5];
+            let dashed = numbers.join("-");
+            
+            let chars = ["h", "e", "l", "l", "o"];
+            let word = chars.join("");
+            
+            document.getElementById('join-result').innerHTML = 
+                `数组: [${words.map(w => `"${w}"`).join(', ')}]<br>` +
+                `join(" "): "${sentence}"<br><br>` +
+                `数组: [${fruits.map(f => `"${f}"`).join(', ')}]<br>` +
+                `join(","): "${csv}"<br><br>` +
+                `数组: [${numbers.join(', ')}]<br>` +
+                `join("-"): "${dashed}"<br><br>` +
+                `数组: [${chars.map(c => `"${c}"`).join(', ')}]<br>` +
+                `join(""): "${word}"`;
+        }
+        
+        // 演示邮箱掩码
+        function demoMaskEmail() {
+            function maskEmail(email) {
+                let atIndex = email.indexOf("@");
+                let emailArr = email.split('');
+                for(let i = 1; i < atIndex - 1; i++) {
+                    emailArr[i] = "*";
+                }
+                return emailArr.join('');
+            }
+            
+            function secureMaskEmail(email) {
+                let [name, domain] = email.split("@");
+                if (name.length <= 2) {
+                    return "*@" + domain;
+                }
+                let maskedName = name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
+                return maskedName + "@" + domain;
+            }
+            
+            let email = "example@example.com";
+            let masked = maskEmail(email);
+            let secureMasked = secureMaskEmail("john@example.com");
+            
+            document.getElementById('mask-email-result').innerHTML = 
+                `原始邮箱: "${email}"<br>` +
+                `maskEmail(): "${masked}"<br><br>` +
+                `原始邮箱: "john@example.com"<br>` +
+                `secureMaskEmail(): "${secureMasked}"`;
+        }
+        
+        // 演示trim方法
+        function demoTrim() {
+            let textWithSpaces = "  Hello World  ";
+            let trimmed = textWithSpaces.trim();
+            
+            let textWithWhitespace = "\t Hello \n World \n";
+            let trimmedWhitespace = textWithWhitespace.trim();
+            
+            document.getElementById('trim-result').innerHTML = 
+                `原始字符串: "${textWithSpaces}"<br>` +
+                `trim(): "${trimmed}"<br><br>` +
+                `包含制表符和换行符的字符串:<br>` +
+                `原始: "${textWithWhitespace}"<br>` +
+                `trim(): "${trimmedWhitespace}"<br><br>` +
+                `原始字符串未改变:<br>` +
+                `textWithSpaces: "${textWithSpaces}"`;
+        }
+        
+        // 演示trimStart方法
+        function demoTrimStart() {
+            let textWithSpaces = "  Hello World  ";
+            let trimmedStart = textWithSpaces.trimStart();
+            
+            document.getElementById('trim-start-result').innerHTML = 
+                `原始字符串: "${textWithSpaces}"<br>` +
+                `trimStart(): "${trimmedStart}"<br><br>` +
+                `原始字符串未改变:<br>` +
+                `textWithSpaces: "${textWithSpaces}"`;
+        }
+        
+        // 演示trimEnd方法
+        function demoTrimEnd() {
+            let textWithSpaces = "  Hello World  ";
+            let trimmedEnd = textWithSpaces.trimEnd();
+            
+            document.getElementById('trim-end-result').innerHTML = 
+                `原始字符串: "${textWithSpaces}"<br>` +
+                `trimEnd(): "${trimmedEnd}"<br><br>` +
+                `原始字符串未改变:<br>` +
+                `textWithSpaces: "${textWithSpaces}"`;
+        }
+        
+        // 演示charAt方法
+        function demoCharAt() {
+            let word = "JavaScript";
+            let firstChar = word.charAt(0);
+            let lastChar = word.charAt(word.length - 1);
+            let middleChar = word.charAt(4);
+            let outOfBounds = word.charAt(100);
+            
+            document.getElementById('char-at-result').innerHTML = 
+                `字符串: "${word}"<br>` +
+                `charAt(0): "${firstChar}"<br>` +
+                `charAt(length-1): "${lastChar}"<br>` +
+                `charAt(4): "${middleChar}"<br>` +
+                `charAt(100) (超出范围): "${outOfBounds}"`;
+        }
+        
+        // 演示索引访问
+        function demoIndexAccess() {
+            let word = "JavaScript";
+            let firstChar = word[0];
+            let lastChar = word[word.length - 1];
+            let middleChar = word[4];
+            let outOfBounds = word[100];
+            
+            document.getElementById('index-access-result').innerHTML = 
+                `字符串: "${word}"<br>` +
+                `[0]: "${firstChar}"<br>` +
+                `[length-1]: "${lastChar}"<br>` +
+                `[4]: "${middleChar}"<br>` +
+                `[100] (超出范围): ${outOfBounds}<br><br>` +
+                `注意：不能通过索引修改字符串<br>` +
+                `word[0] = "P"; // 无效操作<br>` +
+                `word: "${word}" (未改变)`;
+        }
+        
+        // 演示at方法
+        function demoAt() {
+            let word = "JavaScript";
+            let lastChar = word.at(-1);
+            let secondLast = word.at(-2);
+            let firstChar = word.at(0);
+            
+            let charAtLast = word.charAt(word.length - 1);
+            let atLast = word.at(-1);
+            
+            document.getElementById('at-result').innerHTML = 
+                `字符串: "${word}"<br>` +
+                `at(-1): "${lastChar}"<br>` +
+                `at(-2): "${secondLast}"<br>` +
+                `at(0): "${firstChar}"<br><br>` +
+                `与charAt()的对比:<br>` +
+                `charAt(length-1): "${charAtLast}"<br>` +
+                `at(-1): "${atLast}"<br>` +
+                `结果相同: ${charAtLast === atLast}`;
+        }
+        
+        // 演示padStart方法
+        function demoPadStart() {
+            let number = "5";
+            let paddedStart = number.padStart(3, "0");
+            
+            let hour = "9";
+            let formattedHour = hour.padStart(2, "0");
+            
+            let text = "hello";
+            let paddedText = text.padStart(10, "*");
+            
+            let longText = "hello world";
+            let paddedLong = longText.padStart(5, "*");
+            
+            document.getElementById('pad-start-result').innerHTML = 
+                `原始字符串: "${number}"<br>` +
+                `padStart(3, "0"): "${paddedStart}"<br><br>` +
+                `原始字符串: "${hour}"<br>` +
+                `padStart(2, "0"): "${formattedHour}"<br><br>` +
+                `原始字符串: "${text}"<br>` +
+                `padStart(10, "*"): "${paddedText}"<br><br>` +
+                `原始字符串: "${longText}"<br>` +
+                `padStart(5, "*"): "${paddedLong}" (不会截断)`;
+        }
+        
+        // 演示padEnd方法
+        function demoPadEnd() {
+            let number = "5";
+            let paddedEnd = number.padEnd(3, "0");
+            
+            let name = "John";
+            let formattedName = name.padEnd(10, " ");
+            
+            let text = "hello";
+            let paddedText = text.padEnd(10, "*");
+            
+            let longText = "hello world";
+            let paddedLong = longText.padEnd(5, "*");
+            
+            document.getElementById('pad-end-result').innerHTML = 
+                `原始字符串: "${number}"<br>` +
+                `padEnd(3, "0"): "${paddedEnd}"<br><br>` +
+                `原始字符串: "${name}"<br>` +
+                `padEnd(10, " "): "${formattedName}"<br><br>` +
+                `原始字符串: "${text}"<br>` +
+                `padEnd(10, "*"): "${paddedText}"<br><br>` +
+                `原始字符串: "${longText}"<br>` +
+                `padEnd(5, "*"): "${paddedLong}" (不会截断)`;
+        }
+        
+        // 执行自定义字符串操作
+        function performStringOperation() {
+            let inputString = document.getElementById('input-string').value;
+            let operation = document.getElementById('string-operation').value;
+            let param1 = document.getElementById('param1').value;
+            let param2 = document.getElementById('param2').value;
+            
+            let result;
+            
+            switch(operation) {
+                case 'concat':
+                    if (param1) {
+                        result = inputString.concat(param1);
+                        document.getElementById('string-interactive-result').innerHTML = 
+                            `原始字符串: "${inputString}"<br>` +
+                            `执行 concat("${param1}") 后:<br>` +
+                            `结果: "${result}"`;
+                    } else {
+                        document.getElementById('string-interactive-result').innerHTML = "请输入要连接的字符串";
+                    }
+                    break;
+                case 'replace':
+                    if (param1 && param2) {
+                        result = inputString.replace(param1, param2);
+                        document.getElementById('string-interactive-result').innerHTML = 
+                            `原始字符串: "${inputString}"<br>` +
+                            `执行 replace("${param1}", "${param2}") 后:<br>` +
+                            `结果: "${result}"`;
+                    } else {
+                        document.getElementById('string-interactive-result').innerHTML = "请输入要替换的子字符串和新字符串";
+                    }
+                    break;
+                case 'slice':
+                    if (param1) {
+                        let start = parseInt(param1);
+                        let end = param2 ? parseInt(param2) : undefined;
+                        result = inputString.slice(start, end);
+                        document.getElementById('string-interactive-result').innerHTML = 
+                            `原始字符串: "${inputString}"<br>` +
+                            `执行 slice(${start}${end !== undefined ? `, ${end}` : ''}) 后:<br>` +
+                            `结果: "${result}"`;
+                    } else {
+                        document.getElementById('string-interactive-result').innerHTML = "请输入起始位置";
+                    }
+                    break;
+                case 'toUpperCase':
+                    result = inputString.toUpperCase();
+                    document.getElementById('string-interactive-result').innerHTML = 
+                        `原始字符串: "${inputString}"<br>` +
+                        `执行 toUpperCase() 后:<br>` +
+                        `结果: "${result}"`;
+                    break;
+                case 'toLowerCase':
+                    result = inputString.toLowerCase();
+                    document.getElementById('string-interactive-result').innerHTML = 
+                        `原始字符串: "${inputString}"<br>` +
+                        `执行 toLowerCase() 后:<br>` +
+                        `结果: "${result}"`;
+                    break;
+                case 'split':
+                    if (param1) {
+                        result = inputString.split(param1);
+                        document.getElementById('string-interactive-result').innerHTML = 
+                            `原始字符串: "${inputString}"<br>` +
+                            `执行 split("${param1}") 后:<br>` +
+                            `结果: [${result.map(item => `"${item}"`).join(', ')}]`;
+                    } else {
+                        document.getElementById('string-interactive-result').innerHTML = "请输入分隔符";
+                    }
+                    break;
+                case 'trim':
+                    result = inputString.trim();
+                    document.getElementById('string-interactive-result').innerHTML = 
+                        `原始字符串: "${inputString}"<br>` +
+                        `执行 trim() 后:<br>` +
+                        `结果: "${result}"`;
+                    break;
+                case 'padStart':
+                    if (param1) {
+                        let length = parseInt(param1);
+                        let padString = param2 || " ";
+                        result = inputString.padStart(length, padString);
+                        document.getElementById('string-interactive-result').innerHTML = 
+                            `原始字符串: "${inputString}"<br>` +
+                            `执行 padStart(${length}, "${padString}") 后:<br>` +
+                            `结果: "${result}"`;
+                    } else {
+                        document.getElementById('string-interactive-result').innerHTML = "请输入目标长度";
+                    }
+                    break;
+                case 'padEnd':
+                    if (param1) {
+                        let length = parseInt(param1);
+                        let padString = param2 || " ";
+                        result = inputString.padEnd(length, padString);
+                        document.getElementById('string-interactive-result').innerHTML = 
+                            `原始字符串: "${inputString}"<br>` +
+                            `执行 padEnd(${length}, "${padString}") 后:<br>` +
+                            `结果: "${result}"`;
+                    } else {
+                        document.getElementById('string-interactive-result').innerHTML = "请输入目标长度";
+                    }
+                    break;
+                default:
+                    document.getElementById('string-interactive-result').innerHTML = "未知操作";
+            }
+        }
+        
+        // 根据选择的操作更新参数输入框
+        document.getElementById('string-operation').addEventListener('change', function() {
+            const param1 = document.getElementById('param1');
+            const param2 = document.getElementById('param2');
+            
+            switch(this.value) {
+                case 'concat':
+                    param1.placeholder = '要连接的字符串';
+                    param2.placeholder = '参数2 (可选)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'none';
+                    break;
+                case 'replace':
+                    param1.placeholder = '要替换的子字符串';
+                    param2.placeholder = '新字符串';
+                    param1.style.display = 'block';
+                    param2.style.display = 'block';
+                    break;
+                case 'slice':
+                    param1.placeholder = '起始位置';
+                    param2.placeholder = '结束位置 (可选)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'block';
+                    break;
+                case 'split':
+                    param1.placeholder = '分隔符';
+                    param2.placeholder = '参数2 (可选)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'none';
+                    break;
+                case 'padStart':
+                case 'padEnd':
+                    param1.placeholder = '目标长度';
+                    param2.placeholder = '填充字符串 (默认为空格)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'block';
+                    break;
+                case 'toUpperCase':
+                case 'toLowerCase':
+                case 'trim':
+                    param1.placeholder = '参数1';
+                    param2.placeholder = '参数2 (可选)';
+                    param1.style.display = 'none';
+                    param2.style.display = 'none';
+                    break;
+                default:
+                    param1.placeholder = '参数1';
+                    param2.placeholder = '参数2 (可选)';
+                    param1.style.display = 'block';
+                    param2.style.display = 'block';
+            }
+        });
+        
+        // 初始化参数输入框
+        document.getElementById('param2').style.display = 'none';
+    </script>
+</body>
+</html>

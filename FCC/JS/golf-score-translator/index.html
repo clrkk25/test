@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Score Translator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Golf Score Translator</h1>
+        <p>输入标准杆数和击球次数，获取对应的高尔夫术语</p>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="par">标准杆数 (Par):</label>
+                <input type="number" id="par" min="1" max="10" value="4">
+            </div>
+            
+            <div class="input-group">
+                <label for="strokes">击球次数 (Strokes):</label>
+                <input type="number" id="strokes" min="1" max="20" value="4">
+            </div>
+            
+            <button onclick="translateScore()">翻译分数</button>
+        </div>
+        
+        <div class="result-section">
+            <h2>结果:</h2>
+            <div id="result" class="result-display">
+                请输入标准杆数和击球次数
+            </div>
+        </div>
+        
+        <div class="terms-table">
+            <h2>高尔夫术语对照表</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>术语</th>
+                        <th>描述</th>
+                        <th>条件</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hole-in-one!</td>
+                        <td>一杆进洞</td>
+                        <td>Par = 1</td>
+                    </tr>
+                    <tr>
+                        <td>Eagle</td>
+                        <td>老鹰球</td>
+                        <td>Strokes ≤ Par - 2</td>
+                    </tr>
+                    <tr>
+                        <td>Birdie</td>
+                        <td>小鸟球</td>
+                        <td>Strokes = Par - 1</td>
+                    </tr>
+                    <tr>
+                        <td>Par</td>
+                        <td>标准杆</td>
+                        <td>Strokes = Par</td>
+                    </tr>
+                    <tr>
+                        <td>Bogey</td>
+                        <td>柏忌</td>
+                        <td>Strokes = Par + 1</td>
+                    </tr>
+                    <tr>
+                        <td>Double Bogey</td>
+                        <td>双柏忌</td>
+                        <td>Strokes = Par + 2</td>
+                    </tr>
+                    <tr>
+                        <td>Go Home!</td>
+                        <td>回家吧!</td>
+                        <td>其他情况</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

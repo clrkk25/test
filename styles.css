@@ -297,6 +297,7 @@ footer {
         min-height: 42px;
         border-radius: 8px;
         font-size: 0.9rem;
+        target: self; /* 移动端中a的target改为self */
     }
     
     footer {

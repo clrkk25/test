@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript对象继承方法</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .method-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .method-name {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .method-description {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .example-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .run-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+            margin: 10px 0;
+        }
+
+        .run-btn:hover {
+            background: #5a67d8;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .note {
+            background: #fffbeb;
+            border-left: 4px solid #f6e05e;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .note-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #d69e2e;
+        }
+
+        @media (max-width: 768px) {
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .method-card {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .highlight {
+            background: #f0fff4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JavaScript对象继承方法详解</h1>
+            <div class="intro">
+                <p>在JavaScript中，几乎所有对象都继承自Object.prototype，这意味着它们都拥有Object.prototype上定义的方法。这些方法为所有对象提供了基础功能，使得我们可以对对象进行各种操作和检查。</p>
+                <p>理解这些继承方法对于掌握JavaScript对象模型至关重要，它们是JavaScript语言的核心组成部分。</p>
+            </div>
+        </header>
+
+        <div class="methods-grid">
+            <!-- hasOwnProperty方法 -->
+            <div class="method-card">
+                <h2 class="method-name">hasOwnProperty()</h2>
+                <div class="method-description">
+                    <p>检查对象自身是否具有指定的属性（不包括继承的属性）。</p>
+                </div>
+                
+                <div class="example-section">
+                    <div class="example-title">代码示例：</div>
+                    <pre><code>const obj = {
+  name: '张三',
+  age: 25
+};
+
+// 添加继承属性
+obj.__proto__.inheritedProp = '继承属性';
+
+console.log(obj.hasOwnProperty('name')); // true
+console.log(obj.hasOwnProperty('inheritedProp')); // false
+console.log(obj.hasOwnProperty('toString')); // false</code></pre>
+                    <button class="run-btn" onclick="runHasOwnProperty()">运行示例</button>
+                    <div class="result" id="hasOwnPropertyResult"></div>
+                </div>
+                
+                <div class="note">
+                    <div class="note-title">注意事项：</div>
+                    <p>该方法只检查对象自身的属性，不包括原型链上的属性。这对于区分对象自身属性和继承属性非常有用。</p>
+                </div>
+            </div>
+
+            <!-- toString方法 -->
+            <div class="method-card">
+                <h2 class="method-name">toString()</h2>
+                <div class="method-description">
+                    <p>返回一个表示该对象的字符串。默认返回"[object Type]"格式。</p>
+                </div>
+                
+                <div class="example-section">
+                    <div class="example-title">代码示例：</div>
+                    <pre><code>const obj = { name: '测试对象' };
+const arr = [1, 2, 3];
+const func = function() {};
+
+console.log(obj.toString()); // "[object Object]"
+console.log(arr.toString()); // "1,2,3"
+console.log(func.toString()); // "function() {}"</code></pre>
+                    <button class="run-btn" onclick="runToString()">运行示例</button>
+                    <div class="result" id="toStringResult"></div>
+                </div>
+                
+                <div class="note">
+                    <div class="note-title">注意事项：</div>
+                    <p>许多内置对象（如Array、Function）都重写了toString()方法以提供更有意义的字符串表示。可以自定义toString()方法来改变对象的字符串表示。</p>
+                </div>
+            </div>
+
+            <!-- valueOf方法 -->
+            <div class="method-card">
+                <h2 class="method-name">valueOf()</h2>
+                <div class="method-description">
+                    <p>返回对象的原始值。默认情况下返回对象本身。</p>
+                </div>
+                
+                <div class="example-section">
+                    <div class="example-title">代码示例：</div>
+                    <pre><code>const obj = { value: 42 };
+const num = new Number(10);
+const date = new Date();
+
+console.log(obj.valueOf()); // { value: 42 }
+console.log(num.valueOf()); // 10
+console.log(date.valueOf()); // 时间戳</code></pre>
+                    <button class="run-btn" onclick="runValueOf()">运行示例</button>
+                    <div class="result" id="valueOfResult"></div>
+                </div>
+                
+                <div class="note">
+                    <div class="note-title">注意事项：</div>
+                    <p>与toString()类似，许多内置对象重写了valueOf()方法。当对象需要转换为原始值时（如数学运算），JavaScript会自动调用此方法。</p>
+                </div>
+            </div>
+
+            <!-- isPrototypeOf方法 -->
+            <div class="method-card">
+                <h2 class="method-name">isPrototypeOf()</h2>
+                <div class="method-description">
+                    <p>检查一个对象是否存在于另一个对象的原型链上。</p>
+                </div>
+                
+                <div class="example-section">
+                    <div class="example-title">代码示例：</div>
+                    <pre><code>const parent = { a: 1 };
+const child = Object.create(parent);
+
+console.log(parent.isPrototypeOf(child)); // true
+console.log(Object.prototype.isPrototypeOf(child)); // true
+console.log(Object.prototype.isPrototypeOf(parent)); // true</code></pre>
+                    <button class="run-btn" onclick="runIsPrototypeOf()">运行示例</button>
+                    <div class="result" id="isPrototypeOfResult"></div>
+                </div>
+                
+                <div class="note">
+                    <div class="note-title">注意事项：</div>
+                    <p>该方法用于检查原型链关系，是理解JavaScript继承机制的重要工具。Object.prototype.isPrototypeOf()可以检查任何对象是否为JavaScript对象。</p>
+                </div>
+            </div>
+
+            <!-- propertyIsEnumerable方法 -->
+            <div class="method-card">
+                <h2 class="method-name">propertyIsEnumerable()</h2>
+                <div class="method-description">
+                    <p>检查指定的属性是否为可枚举属性（即是否可通过for...in循环遍历）。</p>
+                </div>
+                
+                <div class="example-section">
+                    <div class="example-title">代码示例：</div>
+                    <pre><code>const obj = { name: '张三', age: 25 };
+Object.defineProperty(obj, 'hidden', {
+  value: '隐藏属性',
+  enumerable: false
+});
+
+console.log(obj.propertyIsEnumerable('name')); // true
+console.log(obj.propertyIsEnumerable('hidden')); // false
+console.log(obj.propertyIsEnumerable('toString')); // false</code></pre>
+                    <button class="run-btn" onclick="runPropertyIsEnumerable()">运行示例</button>
+                    <div class="result" id="propertyIsEnumerableResult"></div>
+                </div>
+                
+                <div class="note">
+                    <div class="note-title">注意事项：</div>
+                    <p>默认情况下，对象的属性都是可枚举的，但可以通过Object.defineProperty()设置enumerable为false来创建不可枚举属性。</p>
+                </div>
+            </div>
+
+            <!-- __proto__属性 -->
+            <div class="method-card">
+                <h2 class="method-name">__proto__</h2>
+                <div class="method-description">
+                    <p>指向对象的原型（内部[[Prototype]]属性）。这是一个非标准但广泛支持的属性。</p>
+                </div>
+                
+                <div class="example-section">
+                    <div class="example-title">代码示例：</div>
+                    <pre><code>const obj = {};
+const arr = [];
+
+console.log(obj.__proto__ === Object.prototype); // true
+console.log(arr.__proto__ === Array.prototype); // true
+console.log(Array.prototype.__proto__ === Object.prototype); // true
+
+// 修改原型（不推荐）
+obj.__proto__ = { customMethod: function() { return '自定义方法'; } };
+console.log(obj.customMethod()); // "自定义方法"</code></pre>
+                    <button class="run-btn" onclick="runProto()">运行示例</button>
+                    <div class="result" id="protoResult"></div>
+                </div>
+                
+                <div class="note">
+                    <div class="note-title">注意事项：</div>
+                    <p><span class="highlight">__proto__是非标准属性</span>，虽然被大多数浏览器支持，但不推荐在生产环境中使用。应使用Object.getPrototypeOf()和Object.setPrototypeOf()替代。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // hasOwnProperty示例
+        function runHasOwnProperty() {
+            const obj = {
+                name: '张三',
+                age: 25
+            };
+            
+            // 添加继承属性
+            obj.__proto__.inheritedProp = '继承属性';
+            
+            let result = '';
+            result += `obj.hasOwnProperty('name'): ${obj.hasOwnProperty('name')}<br>`;
+            result += `obj.hasOwnProperty('inheritedProp'): ${obj.hasOwnProperty('inheritedProp')}<br>`;
+            result += `obj.hasOwnProperty('toString'): ${obj.hasOwnProperty('toString')}<br>`;
+            
+            document.getElementById('hasOwnPropertyResult').innerHTML = result;
+            document.getElementById('hasOwnPropertyResult').style.display = 'block';
+        }
+        
+        // toString示例
+        function runToString() {
+            const obj = { name: '测试对象' };
+            const arr = [1, 2, 3];
+            const func = function() {};
+            
+            let result = '';
+            result += `obj.toString(): ${obj.toString()}<br>`;
+            result += `arr.toString(): ${arr.toString()}<br>`;
+            result += `func.toString(): ${func.toString().substring(0, 20)}...<br>`;
+            
+            document.getElementById('toStringResult').innerHTML = result;
+            document.getElementById('toStringResult').style.display = 'block';
+        }
+        
+        // valueOf示例
+        function runValueOf() {
+            const obj = { value: 42 };
+            const num = new Number(10);
+            const date = new Date();
+            
+            let result = '';
+            result += `obj.valueOf(): ${JSON.stringify(obj.valueOf())}<br>`;
+            result += `num.valueOf(): ${num.valueOf()}<br>`;
+            result += `date.valueOf(): ${typeof date.valueOf()} (时间戳)<br>`;
+            
+            document.getElementById('valueOfResult').innerHTML = result;
+            document.getElementById('valueOfResult').style.display = 'block';
+        }
+        
+        // isPrototypeOf示例
+        function runIsPrototypeOf() {
+            const parent = { a: 1 };
+            const child = Object.create(parent);
+            
+            let result = '';
+            result += `parent.isPrototypeOf(child): ${parent.isPrototypeOf(child)}<br>`;
+            result += `Object.prototype.isPrototypeOf(child): ${Object.prototype.isPrototypeOf(child)}<br>`;
+            result += `Object.prototype.isPrototypeOf(parent): ${Object.prototype.isPrototypeOf(parent)}<br>`;
+            
+            document.getElementById('isPrototypeOfResult').innerHTML = result;
+            document.getElementById('isPrototypeOfResult').style.display = 'block';
+        }
+        
+        // propertyIsEnumerable示例
+        function runPropertyIsEnumerable() {
+            const obj = { name: '张三', age: 25 };
+            Object.defineProperty(obj, 'hidden', {
+                value: '隐藏属性',
+                enumerable: false
+            });
+            
+            let result = '';
+            result += `obj.propertyIsEnumerable('name'): ${obj.propertyIsEnumerable('name')}<br>`;
+            result += `obj.propertyIsEnumerable('hidden'): ${obj.propertyIsEnumerable('hidden')}<br>`;
+            result += `obj.propertyIsEnumerable('toString'): ${obj.propertyIsEnumerable('toString')}<br>`;
+            
+            document.getElementById('propertyIsEnumerableResult').innerHTML = result;
+            document.getElementById('propertyIsEnumerableResult').style.display = 'block';
+        }
+        
+        // __proto__示例
+        function runProto() {
+            const obj = {};
+            const arr = [];
+            
+            let result = '';
+            result += `obj.__proto__ === Object.prototype: ${obj.__proto__ === Object.prototype}<br>`;
+            result += `arr.__proto__ === Array.prototype: ${arr.__proto__ === Array.prototype}<br>`;
+            result += `Array.prototype.__proto__ === Object.prototype: ${Array.prototype.__proto__ === Object.prototype}<br>`;
+            
+            // 演示修改原型（仅用于演示，不推荐）
+            obj.__proto__ = { customMethod: function() { return '自定义方法'; } };
+            result += `obj.customMethod(): ${obj.customMethod()}<br>`;
+            
+            document.getElementById('protoResult').innerHTML = result;
+            document.getElementById('protoResult').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

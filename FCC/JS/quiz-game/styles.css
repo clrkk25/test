@@ -157,6 +157,8 @@ main {
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
 }
 
 #next-btn:hover, #restart-btn:hover {

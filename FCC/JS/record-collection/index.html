@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>唱片收藏管理系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>唱片收藏管理系统</h1>
+            <p>管理您的音乐收藏</p>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <h2>更新唱片信息</h2>
+                <form id="recordForm">
+                    <div class="form-group">
+                        <label for="recordId">唱片ID:</label>
+                        <input type="number" id="recordId" placeholder="例如: 2548" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="property">属性:</label>
+                        <select id="property" required>
+                            <option value="">请选择属性</option>
+                            <option value="albumTitle">专辑标题</option>
+                            <option value="artist">艺术家</option>
+                            <option value="tracks">曲目</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="value">值:</label>
+                        <input type="text" id="value" placeholder="输入值（空字符串将删除属性）" required>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button type="submit">更新唱片</button>
+                        <button type="button" id="resetBtn">重置表单</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="result-section">
+                <h2>唱片收藏</h2>
+                <div id="output"></div>
+                
+                <div class="test-cases">
+                    <h3>测试用例</h3>
+                    <button id="test1">测试1: 添加曲目到2468</button>
+                    <button id="test2">测试2: 删除属性</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 唱片收藏管理系统</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

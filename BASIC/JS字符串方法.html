@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 字符串方法详解</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h2 {
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .method-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .method-name {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .description {
+            margin: 10px 0;
+        }
+        
+        .example {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #3498db;
+        }
+        
+        code {
+            background: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            color: #333; /* 确保代码文字颜色与背景有足够的对比度 */
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .interactive-area {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        input, button {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #d4edda;
+            border-radius: 4px;
+            border: 1px solid #c3e6cb;
+            color: #155724; /* 深绿色文字，提高与浅绿背景的对比度 */
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #856404; /* 深黄色文字，提高与浅黄背景的对比度 */
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript 字符串方法详解</h1>
+    
+    <div class="method-section">
+        <h2>概述</h2>
+        <p>JavaScript 字符串是不可变的，这意味着一旦创建，字符串的值就不能改变。对字符串进行操作的方法会返回新的字符串，而不会修改原始字符串。</p>
+    </div>
+    
+    <div class="method-section">
+        <h2>1. 字符串拼接方法</h2>
+        
+        <h3><span class="method-name">+</span> 操作符</h3>
+        <div class="description">
+            <p>使用加号操作符可以连接两个或多个字符串。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str1 = "Hello";
+let str2 = "World";
+let result = str1 + " " + str2;
+console.log(result); // "Hello World"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">+=</span> 操作符</h3>
+        <div class="description">
+            <p>使用加等于操作符可以将一个字符串追加到另一个字符串。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello";
+str += " World";
+console.log(str); // "Hello World"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">concat()</span> 方法</h3>
+        <div class="description">
+            <p>concat() 方法用于连接两个或多个字符串，返回一个新的字符串。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str1 = "Hello";
+let str2 = "World";
+let result = str1.concat(" ", str2);
+console.log(result); // "Hello World"</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="concatStr1" placeholder="输入第一个字符串" value="Hello">
+            <input type="text" id="concatStr2" placeholder="输入第二个字符串" value="World">
+            <button onclick="runConcatExample()">运行 concat 示例</button>
+            <div id="concatResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>2. 字符串替换方法</h2>
+        
+        <h3><span class="method-name">replace()</span> 方法</h3>
+        <div class="description">
+            <p>replace() 方法用于在字符串中用另一个值替换指定的值，只替换第一个匹配项。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let newStr = str.replace("World", "JavaScript");
+console.log(newStr); // "Hello JavaScript"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">replaceAll()</span> 方法</h3>
+        <div class="description">
+            <p>replaceAll() 方法用于在字符串中用另一个值替换所有匹配的值。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World World";
+let newStr = str.replaceAll("World", "JavaScript");
+console.log(newStr); // "Hello JavaScript JavaScript"</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="replaceStr" placeholder="输入字符串" value="Hello World World">
+            <input type="text" id="searchValue" placeholder="查找值" value="World">
+            <input type="text" id="replaceValue" placeholder="替换值" value="JavaScript">
+            <button onclick="runReplaceExample()">运行 replace 示例</button>
+            <button onclick="runReplaceAllExample()">运行 replaceAll 示例</button>
+            <div id="replaceResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>3. 字符串截取方法</h2>
+        
+        <h3><span class="method-name">slice()</span> 方法</h3>
+        <div class="description">
+            <p>slice() 方法提取字符串的一部分，并返回新的字符串。接受两个参数：起始索引和结束索引（不包含）。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let newStr = str.slice(0, 5);
+console.log(newStr); // "Hello"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">substring()</span> 方法</h3>
+        <div class="description">
+            <p>substring() 方法提取字符串中两个指定索引之间的字符。与 slice() 类似，但不能接受负数参数。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let newStr = str.substring(0, 5);
+console.log(newStr); // "Hello"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">substr()</span> 方法</h3>
+        <div class="description">
+            <p>substr() 方法从指定索引开始提取指定数量的字符。第一个参数是起始索引，第二个参数是要提取的字符数。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let newStr = str.substr(0, 5);
+console.log(newStr); // "Hello"</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="sliceStr" placeholder="输入字符串" value="Hello World">
+            <input type="number" id="startIndex" placeholder="起始索引" value="0">
+            <input type="number" id="endIndex" placeholder="结束索引" value="5">
+            <button onclick="runSliceExample()">运行 slice 示例</button>
+            <button onclick="runSubstringExample()">运行 substring 示例</button>
+            <button onclick="runSubstrExample()">运行 substr 示例</button>
+            <div id="sliceResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>4. 大小写转换方法</h2>
+        
+        <h3><span class="method-name">toUpperCase()</span> 方法</h3>
+        <div class="description">
+            <p>toUpperCase() 方法将字符串转换为大写。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let newStr = str.toUpperCase();
+console.log(newStr); // "HELLO WORLD"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">toLowerCase()</span> 方法</h3>
+        <div class="description">
+            <p>toLowerCase() 方法将字符串转换为小写。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let newStr = str.toLowerCase();
+console.log(newStr); // "hello world"</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="caseStr" placeholder="输入字符串" value="Hello World">
+            <button onclick="runToUpperCaseExample()">转换为大写</button>
+            <button onclick="runToLowerCaseExample()">转换为小写</button>
+            <div id="caseResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>5. 分割与连接方法</h2>
+        
+        <h3><span class="method-name">split()</span> 方法</h3>
+        <div class="description">
+            <p>split() 方法将字符串分割成字符串数组，分割符由参数指定。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello,World,JavaScript";
+let arr = str.split(",");
+console.log(arr); // ["Hello", "World", "JavaScript"]</code></pre>
+        </div>
+        
+        <h3><span class="method-name">join()</span> 方法</h3>
+        <div class="description">
+            <p>join() 方法将数组元素连接成字符串，连接符由参数指定。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let arr = ["Hello", "World", "JavaScript"];
+let str = arr.join(" ");
+console.log(str); // "Hello World JavaScript"</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="splitStr" placeholder="输入字符串" value="Hello,World,JavaScript">
+            <input type="text" id="delimiter" placeholder="分隔符" value=",">
+            <button onclick="runSplitExample()">运行 split 示例</button>
+            <button onclick="runJoinExample()">运行 join 示例</button>
+            <div id="splitResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>6. 去除空格方法</h2>
+        
+        <h3><span class="method-name">trim()</span> 方法</h3>
+        <div class="description">
+            <p>trim() 方法去除字符串两端的空白字符。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "  Hello World  ";
+let newStr = str.trim();
+console.log(newStr); // "Hello World"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">trimStart()</span> 方法</h3>
+        <div class="description">
+            <p>trimStart() 方法去除字符串开头的空白字符。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "  Hello World  ";
+let newStr = str.trimStart();
+console.log(newStr); // "Hello World  "</code></pre>
+        </div>
+        
+        <h3><span class="method-name">trimEnd()</span> 方法</h3>
+        <div class="description">
+            <p>trimEnd() 方法去除字符串结尾的空白字符。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "  Hello World  ";
+let newStr = str.trimEnd();
+console.log(newStr); // "  Hello World"</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="trimStr" placeholder="输入字符串" value="  Hello World  ">
+            <button onclick="runTrimExample()">运行 trim 示例</button>
+            <button onclick="runTrimStartExample()">运行 trimStart 示例</button>
+            <button onclick="runTrimEndExample()">运行 trimEnd 示例</button>
+            <div id="trimResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>7. 字符访问方法</h2>
+        
+        <h3><span class="method-name">charAt()</span> 方法</h3>
+        <div class="description">
+            <p>charAt() 方法返回指定索引位置的字符。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let char = str.charAt(0);
+console.log(char); // "H"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">索引访问</span></h3>
+        <div class="description">
+            <p>可以使用方括号表示法直接访问字符串中指定索引位置的字符。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let char = str[0];
+console.log(char); // "H"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">at()</span> 方法</h3>
+        <div class="description">
+            <p>at() 方法接受一个整数值作为参数，并返回指定索引位置的字符，支持负索引。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let char = str.at(0);
+console.log(char); // "H"
+
+let lastChar = str.at(-1);
+console.log(lastChar); // "d"</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="charAtStr" placeholder="输入字符串" value="Hello World">
+            <input type="number" id="charIndex" placeholder="索引" value="0">
+            <button onclick="runCharAtExample()">运行 charAt 示例</button>
+            <button onclick="runIndexAccessExample()">运行索引访问示例</button>
+            <button onclick="runAtExample()">运行 at 示例</button>
+            <div id="charAtResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>8. 字符串填充方法</h2>
+        
+        <h3><span class="method-name">padStart()</span> 方法</h3>
+        <div class="description">
+            <p>padStart() 方法用另一个字符串填充当前字符串（如果需要的话），使结果字符串达到指定长度，从当前字符串的开头开始填充。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "5";
+let paddedStr = str.padStart(3, "0");
+console.log(paddedStr); // "005"</code></pre>
+        </div>
+        
+        <h3><span class="method-name">padEnd()</span> 方法</h3>
+        <div class="description">
+            <p>padEnd() 方法用另一个字符串填充当前字符串（如果需要的话），使结果字符串达到指定长度，从当前字符串的结尾开始填充。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "5";
+let paddedStr = str.padEnd(3, "0");
+console.log(paddedStr); // "500"</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="padStr" placeholder="输入字符串" value="5">
+            <input type="number" id="padLength" placeholder="目标长度" value="3">
+            <input type="text" id="padString" placeholder="填充字符串" value="0">
+            <button onclick="runPadStartExample()">运行 padStart 示例</button>
+            <button onclick="runPadEndExample()">运行 padEnd 示例</button>
+            <div id="padResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>9. 字符串搜索方法</h2>
+        
+        <h3><span class="method-name">indexOf()</span> 方法</h3>
+        <div class="description">
+            <p>indexOf() 方法返回指定值在字符串中首次出现的位置，如果未找到则返回 -1。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let index = str.indexOf("World");
+console.log(index); // 6</code></pre>
+        </div>
+        
+        <h3><span class="method-name">lastIndexOf()</span> 方法</h3>
+        <div class="description">
+            <p>lastIndexOf() 方法返回指定值在字符串中最后一次出现的位置，如果未找到则返回 -1。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World World";
+let index = str.lastIndexOf("World");
+console.log(index); // 12</code></pre>
+        </div>
+        
+        <h3><span class="method-name">includes()</span> 方法</h3>
+        <div class="description">
+            <p>includes() 方法用于检查字符串是否包含指定的子字符串，返回 true 或 false。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let result = str.includes("World");
+console.log(result); // true</code></pre>
+        </div>
+        
+        <h3><span class="method-name">startsWith()</span> 方法</h3>
+        <div class="description">
+            <p>startsWith() 方法用于检查字符串是否以指定的子字符串开头，返回 true 或 false。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let result = str.startsWith("Hello");
+console.log(result); // true</code></pre>
+        </div>
+        
+        <h3><span class="method-name">endsWith()</span> 方法</h3>
+        <div class="description">
+            <p>endsWith() 方法用于检查字符串是否以指定的子字符串结尾，返回 true 或 false。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let result = str.endsWith("World");
+console.log(result); // true</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="searchStr" placeholder="输入字符串" value="Hello World World">
+            <input type="text" id="searchTerm" placeholder="搜索词" value="World">
+            <button onclick="runIndexOfExample()">运行 indexOf 示例</button>
+            <button onclick="runLastIndexOfExample()">运行 lastIndexOf 示例</button>
+            <button onclick="runIncludesExample()">运行 includes 示例</button>
+            <button onclick="runStartsWithExample()">运行 startsWith 示例</button>
+            <button onclick="runEndsWithExample()">运行 endsWith 示例</button>
+            <div id="searchResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>10. 正则表达式匹配方法</h2>
+        
+        <h3><span class="method-name">match()</span> 方法</h3>
+        <div class="description">
+            <p>match() 方法检索字符串中与正则表达式匹配的结果，返回匹配结果数组或 null。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let result = str.match(/World/);
+console.log(result); // ["World", index: 6, input: "Hello World", groups: undefined]</code></pre>
+        </div>
+        
+        <h3><span class="method-name">search()</span> 方法</h3>
+        <div class="description">
+            <p>search() 方法检索字符串中与正则表达式匹配的子字符串，返回首次匹配项的索引，如果未找到则返回 -1。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World";
+let index = str.search(/World/);
+console.log(index); // 6</code></pre>
+        </div>
+        
+        <h3><span class="method-name">matchAll()</span> 方法</h3>
+        <div class="description">
+            <p>matchAll() 方法返回一个包含所有匹配正则表达式的结果及分组捕获的迭代器。</p>
+        </div>
+        <div class="example">
+            <div class="example-title">示例：</div>
+            <pre><code>let str = "Hello World World";
+let matches = [...str.matchAll(/World/g)];
+console.log(matches.length); // 2</code></pre>
+        </div>
+        
+        <div class="interactive-area">
+            <h3>交互式示例</h3>
+            <input type="text" id="regexStr" placeholder="输入字符串" value="Hello World World">
+            <input type="text" id="regexPattern" placeholder="正则表达式" value="World">
+            <button onclick="runMatchExample()">运行 match 示例</button>
+            <button onclick="runSearchExample()">运行 search 示例</button>
+            <button onclick="runMatchAllExample()">运行 matchAll 示例</button>
+            <div id="regexResult" class="result"></div>
+        </div>
+    </div>
+    
+    <div class="method-section">
+        <h2>字符串方法对比表</h2>
+        <table>
+            <tr>
+                <th>方法</th>
+                <th>操作类型</th>
+                <th>描述</th>
+                <th>修改原字符串</th>
+                <th>返回值</th>
+            </tr>
+            <tr>
+                <td>+</td>
+                <td>拼接</td>
+                <td>连接两个或多个字符串</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>+=</td>
+                <td>拼接</td>
+                <td>将一个字符串追加到另一个字符串</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>concat()</td>
+                <td>拼接</td>
+                <td>连接两个或多个字符串</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>replace()</td>
+                <td>替换</td>
+                <td>替换第一个匹配项</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>replaceAll()</td>
+                <td>替换</td>
+                <td>替换所有匹配项</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>slice()</td>
+                <td>截取</td>
+                <td>提取字符串的一部分</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>substring()</td>
+                <td>截取</td>
+                <td>提取字符串中两个索引之间的字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>substr()</td>
+                <td>截取</td>
+                <td>从指定索引开始提取指定数量的字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>toUpperCase()</td>
+                <td>转换</td>
+                <td>将字符串转换为大写</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>toLowerCase()</td>
+                <td>转换</td>
+                <td>将字符串转换为小写</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>split()</td>
+                <td>分割</td>
+                <td>将字符串分割成字符串数组</td>
+                <td>否</td>
+                <td>数组</td>
+            </tr>
+            <tr>
+                <td>join()</td>
+                <td>连接</td>
+                <td>将数组元素连接成字符串</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>trim()</td>
+                <td>清理</td>
+                <td>去除字符串两端的空白字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>trimStart()</td>
+                <td>清理</td>
+                <td>去除字符串开头的空白字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>trimEnd()</td>
+                <td>清理</td>
+                <td>去除字符串结尾的空白字符</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>charAt()</td>
+                <td>访问</td>
+                <td>返回指定索引位置的字符</td>
+                <td>否</td>
+                <td>字符</td>
+            </tr>
+            <tr>
+                <td>padStart()</td>
+                <td>填充</td>
+                <td>在字符串开头填充</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>padEnd()</td>
+                <td>填充</td>
+                <td>在字符串结尾填充</td>
+                <td>否</td>
+                <td>新字符串</td>
+            </tr>
+            <tr>
+                <td>indexOf()</td>
+                <td>搜索</td>
+                <td>返回指定值首次出现的位置</td>
+                <td>否</td>
+                <td>索引或-1</td>
+            </tr>
+            <tr>
+                <td>lastIndexOf()</td>
+                <td>搜索</td>
+                <td>返回指定值最后一次出现的位置</td>
+                <td>否</td>
+                <td>索引或-1</td>
+            </tr>
+            <tr>
+                <td>includes()</td>
+                <td>搜索</td>
+                <td>检查字符串是否包含指定子字符串</td>
+                <td>否</td>
+                <td>布尔值</td>
+            </tr>
+            <tr>
+                <td>startsWith()</td>
+                <td>搜索</td>
+                <td>检查字符串是否以指定子字符串开头</td>
+                <td>否</td>
+                <td>布尔值</td>
+            </tr>
+            <tr>
+                <td>endsWith()</td>
+                <td>搜索</td>
+                <td>检查字符串是否以指定子字符串结尾</td>
+                <td>否</td>
+                <td>布尔值</td>
+            </tr>
+            <tr>
+                <td>match()</td>
+                <td>正则匹配</td>
+                <td>检索与正则表达式匹配的结果</td>
+                <td>否</td>
+                <td>数组或null</td>
+            </tr>
+            <tr>
+                <td>search()</td>
+                <td>正则匹配</td>
+                <td>检索与正则表达式匹配的子字符串位置</td>
+                <td>否</td>
+                <td>索引或-1</td>
+            </tr>
+            <tr>
+                <td>matchAll()</td>
+                <td>正则匹配</td>
+                <td>返回所有匹配正则表达式的结果</td>
+                <td>否</td>
+                <td>迭代器</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="method-section">
+        <h2>注意事项</h2>
+        <div class="note">
+            <p><strong>字符串不可变性：</strong>JavaScript 中的字符串是不可变的，这意味着字符串一旦创建就不能被修改。所有字符串方法都会返回新字符串，而不会修改原始字符串。</p>
+        </div>
+        <div class="note">
+            <p><strong>兼容性：</strong>某些较新的方法如 <code>replaceAll()</code>、<code>at()</code>、<code>matchAll()</code>、<code>trimStart()</code>、<code>trimEnd()</code>、<code>padStart()</code> 和 <code>padEnd()</code> 在较老的浏览器中可能不被支持。</p>
+        </div>
+        <div class="note">
+            <p><strong>性能：</strong>对于大量字符串操作，应该考虑性能影响。例如，频繁使用 <code>+</code> 或 <code>+=</code> 操作符连接大量字符串可能不如使用数组 <code>join()</code> 方法高效。</p>
+        </div>
+    </div>
+    
+    <script>
+        // 拼接方法示例
+        function runConcatExample() {
+            let str1 = document.getElementById("concatStr1").value;
+            let str2 = document.getElementById("concatStr2").value;
+            let result = str1.concat(" ", str2);
+            document.getElementById("concatResult").innerHTML = "结果: " + result;
+        }
+        
+        // 替换方法示例
+        function runReplaceExample() {
+            let str = document.getElementById("replaceStr").value;
+            let search = document.getElementById("searchValue").value;
+            let replace = document.getElementById("replaceValue").value;
+            let result = str.replace(search, replace);
+            document.getElementById("replaceResult").innerHTML = "结果: " + result;
+        }
+        
+        function runReplaceAllExample() {
+            let str = document.getElementById("replaceStr").value;
+            let search = document.getElementById("searchValue").value;
+            let replace = document.getElementById("replaceValue").value;
+            let result = str.replaceAll(search, replace);
+            document.getElementById("replaceResult").innerHTML = "结果: " + result;
+        }
+        
+        // 截取方法示例
+        function runSliceExample() {
+            let str = document.getElementById("sliceStr").value;
+            let start = parseInt(document.getElementById("startIndex").value);
+            let end = parseInt(document.getElementById("endIndex").value);
+            let result = str.slice(start, end);
+            document.getElementById("sliceResult").innerHTML = "结果: " + result;
+        }
+        
+        function runSubstringExample() {
+            let str = document.getElementById("sliceStr").value;
+            let start = parseInt(document.getElementById("startIndex").value);
+            let end = parseInt(document.getElementById("endIndex").value);
+            let result = str.substring(start, end);
+            document.getElementById("sliceResult").innerHTML = "结果: " + result;
+        }
+        
+        function runSubstrExample() {
+            let str = document.getElementById("sliceStr").value;
+            let start = parseInt(document.getElementById("startIndex").value);
+            let length = parseInt(document.getElementById("endIndex").value) - start;
+            let result = str.substr(start, length);
+            document.getElementById("sliceResult").innerHTML = "结果: " + result;
+        }
+        
+        // 大小写转换示例
+        function runToUpperCaseExample() {
+            let str = document.getElementById("caseStr").value;
+            let result = str.toUpperCase();
+            document.getElementById("caseResult").innerHTML = "结果: " + result;
+        }
+        
+        function runToLowerCaseExample() {
+            let str = document.getElementById("caseStr").value;
+            let result = str.toLowerCase();
+            document.getElementById("caseResult").innerHTML = "结果: " + result;
+        }
+        
+        // 分割与连接示例
+        function runSplitExample() {
+            let str = document.getElementById("splitStr").value;
+            let delimiter = document.getElementById("delimiter").value || ",";
+            let result = str.split(delimiter);
+            document.getElementById("splitResult").innerHTML = "结果: " + JSON.stringify(result);
+        }
+        
+        function runJoinExample() {
+            let str = document.getElementById("splitStr").value;
+            let delimiter = document.getElementById("delimiter").value || ",";
+            let arr = str.split(delimiter);
+            let result = arr.join(" ");
+            document.getElementById("splitResult").innerHTML = "结果: " + result;
+        }
+        
+        // 去除空格示例
+        function runTrimExample() {
+            let str = document.getElementById("trimStr").value;
+            let result = str.trim();
+            document.getElementById("trimResult").innerHTML = "结果: '" + result + "'";
+        }
+        
+        function runTrimStartExample() {
+            let str = document.getElementById("trimStr").value;
+            let result = str.trimStart();
+            document.getElementById("trimResult").innerHTML = "结果: '" + result + "'";
+        }
+        
+        function runTrimEndExample() {
+            let str = document.getElementById("trimStr").value;
+            let result = str.trimEnd();
+            document.getElementById("trimResult").innerHTML = "结果: '" + result + "'";
+        }
+        
+        // 字符访问示例
+        function runCharAtExample() {
+            let str = document.getElementById("charAtStr").value;
+            let index = parseInt(document.getElementById("charIndex").value);
+            let result = str.charAt(index);
+            document.getElementById("charAtResult").innerHTML = "结果: '" + result + "'";
+        }
+        
+        function runIndexAccessExample() {
+            let str = document.getElementById("charAtStr").value;
+            let index = parseInt(document.getElementById("charIndex").value);
+            let result = str[index];
+            document.getElementById("charAtResult").innerHTML = "结果: '" + result + "'";
+        }
+        
+        function runAtExample() {
+            let str = document.getElementById("charAtStr").value;
+            let index = parseInt(document.getElementById("charIndex").value);
+            let result = str.at(index);
+            document.getElementById("charAtResult").innerHTML = "结果: '" + result + "'";
+        }
+        
+        // 字符串填充示例
+        function runPadStartExample() {
+            let str = document.getElementById("padStr").value;
+            let length = parseInt(document.getElementById("padLength").value);
+            let padStr = document.getElementById("padString").value;
+            let result = str.padStart(length, padStr);
+            document.getElementById("padResult").innerHTML = "结果: '" + result + "'";
+        }
+        
+        function runPadEndExample() {
+            let str = document.getElementById("padStr").value;
+            let length = parseInt(document.getElementById("padLength").value);
+            let padStr = document.getElementById("padString").value;
+            let result = str.padEnd(length, padStr);
+            document.getElementById("padResult").innerHTML = "结果: '" + result + "'";
+        }
+        
+        // 字符串搜索示例
+        function runIndexOfExample() {
+            let str = document.getElementById("searchStr").value;
+            let term = document.getElementById("searchTerm").value;
+            let result = str.indexOf(term);
+            document.getElementById("searchResult").innerHTML = "结果: " + result;
+        }
+        
+        function runLastIndexOfExample() {
+            let str = document.getElementById("searchStr").value;
+            let term = document.getElementById("searchTerm").value;
+            let result = str.lastIndexOf(term);
+            document.getElementById("searchResult").innerHTML = "结果: " + result;
+        }
+        
+        function runIncludesExample() {
+            let str = document.getElementById("searchStr").value;
+            let term = document.getElementById("searchTerm").value;
+            let result = str.includes(term);
+            document.getElementById("searchResult").innerHTML = "结果: " + result;
+        }
+        
+        function runStartsWithExample() {
+            let str = document.getElementById("searchStr").value;
+            let term = document.getElementById("searchTerm").value;
+            let result = str.startsWith(term);
+            document.getElementById("searchResult").innerHTML = "结果: " + result;
+        }
+        
+        function runEndsWithExample() {
+            let str = document.getElementById("searchStr").value;
+            let term = document.getElementById("searchTerm").value;
+            let result = str.endsWith(term);
+            document.getElementById("searchResult").innerHTML = "结果: " + result;
+        }
+        
+        // 正则表达式匹配示例
+        function runMatchExample() {
+            let str = document.getElementById("regexStr").value;
+            let pattern = document.getElementById("regexPattern").value;
+            try {
+                let regex = new RegExp(pattern, "g");
+                let result = str.match(regex);
+                document.getElementById("regexResult").innerHTML = "结果: " + JSON.stringify(result);
+            } catch (e) {
+                document.getElementById("regexResult").innerHTML = "错误: " + e.message;
+            }
+        }
+        
+        function runSearchExample() {
+            let str = document.getElementById("regexStr").value;
+            let pattern = document.getElementById("regexPattern").value;
+            try {
+                let regex = new RegExp(pattern);
+                let result = str.search(regex);
+                document.getElementById("regexResult").innerHTML = "结果: " + result;
+            } catch (e) {
+                document.getElementById("regexResult").innerHTML = "错误: " + e.message;
+            }
+        }
+        
+        function runMatchAllExample() {
+            let str = document.getElementById("regexStr").value;
+            let pattern = document.getElementById("regexPattern").value;
+            try {
+                let regex = new RegExp(pattern, "g");
+                let matches = [...str.matchAll(regex)];
+                document.getElementById("regexResult").innerHTML = "匹配次数: " + matches.length + "<br>结果: " + JSON.stringify(matches.map(m => m[0]));
+            } catch (e) {
+                document.getElementById("regexResult").innerHTML = "错误: " + e.message;
+            }
+        }
+    </script>
+</body>
+</html>

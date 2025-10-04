@@ -50,10 +50,12 @@ const questions = [
 ];
 
 // 游戏状态变量
-let currentQuestion = null;
+let currentQuestions = []; // 当前一轮的三个问题
+let currentQuestionIndex = 0; // 当前问题的索引
 let score = 0;
 let totalQuestions = 0;
 let answered = false;
+let usedQuestions = []; // 已使用过的问题索引
 
 // DOM元素
 const categoryElement = document.getElementById('category');
@@ -78,21 +80,45 @@ function initGame() {
     score = 0;
     totalQuestions = 0;
     answered = false;
+    currentQuestionIndex = 0;
+    usedQuestions = [];
     gameOverElement.style.display = 'none';
-    loadQuestion();
+    nextButton.style.display = 'block';
+    loadQuestionsBatch();
     updateScore();
 }
 
-// 加载问题
-function loadQuestion() {
-    // 如果所有问题都答完了，显示游戏结束界面
-    if (totalQuestions >= questions.length) {
+// 加载一批（三个）不重复的问题
+function loadQuestionsBatch() {
+    if (usedQuestions.length >= 3) {
         showGameOver();
+        // 隐藏下一题按钮
+        nextButton.style.display = 'none';
         return;
     }
+
+    currentQuestions = [];
+    const availableIndices = questions.map((_, index) => index).filter(index => !usedQuestions.includes(index));
     
-    // 获取随机问题
-    currentQuestion = getRandomQuestion(questions);
+    for (let i = 0; i < Math.min(3, availableIndices.length); i++) {
+        const randomIndex = Math.floor(Math.random() * availableIndices.length);
+        const questionIndex = availableIndices[randomIndex];
+        currentQuestions.push(questions[questionIndex]);
+        availableIndices.splice(randomIndex, 1);
+    }
+
+    currentQuestionIndex = 0;
+    loadSingleQuestion();
+}
+
+// 加载单个问题
+function loadSingleQuestion() {
+    if (currentQuestionIndex >= currentQuestions.length) {
+        loadQuestionsBatch();
+        return;
+    }
+
+    const currentQuestion = currentQuestions[currentQuestionIndex];
     
     // 显示问题和选项
     categoryElement.textContent = currentQuestion.category;
@@ -110,18 +136,13 @@ function loadQuestion() {
     answered = false;
 }
 
-// 获取随机问题
-function getRandomQuestion(arr) {
-    let num = Math.floor(Math.random() * arr.length);
-    return arr[num];
-}
-
 // 处理选项点击
 function handleChoiceClick(choiceIndex) {
     if (answered) return;
     
     answered = true;
     totalQuestions++;
+    const currentQuestion = currentQuestions[currentQuestionIndex];
     
     const selectedChoice = currentQuestion.choices[choiceIndex];
     const isCorrect = selectedChoice === currentQuestion.answer;
@@ -149,6 +170,25 @@ function handleChoiceClick(choiceIndex) {
     
     // 更新得分显示
     updateScore();
+    
+    // 记录已使用的问题
+    if (!usedQuestions.includes(questions.indexOf(currentQuestion))) {
+        usedQuestions.push(questions.indexOf(currentQuestion));
+    }
+
+    // 检查是否已经回答了3个问题，如果是则显示游戏结束并隐藏下一题按钮
+    if (usedQuestions.length >= 3) {
+        showGameOver();
+        nextButton.style.display = 'none';
+    }
+}
+
+// 加载下一个问题
+function loadNextQuestion() {
+    if (answered) {
+        currentQuestionIndex++;
+        loadSingleQuestion();
+    }
 }
 
 // 更新得分显示
@@ -169,11 +209,7 @@ choiceElements[0].addEventListener('click', () => handleChoiceClick(0));
 choiceElements[1].addEventListener('click', () => handleChoiceClick(1));
 choiceElements[2].addEventListener('click', () => handleChoiceClick(2));
 
-nextButton.addEventListener('click', () => {
-    if (answered) {
-        loadQuestion();
-    }
-});
+nextButton.addEventListener('click', loadNextQuestion);
 
 restartButton.addEventListener('click', () => {
     initGame();

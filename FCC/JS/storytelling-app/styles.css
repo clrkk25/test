@@ -1,0 +1,211 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --dark-grey: #1b1b32;
+    --black: #000;
+    --white: #fff;
+    --light-grey: #f5f6f7;
+    --golden-yellow: #fecc4c;
+    --yellow: #ffcc4c;
+    --gold: #feac32;
+    --orange: #ffac33;
+    --dark-orange: #f89808;
+    --scary-red: #ee4b2b;
+    --funny-yellow: #f1be32;
+    --adventure-green: #acd157;
+    --transition-speed: 0.3s;
+}
+
+body {
+    background: linear-gradient(135deg, var(--dark-grey) 0%, #0a0a17 100%);
+    color: var(--white);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0 30px;
+    font-size: 2.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to right, var(--golden-yellow), var(--orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, var(--golden-yellow), var(--orange));
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+.story-container {
+    margin: auto;
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 15px;
+    border-color: var(--white);
+    background: rgba(27, 27, 50, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-speed) ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+}
+
+.story-container.scary {
+    border-color: var(--scary-red);
+    box-shadow: 0 0 20px var(--scary-red);
+}
+
+.story-container.funny {
+    border-color: var(--funny-yellow);
+    box-shadow: 0 0 20px var(--funny-yellow);
+}
+
+.story-container.adventure {
+    border-color: var(--adventure-green);
+    box-shadow: 0 0 20px var(--adventure-green);
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+@media (min-width: 760px) {
+    .btn-container {
+        flex-direction: row;
+        gap: 25px;
+    }
+}
+
+#result {
+    margin-top: 15px;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: all var(--transition-speed) ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#result.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn {
+    cursor: pointer;
+    width: 220px;
+    padding: 15px 20px;
+    margin: 0;
+    color: var(--black);
+    background-color: var(--gold);
+    background-image: linear-gradient(var(--golden-yellow), var(--orange));
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn.scary {
+    background-image: linear-gradient(to bottom, #ff6b6b, var(--scary-red));
+    box-shadow: 0 4px 8px rgba(238, 75, 43, 0.3);
+}
+
+.btn.scary:hover {
+    box-shadow: 0 6px 12px rgba(238, 75, 43, 0.4);
+}
+
+.btn.funny {
+    background-image: linear-gradient(to bottom, #ffd93d, var(--funny-yellow));
+    box-shadow: 0 4px 8px rgba(241, 190, 50, 0.3);
+}
+
+.btn.funny:hover {
+    box-shadow: 0 6px 12px rgba(241, 190, 50, 0.4);
+}
+
+.btn.adventure {
+    background-image: linear-gradient(to bottom, #6cff74, var(--adventure-green));
+    box-shadow: 0 4px 8px rgba(172, 209, 87, 0.3);
+}
+
+.btn.adventure:hover {
+    box-shadow: 0 6px 12px rgba(172, 209, 87, 0.4);
+}
+
+/* 故事类型图标 */
+.btn.scary::after {
+    content: '👻';
+    margin-left: 8px;
+}
+
+.btn.funny::after {
+    content: '😂';
+    margin-left: 8px;
+}
+
+.btn.adventure::after {
+    content: '🗺️';
+    margin-left: 8px;
+}

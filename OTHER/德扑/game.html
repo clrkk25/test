@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>德州扑克 - 游戏进行中</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 游戏信息栏 -->
+        <header class="game-header">
+            <div class="game-info">
+                <span id="gameStage">Pre-flop</span>
+                <span id="potAmount">底池: 0</span>
+                <span id="currentPlayer">当前玩家: -</span>
+            </div>
+            <button id="backToMenu" class="menu-btn">返回菜单</button>
+        </header>
+
+        <!-- 游戏主区域 -->
+        <main class="game-main">
+            <!-- 玩家区域 -->
+            <div class="players-container">
+                <!-- 玩家1 -->
+                <div id="player1" class="player-seat player-1">
+                    <div class="player-info">
+                        <span class="player-name">玩家1</span>
+                        <span class="player-chips">筹码: 1000</span>
+                        <span class="player-bet">下注: 0</span>
+                    </div>
+                    <div class="player-cards">
+                        <div class="card back"></div>
+                        <div class="card back"></div>
+                    </div>
+                    <div class="player-status">等待中...</div>
+                </div>
+
+                <!-- 玩家2 -->
+                <div id="player2" class="player-seat player-2">
+                    <div class="player-info">
+                        <span class="player-name">玩家2</span>
+                        <span class="player-chips">筹码: 1000</span>
+                        <span class="player-bet">下注: 0</span>
+                    </div>
+                    <div class="player-cards">
+                        <div class="card back"></div>
+                        <div class="card back"></div>
+                    </div>
+                    <div class="player-status">等待中...</div>
+                </div>
+
+                <!-- 玩家3 -->
+                <div id="player3" class="player-seat player-3">
+                    <div class="player-info">
+                        <span class="player-name">玩家3</span>
+                        <span class="player-chips">筹码: 1000</span>
+                        <span class="player-bet">下注: 0</span>
+                    </div>
+                    <div class="player-cards">
+                        <div class="card back"></div>
+                        <div class="card back"></div>
+                    </div>
+                    <div class="player-status">等待中...</div>
+                </div>
+            </div>
+
+            <!-- 牌桌中央区域 -->
+            <div class="table-center">
+                <div class="community-cards">
+                    <div class="card-placeholder">Flop</div>
+                    <div class="card-placeholder">Flop</div>
+                    <div class="card-placeholder">Flop</div>
+                    <div class="card-placeholder">Turn</div>
+                    <div class="card-placeholder">River</div>
+                </div>
+                <div class="pot-display">
+                    <div id="pot" class="pot">底池: 0</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 操作区域 -->
+        <footer class="game-controls">
+            <div class="action-buttons">
+                <button id="betBtn" class="action-btn" disabled>下注</button>
+                <button id="checkBtn" class="action-btn" disabled>过牌</button>
+                <button id="callBtn" class="action-btn" disabled>跟注</button>
+                <button id="raiseBtn" class="action-btn" disabled>加注</button>
+                <button id="foldBtn" class="action-btn" disabled>弃牌</button>
+            </div>
+            
+
+            
+            <div class="bet-controls">
+                <!-- 砝码显示区域 -->
+                <div class="chips-display">
+                    <div class="chips-total">下注总额: <span id="betTotal">0</span></div>
+                    <div class="chips-container" id="chipsContainer">
+                        <!-- 砝码图标将动态显示在这里 -->
+                    </div>
+                </div>
+                
+                <!-- 砝码选择按钮 -->
+                <div class="chips-selection">
+                    <button class="chip-btn" data-value="10">10</button>
+                    <button class="chip-btn" data-value="20">20</button>
+                    <button class="chip-btn" data-value="50">50</button>
+                    <button class="chip-btn" data-value="100">100</button>
+                </div>
+            </div>
+            
+            <div class="game-log">
+                <div id="logMessages" class="log-messages">
+                    <div>游戏即将开始...</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 游戏结束显示区域 -->
+    <div id="gameOverDisplay" class="game-over-display hidden">
+        <div class="game-over-content">
+            <h3 id="winnerTitle">游戏结束</h3>
+            <div id="winnerInfo"></div>
+            <div class="game-over-buttons">
+                <button id="playAgain" class="game-over-btn">再玩一次</button>
+                <button id="backToMenuFromGame" class="game-over-btn">返回菜单</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="poker.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

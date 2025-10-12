@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>德州扑克 - 菜单</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="menu-container">
+        <header class="menu-header">
+            <h1>🎮 德州扑克</h1>
+            <p>单机版德州扑克游戏</p>
+        </header>
+        
+        <main class="menu-content">
+            <div class="game-info">
+                <h2>游戏特色</h2>
+                <ul>
+                    <li>🎯 完整的德州扑克游戏体验</li>
+                    <li>🤖 智能AI对手（激进型 + 平衡型）</li>
+                    <li>🎮 自动开始，随机位置分配</li>
+                    <li>⏱️ 真实思考时间模拟</li>
+                </ul>
+            </div>
+            
+            <div class="start-section">
+                <button id="startGame" class="start-btn">开始游戏</button>
+                <div class="rules-toggle">
+                    <button id="toggleRules" class="rules-btn">查看游戏规则</button>
+                </div>
+            </div>
+            
+            <div id="rulesPanel" class="rules-panel hidden">
+                <h3>游戏规则</h3>
+                <div class="rules-content">
+                    <h4>游戏流程</h4>
+                    <ol>
+                        <li><strong>Pre-flop</strong>: 发玩家手牌，第一轮下注</li>
+                        <li><strong>Flop</strong>: 发3张公共牌，第二轮下注</li>
+                        <li><strong>Turn</strong>: 发第4张公共牌，第三轮下注</li>
+                        <li><strong>River</strong>: 发第5张公共牌，最后一轮下注</li>
+                        <li><strong>Showdown</strong>: 摊牌比较，决定胜负</li>
+                    </ol>
+                    
+                    <h4>操作说明</h4>
+                    <ul>
+                        <li><strong>下注 (Bet)</strong>: 主动下注指定金额</li>
+                        <li><strong>过牌 (Check)</strong>: 当前无人下注时选择过牌</li>
+                        <li><strong>跟注 (Call)</strong>: 跟注当前最高下注额</li>
+                        <li><strong>弃牌 (Fold)</strong>: 放弃当前手牌</li>
+                        <li><strong>加注 (Raise)</strong>: 在跟注基础上增加下注</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="menu-footer">
+            <p>© 2024 德州扑克游戏 | 单机版</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

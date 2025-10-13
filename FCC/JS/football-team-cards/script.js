@@ -86,11 +86,11 @@ function displayPlayerCards(position) {
     if (position === "all" || player.position === position) {
       const card = document.createElement("div");
       card.classList.add("player-card");
-      if(player.isCaptain) {
-        card.innerHTML = `<h2>(Captain) ${player.name}</h2><p>Position: ${player.position}</p>`;
-      } else {
-        card.innerHTML = `<h2>${player.name}</h2><p>Position: ${player.position}</p>`;
-      }
+      card.classList.add(player.position); // 添加位置类名用于样式区分
+      
+      // 使用徽章显示队长信息
+      const captainBadge = player.isCaptain ? '<span class="captain-badge">队长</span>' : '';
+      card.innerHTML = `<h2>${player.name}${captainBadge}</h2><p>位置: ${player.position}</p>`;
       playerCards.appendChild(card);
     }
   });

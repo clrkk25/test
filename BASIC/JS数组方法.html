@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS数组方法详解</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .overview {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #2196f3;
+        }
+        .method-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .method-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .section-title {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        .example-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .result {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .interactive-section {
+            background: #fff3e0;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 1px solid #ffe0b2;
+        }
+        input, select {
+            padding: 12px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            width: calc(100% - 40px);
+            max-width: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        tr:hover {
+            background: #e8f4f8;
+        }
+        .note {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            input, select {
+                width: calc(100% - 24px);
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JS数组方法详解</h1>
+        
+        <div class="overview">
+            <h2>概述</h2>
+            <p>JavaScript数组提供了丰富的内置方法来操作和处理数据。这些方法可以分为几大类：遍历/转换方法（如map）、筛选方法（如filter）、聚合方法（如reduce）、排序方法（如sort）等。掌握这些数组方法对于高效处理数据集合至关重要。</p>
+            <p>在本教程中，我们将详细介绍JavaScript中数组的各种重要方法，包括map、filter、reduce、forEach、find、some、every、sort等，并提供交互式示例帮助理解。</p>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">1. map() 方法 - 转换数组</h2>
+            <div class="example-card">
+                <h3>1.1 基本用法</h3>
+                <p>map()方法创建一个新数组，其结果是调用提供的函数处理原数组中每个元素的返回值。</p>
+                <div class="code-block">
+let numbers = [1, 2, 3, 4, 5];<br>
+let doubled = numbers.map(x => x * 2);<br>
+console.log(doubled); // [2, 4, 6, 8, 10]<br>
+console.log(numbers); // [1, 2, 3, 4, 5] (原数组未改变)
+                </div>
+                <div class="result" id="map-result-1">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoMap1()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>1.2 对象数组转换</h3>
+                <p>map()常用于将对象数组转换为其他形式的数组。</p>
+                <div class="code-block">
+let users = [<br>
+  { name: 'Alice', age: 25 },<br>
+  { name: 'Bob', age: 30 },<br>
+  { name: 'Charlie', age: 35 }<br>
+];<br><br>
+let names = users.map(user => user.name);<br>
+console.log(names); // ['Alice', 'Bob', 'Charlie']<br><br>
+let userDescriptions = users.map(user => `${user.name} is ${user.age} years old`);<br>
+console.log(userDescriptions);<br>
+// ['Alice is 25 years old', 'Bob is 30 years old', 'Charlie is 35 years old']
+                </div>
+                <div class="result" id="map-result-2">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoMap2()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">2. filter() 方法 - 筛选数组</h2>
+            <div class="example-card">
+                <h3>2.1 基本筛选</h3>
+                <p>filter()方法创建一个新数组，包含通过所提供函数实现的测试的所有元素。</p>
+                <div class="code-block">
+let numbers = [1, 2, 3, 4, 5, 6];<br>
+let evenNumbers = numbers.filter(num => num % 2 === 0);<br>
+console.log(evenNumbers); // [2, 4, 6]<br>
+console.log(numbers); // [1, 2, 3, 4, 5, 6] (原数组未改变)
+                </div>
+                <div class="result" id="filter-result-1">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoFilter1()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>2.2 对象数组筛选</h3>
+                <p>filter()常用于根据条件筛选对象数组。</p>
+                <div class="code-block">
+let products = [<br>
+  { name: '苹果', price: 5 },<br>
+  { name: '香蕉', price: 3 },<br>
+  { name: '橙子', price: 4 },<br>
+  { name: '葡萄', price: 8 }<br>
+];<br><br>
+let expensiveProducts = products.filter(p => p.price > 4);<br>
+console.log(expensiveProducts);<br>
+// [{ name: '苹果', price: 5 }, { name: '葡萄', price: 8 }]
+                </div>
+                <div class="result" id="filter-result-2">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoFilter2()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">3. reduce() 方法 - 聚合数组</h2>
+            <div class="example-card">
+                <h3>3.1 基本聚合</h3>
+                <p>reduce()方法对数组中的每个元素执行一个reducer函数，将其结果汇总为单个返回值。</p>
+                <div class="code-block">
+let numbers = [1, 2, 3, 4, 5];<br>
+let sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);<br>
+console.log(sum); // 15<br><br>
+// 计算数组中所有数字的乘积<br>
+let product = numbers.reduce((acc, curr) => acc * curr, 1);<br>
+console.log(product); // 120
+                </div>
+                <div class="result" id="reduce-result-1">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoReduce1()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>3.2 复杂聚合</h3>
+                <p>reduce()可以用于更复杂的聚合操作，如统计或分组。</p>
+                <div class="code-block">
+let votes = ['A', 'B', 'A', 'C', 'B', 'A'];<br>
+let voteCount = votes.reduce((acc, vote) => {<br>
+  acc[vote] = (acc[vote] || 0) + 1;<br>
+  return acc;<br>
+}, {});<br>
+console.log(voteCount); // { A: 3, B: 2, C: 1 }
+                </div>
+                <div class="result" id="reduce-result-2">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoReduce2()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">4. forEach() 方法 - 遍历数组</h2>
+            <div class="example-card">
+                <h3>4.1 基本遍历</h3>
+                <p>forEach()方法对数组的每个元素执行一次提供的函数，不返回任何值(undefined)。</p>
+                <div class="code-block">
+let fruits = ['apple', 'banana', 'orange'];<br>
+fruits.forEach(fruit => {<br>
+  console.log(fruit.toUpperCase());<br>
+});<br>
+// 输出:<br>
+// APPLE<br>
+// BANANA<br>
+// ORANGE
+                </div>
+                <div class="result" id="foreach-result-1">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoForEach1()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>4.2 带索引的遍历</h3>
+                <p>forEach()可以访问元素的索引和整个数组。</p>
+                <div class="code-block">
+let colors = ['red', 'green', 'blue'];<br>
+colors.forEach((color, index) => {<br>
+  console.log(`${index}: ${color}`);<br>
+});<br>
+// 输出:<br>
+// 0: red<br>
+// 1: green<br>
+// 2: blue
+                </div>
+                <div class="result" id="foreach-result-2">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoForEach2()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">5. 其他重要数组方法</h2>
+            <div class="example-card">
+                <h3>5.1 find() 和 findIndex()</h3>
+                <p>find()返回数组中满足提供的测试函数的第一个元素的值，findIndex()返回索引。</p>
+                <div class="code-block">
+let users = [<br>
+  { id: 1, name: 'Alice' },<br>
+  { id: 2, name: 'Bob' },<br>
+  { id: 3, name: 'Charlie' }<br>
+];<br><br>
+let user = users.find(u => u.id === 2);<br>
+console.log(user); // { id: 2, name: 'Bob' }<br><br>
+let userIndex = users.findIndex(u => u.name === 'Charlie');<br>
+console.log(userIndex); // 2
+                </div>
+                <div class="result" id="find-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoFind()">运行示例</button>
+            </div>
+            
+            <div class="example-card">
+                <h3>5.2 some() 和 every()</h3>
+                <p>some()测试数组中是否至少有一个元素通过测试，every()测试是否所有元素都通过测试。</p>
+                <div class="code-block">
+let numbers = [1, 2, 3, 4, 5];<br><br>
+let hasEven = numbers.some(num => num % 2 === 0);<br>
+console.log(hasEven); // true<br><br>
+let allPositive = numbers.every(num => num > 0);<br>
+console.log(allPositive); // true
+                </div>
+                <div class="result" id="some-every-result">
+                    点击按钮查看结果
+                </div>
+                <button onclick="demoSomeEvery()">运行示例</button>
+            </div>
+        </div>
+        
+        <div class="method-section">
+            <h2 class="section-title">6. 数组方法对比表</h2>
+            <div class="example-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>方法</th>
+                            <th>用途</th>
+                            <th>返回值</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>map()</td>
+                            <td>转换数组中的每个元素</td>
+                            <td>新数组</td>
+                        </tr>
+                        <tr>
+                            <td>filter()</td>
+                            <td>筛选满足条件的元素</td>
+                            <td>新数组（较短或相同长度）</td>
+                        </tr>
+                        <tr>
+                            <td>forEach()</td>
+                            <td>对每个元素执行操作</td>
+                            <td>undefined</td>
+                        </tr>
+                        <tr>
+                            <td>reduce()</td>
+                            <td>将数组归约为单个值</td>
+                            <td>单个值</td>
+                        </tr>
+                        <tr>
+                            <td>find()</td>
+                            <td>查找满足条件的第一个元素</td>
+                            <td>元素值或undefined</td>
+                        </tr>
+                        <tr>
+                            <td>findIndex()</td>
+                            <td>查找满足条件的第一个元素索引</td>
+                            <td>索引或-1</td>
+                        </tr>
+                        <tr>
+                            <td>some()</td>
+                            <td>检查是否至少一个元素满足条件</td>
+                            <td>布尔值</td>
+                        </tr>
+                        <tr>
+                            <td>every()</td>
+                            <td>检查是否所有元素都满足条件</td>
+                            <td>布尔值</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="interactive-section">
+            <h2>交互式示例</h2>
+            <h3>自定义数组操作</h3>
+            <input type="text" id="input-array" placeholder="输入数组元素，用逗号分隔" value="1,2,3,4,5">
+            <select id="array-operation">
+                <option value="map">map (转换每个元素)</option>
+                <option value="filter">filter (筛选元素)</option>
+                <option value="reduce">reduce (聚合数组)</option>
+                <option value="find">find (查找元素)</option>
+            </select>
+            <div id="operation-params">
+                <input type="text" id="param1" placeholder="操作参数 (如: x => x * 2)">
+                <input type="text" id="param2" placeholder="reduce初始值 (可选)" value="0">
+            </div>
+            <button onclick="performArrayOperation()">执行操作</button>
+            <div class="result" id="array-interactive-result"></div>
+        </div>
+    </div>
+
+    <script>
+        // map示例
+        function demoMap1() {
+            let numbers = [1, 2, 3, 4, 5];
+            let doubled = numbers.map(x => x * 2);
+            document.getElementById('map-result-1').innerHTML = 
+                `原数组: [${numbers}]<br>转换后: [${doubled}]`;
+        }
+        
+        function demoMap2() {
+            let users = [
+                { name: 'Alice', age: 25 },
+                { name: 'Bob', age: 30 },
+                { name: 'Charlie', age: 35 }
+            ];
+            let names = users.map(user => user.name);
+            let userDescriptions = users.map(user => `${user.name} is ${user.age} years old`);
+            document.getElementById('map-result-2').innerHTML = 
+                `原数组: ${JSON.stringify(users)}<br>` +
+                `提取名字: [${names}]<br>` +
+                `描述信息: [${userDescriptions.join(', ')}]`;
+        }
+        
+        // filter示例
+        function demoFilter1() {
+            let numbers = [1, 2, 3, 4, 5, 6];
+            let evenNumbers = numbers.filter(num => num % 2 === 0);
+            document.getElementById('filter-result-1').innerHTML = 
+                `原数组: [${numbers}]<br>偶数: [${evenNumbers}]`;
+        }
+        
+        function demoFilter2() {
+            let products = [
+                { name: '苹果', price: 5 },
+                { name: '香蕉', price: 3 },
+                { name: '橙子', price: 4 },
+                { name: '葡萄', price: 8 }
+            ];
+            let expensiveProducts = products.filter(p => p.price > 4);
+            document.getElementById('filter-result-2').innerHTML = 
+                `原数组: ${JSON.stringify(products)}<br>` +
+                `价格大于4的商品: ${JSON.stringify(expensiveProducts)}`;
+        }
+        
+        // reduce示例
+        function demoReduce1() {
+            let numbers = [1, 2, 3, 4, 5];
+            let sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+            let product = numbers.reduce((acc, curr) => acc * curr, 1);
+            document.getElementById('reduce-result-1').innerHTML = 
+                `原数组: [${numbers}]<br>求和: ${sum}<br>乘积: ${product}`;
+        }
+        
+        function demoReduce2() {
+            let votes = ['A', 'B', 'A', 'C', 'B', 'A'];
+            let voteCount = votes.reduce((acc, vote) => {
+                acc[vote] = (acc[vote] || 0) + 1;
+                return acc;
+            }, {});
+            document.getElementById('reduce-result-2').innerHTML = 
+                `投票数组: [${votes}]<br>统计结果: ${JSON.stringify(voteCount)}`;
+        }
+        
+        // forEach示例
+        function demoForEach1() {
+            let fruits = ['apple', 'banana', 'orange'];
+            let output = [];
+            fruits.forEach(fruit => {
+                output.push(fruit.toUpperCase());
+            });
+            document.getElementById('foreach-result-1').innerHTML = 
+                `原数组: [${fruits}]<br>转换后: [${output}]`;
+        }
+        
+        function demoForEach2() {
+            let colors = ['red', 'green', 'blue'];
+            let output = [];
+            colors.forEach((color, index) => {
+                output.push(`${index}: ${color}`);
+            });
+            document.getElementById('foreach-result-2').innerHTML = 
+                `原数组: [${colors}]<br>带索引: [${output.join(', ')}]`;
+        }
+        
+        // find示例
+        function demoFind() {
+            let users = [
+                { id: 1, name: 'Alice' },
+                { id: 2, name: 'Bob' },
+                { id: 3, name: 'Charlie' }
+            ];
+            let user = users.find(u => u.id === 2);
+            let userIndex = users.findIndex(u => u.name === 'Charlie');
+            document.getElementById('find-result').innerHTML = 
+                `原数组: ${JSON.stringify(users)}<br>` +
+                `查找id为2的用户: ${JSON.stringify(user)}<br>` +
+                `查找Charlie的索引: ${userIndex}`;
+        }
+        
+        // some/every示例
+        function demoSomeEvery() {
+            let numbers = [1, 2, 3, 4, 5];
+            let hasEven = numbers.some(num => num % 2 === 0);
+            let allPositive = numbers.every(num => num > 0);
+            document.getElementById('some-every-result').innerHTML = 
+                `原数组: [${numbers}]<br>` +
+                `是否有偶数: ${hasEven}<br>` +
+                `是否都是正数: ${allPositive}`;
+        }
+        
+        // 交互式示例
+        function performArrayOperation() {
+            try {
+                const inputArray = document.getElementById('input-array').value;
+                const operation = document.getElementById('array-operation').value;
+                const param1 = document.getElementById('param1').value;
+                const param2 = document.getElementById('param2').value;
+                
+                // 解析输入数组
+                let array;
+                try {
+                    array = JSON.parse(`[${inputArray}]`);
+                } catch (e) {
+                    // 如果JSON解析失败，尝试按字符串数组处理
+                    array = inputArray.split(',').map(item => {
+                        // 尝试转换为数字，如果失败则保持为字符串
+                        const num = Number(item.trim());
+                        return isNaN(num) ? item.trim() : num;
+                    });
+                }
+                
+                let result;
+                
+                switch(operation) {
+                    case 'map':
+                        if (!param1) throw new Error('请提供转换函数');
+                        // 创建函数
+                        const mapFn = new Function('x', `return ${param1}`);
+                        result = array.map(mapFn);
+                        break;
+                    case 'filter':
+                        if (!param1) throw new Error('请提供筛选条件');
+                        // 创建函数
+                        const filterFn = new Function('x', `return ${param1}`);
+                        result = array.filter(filterFn);
+                        break;
+                    case 'reduce':
+                        if (!param1) throw new Error('请提供聚合函数');
+                        // 创建函数
+                        const reduceFn = new Function('acc', 'curr', `return ${param1}`);
+                        const initialValue = param2 !== '' ? 
+                            (isNaN(Number(param2)) ? param2 : Number(param2)) : 0;
+                        result = array.reduce(reduceFn, initialValue);
+                        break;
+                    case 'find':
+                        if (!param1) throw new Error('请提供查找条件');
+                        // 创建函数
+                        const findFn = new Function('x', `return ${param1}`);
+                        result = array.find(findFn);
+                        break;
+                }
+                
+                document.getElementById('array-interactive-result').innerHTML = 
+                    `原数组: ${JSON.stringify(array)}<br>` +
+                    `操作结果: ${JSON.stringify(result)}`;
+            } catch (error) {
+                document.getElementById('array-interactive-result').innerHTML = 
+                    `执行出错: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

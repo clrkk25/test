@@ -1,0 +1,361 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --very-dark-blue: #0a0a23;
+  --dark-blue: #1a1a3f;
+  --medium-blue: #2a2a6f;
+  --light-blue: #3a3a9f;
+  --white: #ffffff;
+  --yellow: #f1be32;
+  --golden-yellow: #feac32;
+  --light-yellow: #ffcc4c;
+  --orange: #ff6b35;
+  --light-gray: #f0f0f0;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --transition: all 0.3s ease;
+}
+
+body {
+  background: linear-gradient(135deg, var(--very-dark-blue), var(--dark-blue), var(--medium-blue));
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  text-align: center;
+  color: var(--white);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+h1 {
+  margin: 15px 0 25px;
+  font-size: 2.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  padding-bottom: 15px;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--golden-yellow);
+  border-radius: 2px;
+}
+
+h2 {
+  margin: 20px 0;
+  color: var(--light-yellow);
+  font-size: 1.8rem;
+}
+
+.btn {
+  cursor: pointer;
+  width: 120px;
+  margin: 15px;
+  padding: 12px 20px;
+  color: var(--very-dark-blue);
+  background-color: var(--golden-yellow);
+  background-image: linear-gradient(145deg, var(--light-yellow), var(--golden-yellow));
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: 0.5s;
+}
+
+.btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow);
+}
+
+.rules-container {
+  padding: 20px;
+  margin: 25px auto;
+  border-radius: 15px;
+  border: 3px solid var(--golden-yellow);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--very-dark-blue);
+  box-shadow: var(--shadow);
+  max-width: 600px;
+  transition: var(--transition);
+}
+
+.rules-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.rules-container summary {
+  font-weight: bold;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 10px;
+  background: var(--light-yellow);
+  border-radius: 10px;
+  margin: -10px -10px 10px -10px;
+  transition: var(--transition);
+}
+
+.rules-container summary:hover {
+  background: var(--golden-yellow);
+}
+
+.rules-container ul {
+  list-style-type: none;
+  padding: 0 15px;
+}
+
+.rules-container ul li {
+  margin: 10px 0;
+  padding: 10px;
+  background: var(--light-gray);
+  border-radius: 8px;
+  position: relative;
+  padding-left: 30px;
+}
+
+.rules-container ul li::before {
+  content: '▶';
+  color: var(--orange);
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.rules-container p {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.score-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px auto;
+  font-size: 1.4rem;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+}
+
+.score {
+  font-weight: bold;
+  color: var(--light-yellow);
+  font-size: 1.6rem;
+}
+
+.results-container {
+  font-size: 1.4rem;
+  margin: 25px auto;
+  max-width: 600px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+}
+
+#winner-msg {
+  margin-top: 25px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--light-yellow);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#reset-game-btn {
+  display: none;
+  margin: 30px auto;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+}
+
+.options-container {
+  margin: 30px 0;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .btn {
+    width: 100px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    margin: 10px;
+  }
+  
+  .rules-container {
+    padding: 15px;
+    margin: 20px 10px;
+  }
+  
+  .score-container {
+    flex-direction: column;
+    gap: 15px;
+    font-size: 1.2rem;
+  }
+  
+  .results-container {
+    font-size: 1.2rem;
+  }
+  
+  #winner-msg {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 576px) {
+  body {
+    padding: 15px 10px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    margin: 10px 0 20px;
+  }
+  
+  h2 {
+    font-size: 1.3rem;
+  }
+  
+  .btn {
+    width: 90px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    margin: 8px;
+  }
+  
+  .btn-container {
+    gap: 10px;
+  }
+  
+  .rules-container {
+    padding: 12px;
+    margin: 15px 5px;
+  }
+  
+  .rules-container summary {
+    font-size: 1.1rem;
+  }
+  
+  .rules-container ul li {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .score-container {
+    padding: 15px;
+    font-size: 1.1rem;
+  }
+  
+  .score {
+    font-size: 1.3rem;
+  }
+  
+  .results-container {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+  
+  #winner-msg {
+    font-size: 1.2rem;
+  }
+  
+  #reset-game-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .rules-container {
+    max-width: 700px;
+  }
+  
+  .btn {
+    width: 130px;
+    padding: 15px 25px;
+    font-size: 1.2rem;
+  }
+  
+  .score-container {
+    max-width: 600px;
+    font-size: 1.5rem;
+  }
+  
+  .score {
+    font-size: 1.8rem;
+  }
+  
+  .results-container {
+    font-size: 1.5rem;
+    max-width: 700px;
+  }
+  
+  #winner-msg {
+    font-size: 1.8rem;
+  }
+}

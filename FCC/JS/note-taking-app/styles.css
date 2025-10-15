@@ -1,0 +1,135 @@
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --background-color: #f8f9fa;
+  --card-background: #ffffff;
+  --text-color: #212529;
+  --border-color: #e9ecef;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --success-color: #06d6a0;
+  --hover-shadow: rgba(0, 0, 0, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--background-color) 0%, #e0e7ff 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  color: var(--secondary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.note {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  min-height: 300px;
+  font-size: 1.1rem;
+  white-space: pre-wrap;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.note:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 16px rgba(67, 97, 238, 0.2);
+}
+
+.note:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--hover-shadow);
+}
+
+.note[contenteditable="true"] {
+  caret-color: var(--primary-color);
+}
+
+.helper-text {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+  user-select: none;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+#status {
+  color: var(--success-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  background-color: rgba(6, 214, 160, 0.1);
+  text-align: center;
+  font-weight: 500;
+  margin-top: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 1.5rem;
+  }
+  
+  .note {
+    padding: 1.5rem;
+    min-height: 250px;
+    font-size: 1rem;
+  }
+  
+  .helper-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+  
+  .note {
+    padding: 1.25rem;
+    min-height: 200px;
+    font-size: 0.95rem;
+  }
+  
+  #status {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .note {
+    padding: 2.5rem;
+    font-size: 1.15rem;
+  }
+}

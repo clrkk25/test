@@ -1,0 +1,229 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary-color: #8b5cf6;
+  --background-light: #f8fafc;
+  --background-dark: #0f172a;
+  --text-light: #f1f5f9;
+  --text-dark: #1e293b;
+  --border-color: #cbd5e1;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.tabs {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+#tabs-title {
+  padding: 2rem 1.5rem 1rem;
+  text-align: center;
+  color: var(--primary-dark);
+  font-size: 2.5rem;
+  position: relative;
+}
+
+#tabs-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border-radius: 2px;
+}
+
+.tabs [role="tablist"] {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.5rem 1rem 0;
+  padding: 0.5rem;
+  background: rgba(37, 99, 235, 0.05);
+  border-radius: 12px;
+  position: relative;
+}
+
+[role="tab"] {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-dark);
+  transition: var(--transition);
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  text-align: center;
+}
+
+[role="tab"]:hover {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary-dark);
+}
+
+[role="tab"][aria-selected="true"] {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+[role="tab"][aria-selected="true"]::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+}
+
+[role="tabpanel"] {
+  border: none;
+  padding: 2rem 1.5rem;
+  background: rgba(37, 99, 235, 0.03);
+  border-radius: 0 0 12px 12px;
+  margin: 0 1rem 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+[role="tabpanel"] p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  #tabs-title {
+    font-size: 2rem;
+    padding: 1.5rem 1rem 0.75rem;
+  }
+  
+  .tabs [role="tablist"] {
+    flex-direction: column;
+    margin: 1rem;
+  }
+  
+  [role="tab"] {
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  [role="tab"][aria-selected="true"]::after {
+    bottom: auto;
+    top: 50%;
+    left: auto;
+    right: 0;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+  }
+  
+  [role="tabpanel"] {
+    padding: 1.5rem 1rem;
+    margin: 0 1rem 1rem;
+  }
+  
+  [role="tabpanel"] p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #tabs-title {
+    font-size: 1.8rem;
+    padding: 1.25rem 0.75rem 0.5rem;
+  }
+  
+  .tabs [role="tablist"] {
+    margin: 0.75rem;
+  }
+  
+  [role="tab"] {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  [role="tabpanel"] {
+    padding: 1.25rem 0.75rem;
+    margin: 0 0.75rem 0.75rem;
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    padding: 30px;
+  }
+  
+  .tabs {
+    max-width: 900px;
+  }
+  
+  #tabs-title {
+    font-size: 2.8rem;
+    padding: 2.5rem 2rem 1.5rem;
+  }
+  
+  .tabs [role="tablist"] {
+    margin: 2rem 1.5rem 0;
+    padding: 0.75rem;
+  }
+  
+  [role="tab"] {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+  
+  [role="tabpanel"] {
+    padding: 2.5rem 2rem;
+    margin: 0 1.5rem 2rem;
+  }
+  
+  [role="tabpanel"] p {
+    font-size: 1.2rem;
+  }
+}

@@ -1,227 +1,80 @@
-/* 基础重置和通用样式 */
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+:root {
+  --dark-grey: #1b1b32;
+  --light-grey: #f5f6f7;
+  --golden-yellow: #fecc4c;
+  --yellow: #ffcc4c;
+  --gold: #feac32;
+  --orange: #ffac33;
+  --dark-orange: #f89808;
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--dark-grey);
+  color: var(--light-grey);
 }
 
-/* 主题切换按钮样式 */
-#theme-switcher-button {
-  background-color: var(--button-bg, #f0f0f0);
-  color: var(--button-text, #333);
-  border: 2px solid var(--button-border, #ccc);
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#theme-switcher-button:hover {
-  background-color: var(--button-hover-bg, #e0e0e0);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-#theme-switcher-button:focus {
-  outline: 3px solid var(--focus-outline, #4361ee);
-  outline-offset: 2px;
-}
-
-/* 主题下拉菜单样式 */
-#theme-dropdown {
-  position: absolute;
-  top: calc(50% + 60px);
-  background-color: var(--dropdown-bg, #fff);
-  border: 1px solid var(--dropdown-border, #ddd);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  list-style: none;
-  padding: 0.5rem 0;
-  margin: 0.5rem 0;
-  min-width: 150px;
-  z-index: 100;
-}
-
-#theme-dropdown[hidden] {
-  display: none;
-}
-
-#theme-dropdown li {
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  color: var(--dropdown-text, #333);
-}
-
-#theme-dropdown li:hover {
-  background-color: var(--dropdown-hover-bg, #f5f5f5);
-}
-
-/* 消息容器样式 - 屏幕上方居中 */
-[aria-live="polite"] {
-  position: fixed;
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--message-bg, #e9f7fe);
-  color: var(--message-text, #0c5460);
-  border: 1px solid var(--message-border, #bee5eb);
-  border-radius: 8px;
-  padding: 1rem 2rem;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+body,
+#message-input:placeholder-shown {
   text-align: center;
+}
+
+textarea {
   max-width: 90%;
 }
 
-[aria-live="polite"]:not(:empty) {
-  opacity: 1;
+.main-text {
+  margin: 25px 0;
 }
 
-/* 主题样式定义 */
-/* 默认主题 (Light) */
-body {
-  --bg-color: #ffffff;
-  --text-color: #333333;
-  --button-bg: #f0f0f0;
-  --button-text: #333333;
-  --button-border: #cccccc;
-  --button-hover-bg: #e0e0e0;
-  --dropdown-bg: #ffffff;
-  --dropdown-text: #333333;
-  --dropdown-border: #dddddd;
-  --dropdown-hover-bg: #f5f5f5;
-  --message-bg: #e9f7fe;
-  --message-text: #0c5460;
-  --message-border: #bee5eb;
-  --focus-outline: #4361ee;
-  
-  background-color: var(--bg-color);
-  color: var(--text-color);
+.title {
+  font-size: 2.5rem;
 }
 
-/* Dark 主题 */
-body.theme-dark {
-  --bg-color: #121212;
-  --text-color: #e0e0e0;
-  --button-bg: #2d2d2d;
-  --button-text: #e0e0e0;
-  --button-border: #444444;
-  --button-hover-bg: #3d3d3d;
-  --dropdown-bg: #1e1e1e;
-  --dropdown-text: #e0e0e0;
-  --dropdown-border: #333333;
-  --dropdown-hover-bg: #2d2d2d;
-  --message-bg: #1e3a5f;
-  --message-text: #a3d5ff;
-  --message-border: #2e5a8a;
-  --focus-outline: #6b9bff;
+.description {
+  margin-top: 15px;
+  font-size: 1.4rem;
 }
 
-/* Ocean 主题 */
-body.theme-ocean {
-  --bg-color: #f0f8ff;
-  --text-color: #1a3c5e;
-  --button-bg: #cce6ff;
-  --button-text: #1a3c5e;
-  --button-border: #99ccff;
-  --button-hover-bg: #99d6ff;
-  --dropdown-bg: #ffffff;
-  --dropdown-text: #1a3c5e;
-  --dropdown-border: #b3daff;
-  --dropdown-hover-bg: #e6f2ff;
-  --message-bg: #d1ecf1;
-  --message-text: #0c5460;
-  --message-border: #bee5eb;
-  --focus-outline: #3399ff;
+.message-label {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
 }
 
-/* Nord 主题 */
-body.theme-nord {
-  --bg-color: #f0f4f8;
-  --text-color: #2e3440;
-  --button-bg: #e5e9f0;
-  --button-text: #2e3440;
-  --button-border: #d8dee9;
-  --button-hover-bg: #d8dee9;
-  --dropdown-bg: #ffffff;
-  --dropdown-text: #2e3440;
-  --dropdown-border: #d8dee9;
-  --dropdown-hover-bg: #eceff4;
-  --message-bg: #e1f0fa;
-  --message-text: #2a4e6c;
-  --message-border: #c2e0f4;
-  --focus-outline: #5e81ac;
+#message-input:placeholder-shown,
+textarea {
+  font-size: 1.1rem;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-  body {
-    padding: 1rem;
-  }
-  
-  #theme-switcher-button {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
-  }
-  
-  #theme-dropdown {
-    top: calc(50% + 50px);
-    min-width: 130px;
-  }
-  
-  #theme-dropdown li {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
-  }
-  
-  [aria-live="polite"] {
-    top: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
-  }
+.btn {
+  display: block;
+  cursor: pointer;
+  width: 200px;
+  margin: 10px auto;
+  color: var(--dark-grey);
+  background-color: var(--gold);
+  background-image: linear-gradient(var(--golden-yellow), var(--orange));
+  border-color: var(--gold);
+  border-width: 3px;
 }
 
-@media (max-width: 480px) {
-  body {
-    padding: 0.5rem;
-  }
-  
-  #theme-switcher-button {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-  }
-  
-  #theme-dropdown {
-    top: calc(50% + 45px);
-    min-width: 120px;
-  }
-  
-  #theme-dropdown li {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-  }
-  
-  [aria-live="polite"] {
-    top: 0.25rem;
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-  }
+.btn:hover {
+  background-image: linear-gradient(var(--yellow), var(--dark-orange));
+}
+
+#result {
+  font-size: 2rem;
+  margin: 20px 0;
+}
+
+.footer {
+  margin-top: 10px;
 }

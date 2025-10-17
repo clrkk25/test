@@ -117,8 +117,26 @@ body {
   color: var(--text-color);
 }
 
+/* Light 主题 */
+body.light {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --button-bg: #f0f0f0;
+  --button-text: #333333;
+  --button-border: #cccccc;
+  --button-hover-bg: #e0e0e0;
+  --dropdown-bg: #ffffff;
+  --dropdown-text: #333333;
+  --dropdown-border: #dddddd;
+  --dropdown-hover-bg: #f5f5f5;
+  --message-bg: #e9f7fe;
+  --message-text: #0c5460;
+  --message-border: #bee5eb;
+  --focus-outline: #4361ee;
+}
+
 /* Dark 主题 */
-body.theme-dark {
+body.dark {
   --bg-color: #121212;
   --text-color: #e0e0e0;
   --button-bg: #2d2d2d;
@@ -136,8 +154,8 @@ body.theme-dark {
 }
 
 /* Ocean 主题 */
-body.theme-ocean {
-  --bg-color: #f0f8ff;
+body.ocean {
+  --bg-color: #cccccc;
   --text-color: #1a3c5e;
   --button-bg: #cce6ff;
   --button-text: #1a3c5e;
@@ -154,7 +172,7 @@ body.theme-ocean {
 }
 
 /* Nord 主题 */
-body.theme-nord {
+body.nord {
   --bg-color: #f0f4f8;
   --text-color: #2e3440;
   --button-bg: #e5e9f0;

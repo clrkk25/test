@@ -30,8 +30,19 @@ themeSwitcherButton.addEventListener("click", () => {
 const themeTypes = document.querySelectorAll('.theme-type');
 themeTypes.forEach(themeType => {
   themeType.addEventListener("click", () => {
-    messageContainer.textContent = themes.find(theme => theme.name === themeType.textContent.toLowerCase()).message;
+    // 获取主题名称
+    const themeName = themeType.textContent.toLowerCase();
+    
+    // 更新消息容器
+    messageContainer.textContent = themes.find(theme => theme.name === themeName).message;
+    
+    // 隐藏下拉菜单
     themeDropdown.hidden = !themeDropdown.hidden;
-      document.body.classList.add(`theme-${themeType.textContent.toLowerCase()}`);
+    
+    // 移除所有可能的主题类
+    document.body.classList.remove('light', 'dark', 'ocean', 'nord');
+    
+    // 添加新的主题类
+    document.body.classList.add(themeName);
   });
 });

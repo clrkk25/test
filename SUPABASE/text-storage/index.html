@@ -20,6 +20,10 @@
             <div id="authButtons" class="auth-buttons">
                 <button id="showLoginButton">登录/注册</button>
             </div>
+            <!-- 未登录提示 -->
+            <div id="notLoggedInMessage" class="info-message" style="display: none; margin-top: 20px;">
+                <p>登录以上传消息</p>
+            </div>
             <!-- 用户信息显示区域 -->
             <div id="userInfo" class="user-info" style="display: none;">
                 <span>欢迎, <span id="userName"></span></span>
@@ -27,40 +31,41 @@
             </div>
         </div>
         
-        <!-- 消息显示区域 -->
-        <div id="messagesSection" class="content">
-            <h2>所有消息</h2>
-            <div id="allMessages">加载中...</div>
+        <!-- 登录表单 -->
+        <div id="loginSection" class="login-form" style="display: none;">
+            <button id="cancelLoginButton" class="cancel-login-btn">✕</button>
+            <h2>用户登录</h2>
+            <input type="text" id="usernameInput" placeholder="用户名（仅限字母和数字）">
+            <input type="password" id="passwordInput" placeholder="密码">
+            <div class="button-group">
+                <button id="loginButton">登录</button>
+                <button id="registerButton">注册</button>
+            </div>
+            <div id="authStatus"></div>
         </div>
         
-        <!-- 上传消息区域 -->
-        <div id="saveMessageSection" class="content">
-            <h2>保存新消息</h2>
-            <!-- 未登录提示 -->
-            <div id="notLoggedInMessage" class="info-message">
-                <p>上传消息需要登录。请先登录或注册账户。</p>
-                <button id="showLoginButton">登录/注册</button>
-            </div>
-            
-            <!-- 登录表单 -->
-            <div id="loginSection" class="login-form" style="display: none;">
-                <h2>用户登录</h2>
-                <input type="text" id="usernameInput" placeholder="用户名（仅限字母和数字）">
-                <input type="password" id="passwordInput" placeholder="密码">
-                <div class="button-group">
-                    <button id="loginButton">登录</button>
-                    <button id="registerButton">注册</button>
+        <!-- 内容区域容器 -->
+        <div class="content-container">
+            <!-- 消息显示区域 -->
+            <div id="messagesSection" class="content">
+                <h2>所有消息</h2>
+                <div id="allMessagesContainer">
+                    <div id="allMessages">加载中...</div>
                 </div>
-                <button id="cancelLoginButton">取消</button>
-                <div id="authStatus"></div>
             </div>
             
-            <!-- 消息输入区域（登录后显示） -->
-            <div id="messageInputSection" style="display: none;">
-                <textarea id="messageInput" placeholder="输入要保存的文字..."></textarea>
-                <button id="saveButton">保存消息</button>
-                <div id="contentWarning" class="warning"></div>
-                <div id="status"></div>
+            <!-- 上传消息区域 -->
+            <div id="saveMessageSection" class="content">
+                <h2>保存新消息</h2>
+                <div class="content-inner">
+                    <!-- 消息输入区域（登录后显示） -->
+                    <div id="messageInputSection" style="display: none;">
+                        <textarea id="messageInput" placeholder="输入要保存的文字..."></textarea>
+                        <button id="saveButton">保存消息</button>
+                        <div id="contentWarning" class="warning" style="display: none;"></div>
+                        <div id="status"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

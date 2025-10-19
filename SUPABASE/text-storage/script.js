@@ -29,7 +29,7 @@ const showLoginButton = document.getElementById('showLoginButton');
 const loginSection = document.getElementById('loginSection');
 const notLoggedInMessage = document.getElementById('notLoggedInMessage');
 const messageInputSection = document.getElementById('messageInputSection');
-const cancelLoginButton = document.getElementById('cancelLoginButton');
+const cancelLoginButton = document.querySelector('.cancel-login-btn');
 
 // 引入政治敏感内容检测模块
 const { isPoliticalSensitive } = typeof module !== 'undefined' && module.exports ? 
@@ -98,9 +98,15 @@ async function checkUser() {
 function showGuestInterface() {
     userInfo.style.display = 'none';
     authButtons.style.display = 'block';
-    notLoggedInMessage.style.display = 'block';
+    notLoggedInMessage.style.display = 'block'; // 显示顶部的未登录提示
     loginSection.style.display = 'none';
     messageInputSection.style.display = 'none';
+    messagesSection.style.display = 'block'; // 显示消息显示区域
+    saveMessageSection.style.display = 'none'; // 隐藏保存消息区域
+    
+    // 获取容器元素
+    const container = document.querySelector('.container');
+    
     // 注意：我们仍然加载消息，因为游客可以查看消息
 }
 
@@ -108,27 +114,34 @@ function showGuestInterface() {
 function showUserInterface() {
     userInfo.style.display = 'block';
     authButtons.style.display = 'none';
-    notLoggedInMessage.style.display = 'none';
+    notLoggedInMessage.style.display = 'none'; // 隐藏顶部的未登录提示
     loginSection.style.display = 'none';
     messageInputSection.style.display = 'block';
+    messagesSection.style.display = 'block'; // 显示消息显示区域
+    saveMessageSection.style.display = 'block'; // 显示保存消息区域
+    
     userName.textContent = currentUser.user_metadata?.username || '用户';
     fetchAllMessages();
 }
 
 // 显示登录表单
 function showLoginForm() {
-    notLoggedInMessage.style.display = 'none';
+    notLoggedInMessage.style.display = 'none'; // 隐藏顶部的未登录提示
     authButtons.style.display = 'none';
     loginSection.style.display = 'block';
     messageInputSection.style.display = 'none';
+    messagesSection.style.display = 'none'; // 隐藏消息显示区域
+    saveMessageSection.style.display = 'none'; // 隐藏保存消息区域
 }
 
 // 隐藏登录表单
 function hideLoginForm() {
-    notLoggedInMessage.style.display = 'block';
+    notLoggedInMessage.style.display = 'block'; // 显示顶部的未登录提示
     authButtons.style.display = 'block';
     loginSection.style.display = 'none';
     messageInputSection.style.display = 'none';
+    messagesSection.style.display = 'block'; // 显示消息显示区域
+    saveMessageSection.style.display = 'none'; // 继续保持隐藏保存消息区域
 }
 
 // 验证用户名格式
@@ -481,12 +494,14 @@ function showStatus(message, type) {
 function showWarning(message) {
     warningElement.textContent = message;
     warningElement.className = 'warning';
+    warningElement.style.display = 'block';
 }
 
 // 清除警告信息
 function clearWarning() {
     warningElement.textContent = '';
     warningElement.className = '';
+    warningElement.style.display = 'none';
 }
 
 // 页面加载完成后初始化并检查用户状态

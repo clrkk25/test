@@ -6,23 +6,63 @@
     <title>文字存储</title>
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- 政治敏感内容检测模块 -->
+    <script src="political-content-filter-browser.js"></script>
     <!-- 引入外部样式表 -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>📝 文字存储</h1>
-    
     <div class="container">
-        <h2>所有消息</h2>
-        <div id="allMessages">加载中...</div>
-    </div>
-    
-    <div class="container">
-        <h2>保存新消息</h2>
-        <textarea id="messageInput" placeholder="输入要保存的文字..."></textarea>
-        <br>
-        <button id="saveButton">保存消息</button>
-        <div id="status"></div>
+        <div class="header">
+            <h1>📝 文字存储</h1>
+            <p>安全、便捷地存储和管理您的文字内容</p>
+            <!-- 登录/注册按钮区域 -->
+            <div id="authButtons" class="auth-buttons">
+                <button id="showLoginButton">登录/注册</button>
+            </div>
+            <!-- 用户信息显示区域 -->
+            <div id="userInfo" class="user-info" style="display: none;">
+                <span>欢迎, <span id="userName"></span></span>
+                <button id="logoutButton">退出登录</button>
+            </div>
+        </div>
+        
+        <!-- 消息显示区域 -->
+        <div id="messagesSection" class="content">
+            <h2>所有消息</h2>
+            <div id="allMessages">加载中...</div>
+        </div>
+        
+        <!-- 上传消息区域 -->
+        <div id="saveMessageSection" class="content">
+            <h2>保存新消息</h2>
+            <!-- 未登录提示 -->
+            <div id="notLoggedInMessage" class="info-message">
+                <p>上传消息需要登录。请先登录或注册账户。</p>
+                <button id="showLoginButton">登录/注册</button>
+            </div>
+            
+            <!-- 登录表单 -->
+            <div id="loginSection" class="login-form" style="display: none;">
+                <h2>用户登录</h2>
+                <input type="text" id="usernameInput" placeholder="用户名（仅限字母和数字）">
+                <input type="password" id="passwordInput" placeholder="密码">
+                <div class="button-group">
+                    <button id="loginButton">登录</button>
+                    <button id="registerButton">注册</button>
+                </div>
+                <button id="cancelLoginButton">取消</button>
+                <div id="authStatus"></div>
+            </div>
+            
+            <!-- 消息输入区域（登录后显示） -->
+            <div id="messageInputSection" style="display: none;">
+                <textarea id="messageInput" placeholder="输入要保存的文字..."></textarea>
+                <button id="saveButton">保存消息</button>
+                <div id="contentWarning" class="warning"></div>
+                <div id="status"></div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

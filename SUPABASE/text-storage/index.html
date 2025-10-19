@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supabase 文本存储示例</title>
+    <title>文字存储</title>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- 引入外部样式表 -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>📝 文字存储</h1>
+    
     <div class="container">
-        <header>
-            <h1>Supabase 文本存储示例</h1>
-        </header>
-        
-        <main>
-            <div class="input-section">
-                <textarea id="textInput" placeholder="请输入要存储的文本..."></textarea>
-                <button id="saveButton">保存到 Supabase</button>
-            </div>
-            
-            <div class="output-section">
-                <h2>已存储的文本</h2>
-                <ul id="textList"></ul>
-            </div>
-        </main>
-        
-        <footer>
-            <p>Supabase 文本存储示例项目</p>
-        </footer>
+        <h2>最新消息</h2>
+        <div id="message">加载中...</div>
     </div>
     
+    <div class="container">
+        <h2>保存新消息</h2>
+        <textarea id="messageInput" placeholder="输入要保存的文字..."></textarea>
+        <br>
+        <button id="saveButton">保存消息</button>
+        <div id="status"></div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

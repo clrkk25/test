@@ -504,8 +504,49 @@ function clearWarning() {
     warningElement.style.display = 'none';
 }
 
+// 处理软键盘弹起导致的页面布局问题
+function handleKeyboardShow() {
+    // 添加一个类来标识键盘已弹出
+    document.body.classList.add('keyboard-open');
+    
+    // 延迟一小段时间后滚动到视图顶部，确保输入框可见
+    setTimeout(() => {
+        if (document.activeElement && 
+            (document.activeElement.tagName === 'INPUT' || 
+             document.activeElement.tagName === 'TEXTAREA')) {
+            document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 300);
+}
+
+function handleKeyboardHide() {
+    // 移除键盘弹出的标识类
+    document.body.classList.remove('keyboard-open');
+    
+    // 滚动到顶部
+    window.scrollTo(0, 0);
+}
+
+// 监听视口变化（用于检测软键盘弹出/收起）
+let initialViewportHeight = window.innerHeight;
+window.addEventListener('resize', () => {
+    const currentHeight = window.innerHeight;
+    const heightDifference = initialViewportHeight - currentHeight;
+    
+    // 如果高度差异大于150px，认为是软键盘弹出
+    if (heightDifference > 150) {
+        handleKeyboardShow();
+    } else if (heightDifference < 50) {
+        // 如果高度差异很小，认为是软键盘收起
+        handleKeyboardHide();
+    }
+});
+
 // 页面加载完成后初始化并检查用户状态
 document.addEventListener('DOMContentLoaded', async () => {
+    // 保存初始视口高度
+    initialViewportHeight = window.innerHeight;
+    
     if (initSupabase()) {
         // 绑定事件监听器
         loginButton.addEventListener('click', login);
@@ -519,6 +560,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (e.key === 'Enter') {
                 login();
             }
+        });
+        
+        // 监听输入框焦点事件
+        const inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', handleKeyboardShow);
+            input.addEventListener('blur', handleKeyboardHide);
         });
         
         // 检查用户登录状态并加载消息

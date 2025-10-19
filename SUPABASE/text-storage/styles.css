@@ -57,13 +57,49 @@ button:disabled {
     cursor: not-allowed;
 }
 
-#message {
+#allMessages {
     padding: 15px;
     border: 1px solid #ddd;
     background-color: #f8f9fa;
     min-height: 50px;
     border-radius: 4px;
     white-space: pre-wrap;
+}
+
+.messages-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.message-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.message-content {
+    margin-bottom: 5px;
+    word-wrap: break-word;
+}
+
+.message-date {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.message-separator {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+}
+
+.no-messages {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
 }
 
 #status {

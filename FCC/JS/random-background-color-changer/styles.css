@@ -1,0 +1,145 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --yellow: #f1be32;
+  --golden-yellow: #feac32;
+  --dark-purple: #110815;
+  --light-grey: #efefef;
+  --white: #ffffff;
+  --transition: all 0.3s ease;
+}
+body {
+  background-color: var(--dark-purple);
+  color: var(--light-grey);
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  transition: var(--transition);
+}
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: var(--transition);
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: var(--transition);
+}
+.bg-information-container {
+  margin: 20px 0 30px;
+  font-size: 1.4rem;
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  transition: var(--transition);
+}
+.bg-information-container p {
+  margin: 0;
+  font-weight: 600;
+}
+#bg-hex-code {
+  font-family: 'Courier New', monospace;
+  font-size: 1.6rem;
+  color: var(--golden-yellow);
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  transition: var(--transition);
+}
+.btn {
+  cursor: pointer;
+  padding: 15px 30px;
+  margin: 15px;
+  color: var(--dark-purple);
+  background-color: var(--golden-yellow);
+  background-image: linear-gradient(145deg, #fecc4c, #ffac33);
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+  width: 80%;
+  max-width: 300px;
+}
+.btn:hover {
+  background-image: linear-gradient(145deg, #ffcc4c, #f89808);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  .bg-information-container {
+    font-size: 1.2rem;
+  }
+  
+  #bg-hex-code {
+    font-size: 1.4rem;
+  }
+  
+  .btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    width: 90%;
+  }
+}
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+  
+  main {
+    padding: 15px;
+  }
+  
+  .bg-information-container {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+  
+  #bg-hex-code {
+    font-size: 1.2rem;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    width: 95%;
+  }
+}

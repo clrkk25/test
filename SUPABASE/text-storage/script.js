@@ -5,7 +5,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 let supabase;
 
 // 获取 DOM 元素
-const messageElement = document.getElementById('message');
+const allMessagesElement = document.getElementById('allMessages');
 const messageInput = document.getElementById('messageInput');
 const saveButton = document.getElementById('saveButton');
 const statusElement = document.getElementById('status');
@@ -22,7 +22,7 @@ function initSupabase() {
         }
     } catch (error) {
         console.error('Supabase 客户端初始化失败:', error);
-        messageElement.innerHTML = `
+        allMessagesElement.innerHTML = `
             <div class="error">
                 <strong>错误:</strong> Supabase 客户端初始化失败<br>
                 请检查网络连接或稍后重试
@@ -32,46 +32,53 @@ function initSupabase() {
     }
 }
 
-// 页面加载完成后初始化并获取最新消息
+// 页面加载完成后初始化并获取所有消息
 document.addEventListener('DOMContentLoaded', async () => {
     if (initSupabase()) {
-        await fetchLatestMessage();
+        await fetchAllMessages();
     }
 });
 
-// 获取最新消息
-async function fetchLatestMessage() {
+// 获取所有消息
+async function fetchAllMessages() {
     if (!supabase) {
-        messageElement.innerHTML = '<div class="error">Supabase 客户端未初始化</div>';
+        allMessagesElement.innerHTML = '<div class="error">Supabase 客户端未初始化</div>';
         return;
     }
 
     try {
-        messageElement.innerHTML = '<div class="loading">正在加载...</div>';
+        allMessagesElement.innerHTML = '<div class="loading">正在加载...</div>';
         
         const { data, error } = await supabase
             .from('messages')
             .select('content, created_at')
-            .order('created_at', { ascending: false })
-            .limit(1)
-            .single();
+            .order('created_at', { ascending: false });
 
         if (error && error.code !== 'PGRST116') { // PGRST116 表示没有找到记录
             throw error;
         }
 
-        if (data) {
-            const date = new Date(data.created_at).toLocaleString('zh-CN');
-            messageElement.innerHTML = `
-                <div>${data.content}</div>
-                <div style="font-size: 0.8em; color: #666; margin-top: 10px;">更新时间: ${date}</div>
-            `;
+        if (data && data.length > 0) {
+            // 创建消息列表
+            let messagesHTML = '<div class="messages-list">';
+            data.forEach((message, index) => {
+                const date = new Date(message.created_at).toLocaleString('zh-CN');
+                messagesHTML += `
+                    <div class="message-item">
+                        <div class="message-content">${message.content}</div>
+                        <div class="message-date">${date}</div>
+                    </div>
+                    ${index < data.length - 1 ? '<hr class="message-separator">' : ''}
+                `;
+            });
+            messagesHTML += '</div>';
+            allMessagesElement.innerHTML = messagesHTML;
         } else {
-            messageElement.innerHTML = '<div>暂无消息</div>';
+            allMessagesElement.innerHTML = '<div class="no-messages">暂无消息</div>';
         }
     } catch (error) {
         console.error('获取消息失败:', error);
-        messageElement.innerHTML = `
+        allMessagesElement.innerHTML = `
             <div class="error">
                 <strong>获取消息失败:</strong><br>
                 ${error.message || '未知错误'}
@@ -111,7 +118,7 @@ async function saveMessage() {
 
         showStatus('保存成功!', 'success');
         messageInput.value = ''; // 清空输入框
-        await fetchLatestMessage(); // 重新加载最新消息
+        await fetchAllMessages(); // 重新加载所有消息
     } catch (error) {
         console.error('保存消息失败:', error);
         showStatus('保存失败: ' + (error.message || '未知错误'), 'error');

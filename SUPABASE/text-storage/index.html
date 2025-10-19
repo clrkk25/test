@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文字存储</title>
+    <!-- 引入外部样式表 -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- bcrypt库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/3.0.2/bcrypt.min.js" 
+            onerror="this.onerror=null; this.src='bcrypt.min.js';"></script>
+    <script>
+        // 如果CDN加载失败，则加载本地bcrypt.min.js文件
+        if (typeof bcrypt === 'undefined') {
+            document.write('<script src="bcrypt.min.js"><\/script>'.replace(/\//g, "\/"));
+        }
+    </script>
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- 政治敏感内容检测模块 -->
     <script src="political-content-filter-browser.js"></script>
-    <!-- 引入外部样式表 -->
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">

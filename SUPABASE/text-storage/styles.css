@@ -218,19 +218,20 @@ body {
 /* 登录表单 */
 .login-form {
   max-width: 450px;
-  margin: 30px auto;
+  min-height: 400px;
+  margin: 30px auto 0;
   padding: 30px 25px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border-top: 3px solid var(--primary-color);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .login-form:hover {
@@ -342,19 +343,18 @@ body {
 /* 文本框样式 */
 textarea {
   width: 100%;
-  min-height: 100px;
-  max-height: 120px; /* 限制最大高度 */
+  min-height: 120px;
   padding: 15px;
   border: 2px solid #e2e8f0;
   border-radius: var(--border-radius);
   font-family: inherit;
   font-size: 1rem;
-  resize: none; /* 禁止调整大小 */
+  resize: vertical; /* 允许垂直调整大小 */
   transition: var(--transition);
-  margin-bottom: 3px; /* 减少底部间距 */
+  margin-bottom: 15px; /* 增加底部间距 */
   flex: 1;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  overflow: hidden; /* 隐藏滚动条 */
+  overflow: auto; /* 显示滚动条 */
 }
 
 /* 保存消息区域 */
@@ -363,8 +363,8 @@ textarea {
   display: flex;
   flex-direction: column;
   min-width: 0; /* 防止内容溢出 */
-  max-height: 250px; /* 限制最大高度 */
-  overflow: hidden; /* 隐藏溢出内容 */
+  min-height: 250px; /* 设置最小高度 */
+  overflow: visible; /* 允许内容显示 */
   border: 2px solid #e2e8f0; /* 添加边框 */
   border-radius: var(--border-radius); /* 添加圆角 */
 }
@@ -390,6 +390,7 @@ button {
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+  min-height: 44px; /* 确保按钮有足够高度 */
 }
 
 button:hover:not(:disabled) {
@@ -563,40 +564,10 @@ button:hover:not(:disabled)::after {
   text-align: center;
 }
 
-/* 软键盘弹出时的样式处理 */
-body.keyboard-open {
-  /* 防止页面在软键盘弹出时出现透明化问题 */
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}
-
-body.keyboard-open .container {
-  /* 确保容器在键盘弹出时保持正确的位置 */
-  position: relative;
-  height: 100%;
-}
-
 /* 响应式设计 */
 @media (max-width: 768px) {
   body {
     padding: 15px;
-  }
-  
-  /* 移动端软键盘弹出时的特殊处理 */
-  body.keyboard-open {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  body.keyboard-open .login-form {
-    /* 在软键盘弹出时调整登录表单的位置 */
-    margin: 10px auto;
-    max-width: 95%;
-    padding: 20px 15px;
   }
   
   .header {

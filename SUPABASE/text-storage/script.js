@@ -36,15 +36,71 @@ const { isPoliticalSensitive } = typeof module !== 'undefined' && module.exports
   require('./political-content-filter.js') : 
   window.politicalContentFilter || { isPoliticalSensitive: () => false };
 
-// 简单的密码哈希函数（在实际应用中应该使用更安全的方法）
-function simpleHash(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash; // 转换为32位整数
+// 检查bcrypt库是否已加载
+function isBcryptLoaded() {
+    return typeof bcrypt !== 'undefined';
+}
+
+// 等待bcrypt库加载
+function waitForBcrypt() {
+    return new Promise((resolve, reject) => {
+        if (isBcryptLoaded()) {
+            resolve();
+            return;
+        }
+        
+        let attempts = 0;
+        const maxAttempts = 50; // 最多等待5秒
+        const interval = setInterval(() => {
+            attempts++;
+            if (isBcryptLoaded()) {
+                clearInterval(interval);
+                resolve();
+            } else if (attempts >= maxAttempts) {
+                clearInterval(interval);
+                // 尝试手动加载本地bcrypt文件
+                console.log('尝试加载本地bcrypt文件...');
+                const script = document.createElement('script');
+                script.src = 'bcrypt.min.js';
+                script.onload = () => {
+                    if (isBcryptLoaded()) {
+                        console.log('本地bcrypt文件加载成功');
+                        resolve();
+                    } else {
+                        reject(new Error('bcrypt库加载失败'));
+                    }
+                };
+                script.onerror = () => {
+                    reject(new Error('bcrypt库加载失败'));
+                };
+                document.head.appendChild(script);
+            }
+        }, 100);
+    });
+}
+
+// 使用bcrypt进行密码哈希
+async function hashPassword(password) {
+    try {
+        await waitForBcrypt();
+        // 生成salt并哈希密码
+        const salt = await bcrypt.genSalt(10);
+        return await bcrypt.hash(password, salt);
+    } catch (error) {
+        console.error('bcrypt库未加载:', error);
+        throw error;
     }
-    return hash.toString();
+}
+
+// 验证密码
+async function verifyPassword(password, hash) {
+    try {
+        await waitForBcrypt();
+        return await bcrypt.compare(password, hash);
+    } catch (error) {
+        console.error('bcrypt库未加载:', error);
+        return false;
+    }
 }
 
 // 初始化 Supabase 客户端
@@ -206,8 +262,8 @@ async function login() {
         }
         
         // 验证密码
-        const hashedPassword = simpleHash(password);
-        if (users.password_hash !== hashedPassword) {
+        const isPasswordValid = await verifyPassword(password, users.password_hash);
+        if (!isPasswordValid) {
             showAuthStatus('用户名或密码错误', 'error');
             loginButton.disabled = false;
             loginButton.textContent = '登录';
@@ -289,7 +345,7 @@ async function register() {
         registerButton.textContent = '注册中...';
         
         // 哈希密码
-        const hashedPassword = simpleHash(password);
+        const hashedPassword = await hashPassword(password);
         
         // 直接在users表中创建用户
         const { data, error } = await supabase
@@ -494,59 +550,16 @@ function showStatus(message, type) {
 function showWarning(message) {
     warningElement.textContent = message;
     warningElement.className = 'warning';
-    warningElement.style.display = 'block';
 }
 
 // 清除警告信息
 function clearWarning() {
     warningElement.textContent = '';
     warningElement.className = '';
-    warningElement.style.display = 'none';
 }
-
-// 处理软键盘弹起导致的页面布局问题
-function handleKeyboardShow() {
-    // 添加一个类来标识键盘已弹出
-    document.body.classList.add('keyboard-open');
-    
-    // 延迟一小段时间后滚动到视图顶部，确保输入框可见
-    setTimeout(() => {
-        if (document.activeElement && 
-            (document.activeElement.tagName === 'INPUT' || 
-             document.activeElement.tagName === 'TEXTAREA')) {
-            document.activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }, 300);
-}
-
-function handleKeyboardHide() {
-    // 移除键盘弹出的标识类
-    document.body.classList.remove('keyboard-open');
-    
-    // 滚动到顶部
-    window.scrollTo(0, 0);
-}
-
-// 监听视口变化（用于检测软键盘弹出/收起）
-let initialViewportHeight = window.innerHeight;
-window.addEventListener('resize', () => {
-    const currentHeight = window.innerHeight;
-    const heightDifference = initialViewportHeight - currentHeight;
-    
-    // 如果高度差异大于150px，认为是软键盘弹出
-    if (heightDifference > 150) {
-        handleKeyboardShow();
-    } else if (heightDifference < 50) {
-        // 如果高度差异很小，认为是软键盘收起
-        handleKeyboardHide();
-    }
-});
 
 // 页面加载完成后初始化并检查用户状态
 document.addEventListener('DOMContentLoaded', async () => {
-    // 保存初始视口高度
-    initialViewportHeight = window.innerHeight;
-    
     if (initSupabase()) {
         // 绑定事件监听器
         loginButton.addEventListener('click', login);
@@ -560,13 +573,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (e.key === 'Enter') {
                 login();
             }
-        });
-        
-        // 监听输入框焦点事件
-        const inputs = document.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('focus', handleKeyboardShow);
-            input.addEventListener('blur', handleKeyboardHide);
         });
         
         // 检查用户登录状态并加载消息

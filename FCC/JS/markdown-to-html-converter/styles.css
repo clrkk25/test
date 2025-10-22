@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 2.5rem;
+}
+
+h2 {
+    color: #3498db;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+#container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#markdown-input {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 16px;
+    resize: vertical;
+    transition: border-color 0.3s;
+}
+
+#markdown-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+#html-output, #preview {
+    min-height: 150px;
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+#preview {
+    font-family: Arial, sans-serif;
+    white-space: normal;
+}
+
+#preview blockquote {
+    border-left: 4px solid #3498db;
+    padding-left: 15px;
+    margin: 10px 0;
+    color: #555;
+    font-style: italic;
+}
+
+#preview h1, #preview h2, #preview h3, #preview h4, #preview h5, #preview h6 {
+    margin: 15px 0 10px 0;
+    color: #2c3e50;
+}
+
+#preview p {
+    margin: 10px 0;
+}
+
+#preview strong {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+#preview em {
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+@media (min-width: 768px) {
+    #container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .container {
+        flex: 1;
+        min-width: 300px;
+    }
+    
+    #markdown-input, #html-output, #preview {
+        min-height: 250px;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        padding: 30px;
+    }
+    
+    h1 {
+        font-size: 2.8rem;
+    }
+    
+    .container {
+        padding: 25px;
+    }
+}

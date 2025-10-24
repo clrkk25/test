@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pig Latin Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pig Latin 转换器</h1>
+            <p class="description">将英语单词转换为 Pig Latin 格式</p>
+        </header>
+        
+        <main>
+            <div class="converter">
+                <div class="input-section">
+                    <label for="inputString">输入英文单词或句子:</label>
+                    <textarea id="inputString" placeholder="例如: california, paragraph, algorithm"></textarea>
+                </div>
+                
+                <button id="convertBtn" class="convert-btn">转换为 Pig Latin</button>
+                
+                <div class="output-section">
+                    <label for="outputString">转换结果:</label>
+                    <div id="outputString" class="output-display">转换结果将显示在这里</div>
+                </div>
+            </div>
+            
+            <div class="examples">
+                <h2>示例</h2>
+                <div class="example-grid">
+                    <div class="example-item" data-example="california">
+                        <div class="example-input">california</div>
+                        <div class="example-output">aliforniacay</div>
+                    </div>
+                    <div class="example-item" data-example="paragraphs">
+                        <div class="example-input">paragraphs</div>
+                        <div class="example-output">aragraphspay</div>
+                    </div>
+                    <div class="example-item" data-example="glove">
+                        <div class="example-input">glove</div>
+                        <div class="example-output">oveglay</div>
+                    </div>
+                    <div class="example-item" data-example="algorithm">
+                        <div class="example-input">algorithm</div>
+                        <div class="example-output">algorithmway</div>
+                    </div>
+                    <div class="example-item" data-example="eight">
+                        <div class="example-input">eight</div>
+                        <div class="example-output">eightway</div>
+                    </div>
+                    <div class="example-item" data-example="schwartz">
+                        <div class="example-input">schwartz</div>
+                        <div class="example-output">artzschway</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputElement = document.getElementById('inputString');
+            const outputElement = document.getElementById('outputString');
+            const convertBtn = document.getElementById('convertBtn');
+            const exampleItems = document.querySelectorAll('.example-item');
+            
+            // 转换按钮点击事件
+            convertBtn.addEventListener('click', function() {
+                const inputValue = inputElement.value.trim();
+                if (inputValue) {
+                    const result = translatePigLatin(inputValue);
+                    outputElement.textContent = result;
+                } else {
+                    outputElement.textContent = '请输入要转换的单词或句子';
+                }
+            });
+            
+            // 回车键触发转换
+            inputElement.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    convertBtn.click();
+                }
+            });
+            
+            // 示例点击事件
+            exampleItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const exampleText = this.getAttribute('data-example');
+                    inputElement.value = exampleText;
+                    // 自动触发转换
+                    convertBtn.click();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

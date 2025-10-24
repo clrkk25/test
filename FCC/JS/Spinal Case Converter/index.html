@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinal Case Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Spinal Case Converter</h1>
+        <p class="description">将字符串转换为 spinal-case 格式（全小写，用连字符分隔）</p>
+        
+        <div class="converter">
+            <div class="input-section">
+                <label for="inputString">输入字符串:</label>
+                <textarea id="inputString" placeholder="例如: This Is Spinal Tap 或 thisIsSpinalTap"></textarea>
+            </div>
+            
+            <button id="convertBtn">转换</button>
+            
+            <div class="output-section">
+                <label for="outputString">转换结果:</label>
+                <div id="outputString" class="output-display"></div>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h2>示例</h2>
+            <ul>
+                <li>"This Is Spinal Tap" → "this-is-spinal-tap"</li>
+                <li>"thisIsSpinalTap" → "this-is-spinal-tap"</li>
+                <li>"The_Andy_Griffith_Show" → "the-andy-griffith-show"</li>
+                <li>"Teletubbies say Eh-oh" → "teletubbies-say-eh-oh"</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputElement = document.getElementById('inputString');
+            const outputElement = document.getElementById('outputString');
+            const convertBtn = document.getElementById('convertBtn');
+            
+            convertBtn.addEventListener('click', function() {
+                const inputValue = inputElement.value;
+                if (inputValue) {
+                    const result = spinalCase(inputValue);
+                    outputElement.textContent = result;
+                } else {
+                    outputElement.textContent = '请输入要转换的字符串';
+                }
+            });
+            
+            // 示例点击功能
+            const exampleItems = document.querySelectorAll('.examples li');
+            exampleItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const exampleText = this.textContent.split(' → ')[0].replace(/"/g, '');
+                    inputElement.value = exampleText;
+                    // 自动触发转换
+                    convertBtn.click();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

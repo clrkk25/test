@@ -1,0 +1,232 @@
+:root {
+  --light-grey: #f5f6f7;
+  --dark-blue: #0a0a23;
+  --fcc-blue: #1b1b32;
+  --light-yellow: #fecc4c;
+  --dark-yellow: #feac32;
+  --light-pink: #ffadad;
+  --dark-red: #850000;
+  --light-green: #acd157;
+  --white: #ffffff;
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  background-color: var(--fcc-blue);
+  color: var(--light-grey);
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--white);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  margin-top: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 680px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+form {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+label,
+legend {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+legend {
+  font-size: 1.1em;
+  padding: 5px 0;
+  width: 100%;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+fieldset {
+  border: 1px solid var(--light-grey);
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-container input {
+  margin-bottom: 0;
+}
+
+button {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: var(--light-yellow);
+  border: 2px solid var(--dark-yellow);
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+button:hover {
+  background-color: var(--dark-yellow);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button[type="submit"] {
+  background-color: var(--light-green);
+  border-color: #7ea53d;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+  background-color: #9bc24d;
+}
+
+#clear {
+  background-color: var(--light-pink);
+  border-color: #e09a9a;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+}
+
+#clear:hover {
+  background-color: #ffb8b8;
+}
+
+button,
+input,
+select {
+  min-height: 36px;
+  color: var(--dark-blue);
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.controls {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.controls span {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+#entry-dropdown {
+  flex: 1;
+  min-width: 150px;
+}
+
+#add-entry {
+  flex: 0 0 auto;
+}
+
+.output {
+  border: 2px solid var(--light-grey);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.hide {
+  display: none;
+}
+
+.output span {
+  font-weight: bold;
+  font-size: 1.3em;
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.surplus {
+  color: var(--dark-red);
+  background-color: rgba(255, 173, 173, 0.2);
+}
+
+.deficit {
+  color: var(--light-green);
+  background-color: rgba(173, 209, 87, 0.2);
+}
+
+.output p {
+  margin: 8px 0;
+  padding: 5px;
+  font-size: 1.1em;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--light-grey);
+  margin: 15px 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .controls span {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  #entry-dropdown, #add-entry {
+    width: 100%;
+  }
+  
+  button, input, select {
+    min-height: 40px;
+  }
+}

@@ -1,14 +1,14 @@
 :root {
   /* 颜色主题 - 淡雅淡色系主题 */
   --primary-color: #367ec6;
-  --secondary-color: #ffffff;
+  --secondary-color: #b3b9b8;
   --background-color: #e3f2fd;
   --surface-color: #f1f8ff;
   --accent-color: #442139e8;
   --accent-hover: #4fc3f7;
   --highlight-color: #ffd54f;
   --border-color: #bbdefb;
-  --shadow-color: rgba(0, 0, 0, 0.15);
+  --shadow-color: rgba(34, 166, 255, 0.15);
   --success-color: #80cbc4;
   --danger-color: #ffab91;
 

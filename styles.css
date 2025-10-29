@@ -169,6 +169,7 @@ nav li {
     min-height: 50px;
     border: 1px solid rgba(0, 0, 0, 0.06); /* 加深边框颜色 */
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04); /* 加深阴影 */
+    box-sizing: border-box;
 }
 
 .sub-folder a:hover {

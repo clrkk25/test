@@ -8,38 +8,38 @@ const songArtist = document.getElementById("player-song-artist");
 const allSongs = [
   {
     id: 0,
-    title: "Hello World",
-    artist: "Rafael",
-    duration: "0:23",
-    src: "https://cdn.freecodecamp.org/curriculum/js-music-player/hello-world.mp3",
+    title: "Lay It Down",
+    artist: "steelix",
+    duration: "3:13",
+    src: "src/layitdown.mp3",
   },
   {
     id: 1,
-    title: "In the Zone",
-    artist: "Rafael",
-    duration: "0:11",
-    src: "https://cdn.freecodecamp.org/curriculum/js-music-player/in-the-zone.mp3",
+    title: "不说",
+    artist: "周公",
+    duration: "3:33",
+    src: "src/不说.mp3",
   },
   {
     id: 2,
-    title: "Camper Cat",
-    artist: "Rafael",
-    duration: "0:21",
-    src: "https://cdn.freecodecamp.org/curriculum/js-music-player/camper-cat.mp3",
+    title: "Aces",
+    artist: "dkj /sped up nightcore",
+    duration: "1:41",
+    src: "src/Aces.mp3",
   },
   {
     id: 3,
-    title: "Electronic",
-    artist: "Rafael",
-    duration: "0:15",
-    src: "https://cdn.freecodecamp.org/curriculum/js-music-player/electronic.mp3",
+    title: "Tek It",
+    artist: "Cafuné",
+    duration: "3:11",
+    src: "src/Tek It.mp3",
   },
   {
     id: 4,
-    title: "Sailing Away",
-    artist: "Rafael",
-    duration: "0:22",
-    src: "https://cdn.freecodecamp.org/curriculum/js-music-player/sailing-away.mp3",
+    title: "We Don't Talk Anymore",
+    artist: "Charlie Puth /Selena Gomez",
+    duration: "4:14",
+    src: "src/We Don t Talk Anymore.mp3",
   },
 ];
 
@@ -114,6 +114,9 @@ const setPlayerDisplay = () => {
 
   playingSong.textContent = currentTitle ? currentTitle : "";
   songArtist.textContent = currentArtist ? currentArtist : "";
+  
+  // 设置专辑图片
+  setAlbumArt();
 };
 
 const highlightCurrentSong = () => {
@@ -129,6 +132,19 @@ const highlightCurrentSong = () => {
 const setPlayButtonAccessibleText = () => {
   const song = userData.currentSong;
   playButton.setAttribute("aria-label", userData.currentSong ? `Play ${song.title}` : "Play");
+};
+
+const setAlbumArt = () => {
+  const albumArt = document.querySelector("#player-album-art img");
+  if (userData.currentSong) {
+    // 根据歌曲ID设置对应的专辑图片
+    albumArt.src = `src/${userData.currentSong.id}.jpg`;
+    albumArt.alt = `${userData.currentSong.title} cover art`;
+  } else {
+    // 如果没有当前歌曲，显示默认图片
+    albumArt.src = "src/0.jpg";
+    albumArt.alt = "Default cover art";
+  }
 };
 
 playButton.addEventListener("click", () => {

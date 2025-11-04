@@ -99,6 +99,10 @@ function loadSong(index) {
   playerSongTitle.textContent = song.title;
   playerSongArtist.textContent = song.artist;
   
+  // 重置时间显示
+  currentTimeDisplay.textContent = '0:00';
+  durationDisplay.textContent = song.duration; // 使用预设的时长
+  
   // 更新专辑封面
   const albumArt = playerAlbumArt.querySelector('.album-art');
   albumArt.src = song.cover;
@@ -107,6 +111,16 @@ function loadSong(index) {
   // 高亮当前播放的歌曲
   playlistSongs.querySelectorAll('.playlist-song').forEach((songElement, i) => {
     songElement.classList.toggle('active', i === index);
+  });
+  
+  // 添加音频加载事件
+  audio.addEventListener('loadedmetadata', function onMetadataLoaded() {
+    // 如果音频元数据加载成功，更新时长显示
+    if (audio.duration && audio.duration !== Infinity) {
+      durationDisplay.textContent = formatTime(audio.duration);
+    }
+    // 移除事件监听器，避免重复执行
+    audio.removeEventListener('loadedmetadata', onMetadataLoaded);
   });
 }
 

@@ -1,0 +1,340 @@
+/* CSS Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CSS Custom Properties */
+:root {
+  --main-bg-color: #1b1b32;
+  --light-grey: #f5f6f7;
+  --dark-purple: #5a01a7;
+  --golden-yellow: #feac32;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --transition: all 0.3s ease;
+  --border-radius: 15px;
+}
+
+/* Base Typography and Layout */
+body {
+  background-color: var(--main-bg-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--light-grey);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Main Title */
+.title {
+  color: var(--light-grey);
+  margin: 30px 0 40px;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  letter-spacing: 1px;
+  line-height: 1.2;
+  background: linear-gradient(135deg, var(--light-grey), #e0e0e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--dark-purple), var(--golden-yellow));
+  border-radius: 2px;
+}
+
+/* Author Container - Grid Layout */
+#author-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+}
+
+/* User Card with Enhanced Styling */
+.user-card {
+  border-radius: var(--border-radius);
+  width: 100%;
+  min-height: 380px;
+  background-color: var(--light-grey);
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--hover-shadow);
+}
+
+/* User Image with Better Responsiveness */
+.user-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 25px auto 15px;
+  border: 4px solid var(--dark-purple);
+  transition: var(--transition);
+  order: 2;
+}
+
+.user-card:hover .user-img {
+  transform: scale(1.05);
+  border-color: var(--golden-yellow);
+}
+
+/* Purple Divider with Gradient */
+.purple-divider {
+  background: linear-gradient(90deg, var(--dark-purple), #7a01d7);
+  width: 100%;
+  height: 15px;
+  margin: 10px 0;
+  order: 3;
+}
+
+/* Author Name Styling */
+.author-name {
+  margin: 20px 20px 15px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--main-bg-color);
+  line-height: 1.2;
+  text-align: center;
+  order: 1;
+}
+
+/* Author Link Styling */
+.author-link {
+  display: inline-block;
+  margin: 0 20px 20px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--dark-purple), #7a01d7);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  transition: var(--transition);
+  order: 4;
+  box-shadow: 0 2px 4px rgba(90, 1, 167, 0.3);
+}
+
+.author-link:hover {
+  background: linear-gradient(135deg, #7a01d7, var(--dark-purple));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(90, 1, 167, 0.4);
+}
+
+.author-link:active {
+  transform: translateY(0);
+}
+
+/* Bio Text Styling */
+.bio {
+  margin: 0 20px 15px;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  flex-grow: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  order: 3;
+  text-align: center;
+}
+
+/* Error Message */
+.error-msg {
+  color: var(--light-grey);
+  font-size: 1.1rem;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #ff4444;
+}
+
+/* Button with Enhanced Styling */
+.btn {
+  cursor: pointer;
+  width: 280px;
+  margin: 30px auto 40px;
+  color: var(--main-bg-color);
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--golden-yellow), #ffac33, #ffb84d);
+  border: 3px solid var(--golden-yellow);
+  border-radius: 30px;
+  padding: 16px 32px;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(255, 172, 51, 0.3);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 172, 51, 0.5);
+  background: linear-gradient(135deg, #ffb84d, var(--golden-yellow), #ffac33);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 172, 51, 0.3);
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(255, 172, 51, 0.6);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin: 25px 0 35px;
+    letter-spacing: 0.5px;
+  }
+  
+  .title::after {
+    width: 80px;
+    height: 3px;
+  }
+  
+  #author-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 10px;
+  }
+  
+  .user-card {
+    min-height: 350px;
+  }
+  
+  .user-img {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto 10px;
+  }
+  
+  .author-name {
+    font-size: 1.2rem;
+    margin: 10px 15px 10px;
+  }
+  
+  .author-link {
+    margin: 0 15px 15px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+  
+  .bio {
+    margin: 0 15px 10px;
+    font-size: 0.9rem;
+  }
+  
+  .btn {
+    width: 240px;
+    font-size: 16px;
+    padding: 14px 28px;
+    margin: 25px auto 35px;
+    letter-spacing: 0.8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+    margin: 20px 0 30px;
+    letter-spacing: 0.3px;
+  }
+  
+  .title::after {
+    width: 60px;
+    height: 2px;
+  }
+  
+  #author-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .user-card {
+    min-height: 330px;
+  }
+  
+  .user-img {
+    width: 90px;
+    height: 90px;
+    margin: 15px auto 8px;
+  }
+  
+  .author-name {
+    font-size: 1.1rem;
+    margin: 8px 12px 8px;
+  }
+  
+  .author-link {
+    margin: 0 12px 12px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .bio {
+    margin: 0 12px 8px;
+    font-size: 0.85rem;
+  }
+}

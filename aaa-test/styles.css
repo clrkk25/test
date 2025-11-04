@@ -1,4 +1,3 @@
-/* 音乐播放器样式 */
 * {
   margin: 0;
   padding: 0;
@@ -6,437 +5,68 @@
 }
 
 :root {
-  --primary-color: #1a1a1a;
-  --secondary-color: #2a2a2a;
-  --accent-color: #ff6b6b;
-  --text-color: #ffffff;
-  --text-secondary: #b0b0b0;
-  --border-color: #404040;
+  --main-bg-color: #1b1b32;
+  --light-grey: #f5f6f7;
+  --dark-purple: #5a01a7;
+  --golden-yellow: #feac32;
 }
 
 body {
-  font-family: 'Lato', sans-serif;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  color: var(--text-color);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* 播放器样式 */
-.player {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.player-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
-}
-
-.parallel-lines {
-  display: flex;
-  gap: 10px;
-}
-
-.parallel-lines div {
-  width: 2px;
-  height: 40px;
-  background: linear-gradient(180deg, transparent, var(--accent-color), transparent);
-}
-
-.fcc-title {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 2.5rem;
-  font-weight: 700;
+  background-color: var(--main-bg-color);
   text-align: center;
-  color: var(--text-color);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.player-content {
+.title {
+  color: var(--light-grey);
+  margin: 20px 0;
+}
+
+#author-container {
   display: flex;
-  gap: 40px;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-#player-album-art {
-  flex-shrink: 0;
-}
-
-.album-art {
+.user-card {
+  border-radius: 15px;
   width: 300px;
-  height: 300px;
-  border-radius: 15px;
+  height: 350px;
+  background-color: var(--light-grey);
+  margin: 20px;
+}
+
+.user-img {
+  width: 150px;
+  height: 150px;
   object-fit: cover;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.album-art:hover {
-  transform: scale(1.02);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-}
-
-.player-display {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.player-display-song-artist {
-  text-align: center;
-}
-
-#player-song-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: var(--text-color);
-}
-
-#player-song-artist {
-  font-size: 1.5rem;
-  color: var(--text-secondary);
-}
-
-.player-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.player-buttons button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.player-buttons button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: var(--accent-color);
-  transform: scale(1.1);
-}
-
-.player-buttons button svg {
-  fill: var(--text-color);
-}
-
-/* 进度条样式 */
-.progress-container {
-  margin-top: 20px;
+.purple-divider {
+  background-color: var(--dark-purple);
   width: 100%;
+  height: 15px;
 }
 
-.time-display {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
+.author-name {
+  margin: 10px;
 }
 
-.progress-bar {
-  position: relative;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  overflow: hidden;
+.bio {
+  margin: 20px;
+}
+
+.error-msg {
+  color: var(--light-grey);
+}
+
+.btn {
   cursor: pointer;
-}
-
-.progress-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
-}
-
-.progress-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background: var(--accent-color);
-  border-radius: 3px;
-  width: 0%;
-  transition: width 0.1s ease;
-}
-
-.progress-slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.progress-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--accent-color);
-  cursor: pointer;
-}
-
-.progress-slider::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--accent-color);
-  cursor: pointer;
-  border: none;
-}
-
-.progress-bar:hover .progress-fill {
-  background: #ff8a8a;
-}
-
-.progress-bar:hover .progress-slider {
-  opacity: 1;
-}
-
-/* 播放列表样式 */
-.playlist {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-.playlist-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.playlist-title {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  color: var(--text-color);
-}
-
-#playlist-songs {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.playlist-song {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.playlist-song:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--accent-color);
-}
-
-.playlist-song.active {
-  background: rgba(255, 107, 107, 0.2);
-  border-color: var(--accent-color);
-}
-
-.playlist-song-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 15px 20px;
-  background: none;
-  border: none;
-  color: var(--text-color);
-  cursor: pointer;
-  font-size: 1rem;
-  text-align: left;
-}
-
-.playlist-song-title {
-  font-weight: 600;
-  flex: 2;
-}
-
-.playlist-song-artist {
-  color: var(--text-secondary);
-  flex: 2;
-}
-
-.playlist-song-duration {
-  color: var(--text-secondary);
-  flex: 1;
-  text-align: right;
-}
-
-/* 图片查看器样式 */
-.lightbox {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-}
-
-#close-btn {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  font-size: 30px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1001;
-}
-
-#close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
-}
-
-#lightbox-image {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 15px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-  object-fit: contain;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .container {
-    gap: 20px;
-    padding: 10px;
-  }
-  
-  .player-content {
-    flex-direction: column;
-    gap: 30px;
-  }
-  
-  .album-art {
-    width: 250px;
-    height: 250px;
-  }
-  
-  #player-song-title {
-    font-size: 2rem;
-  }
-  
-  #player-song-artist {
-    font-size: 1.2rem;
-  }
-  
-  .player-buttons button {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .fcc-title, .playlist-title {
-    font-size: 1.8rem;
-  }
-  
-  .playlist-song-info {
-    padding: 12px 15px;
-    font-size: 0.9rem;
-  }
-  
-  #close-btn {
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-  }
-}
-
-@media (max-width: 480px) {
-  .album-art {
-    width: 200px;
-    height: 200px;
-  }
-  
-  #player-song-title {
-    font-size: 1.5rem;
-  }
-  
-  #player-song-artist {
-    font-size: 1rem;
-  }
-  
-  .player-buttons {
-    gap: 15px;
-  }
-  
-  .player-buttons button {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .fcc-title, .playlist-title {
-    font-size: 1.5rem;
-  }
-  
-  .playlist-song-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-  
-  .playlist-song-duration {
-    text-align: left;
-  }
+  width: 200px;
+  margin: 10px;
+  color: var(--main-bg-color);
+  font-size: 14px;
+  background-color: var(--golden-yellow);
+  background-image: linear-gradient(#fecc4c, #ffac33);
+  border-color: var(--golden-yellow);
+  border-width: 3px;
 }

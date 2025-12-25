@@ -94,10 +94,13 @@ body {
 #video {
   display: block;
   margin: 20px auto;
-  max-width: 100%; /* 确保视频不会超出屏幕 */
+  width: 100%;
+  max-width: 800px; /* 限制最大宽度 */
   height: auto;
+  aspect-ratio: 16/9; /* 设置宽高比为16:9 */
   border-radius: 8px; /* 添加圆角 */
   box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 添加阴影提升视觉效果 */
+  background-color: #000; /* 设置视频背景为黑色 */
 }
 
 /* 视频来源链接样式优化 */
@@ -213,18 +216,25 @@ video + p a:hover {
     top: 0;
     left: 0; /* 在小屏幕上从左边开始 */
     right: 0;
-    padding: 8px;
-    justify-content: center; /* 在小屏幕上居中导航项 */
-    gap: 10px;
+    padding: 8px 12px;
+    justify-content: space-around; /* 在小屏幕上均匀分布导航项 */
+    gap: 5px;
+    flex-wrap: nowrap; /* 防止导航项换行 */
+    background-color: rgba(255, 255, 255, 0.95); /* 半透明背景 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   }
   
   #nav-bar a {
-    font-size: 14px; /* 在小屏幕上稍微增大字体 */
+    font-size: 13px; /* 在小屏幕上使用合适字体 */
+    padding: 6px 8px;
+    white-space: nowrap; /* 防止文本换行 */
   }
   
   .dropdown-menu {
-    min-width: 120px; /* 在小屏幕上调整下拉菜单宽度 */
-    font-size: 14px;
+    min-width: 150px; /* 在小屏幕上调整下拉菜单宽度 */
+    font-size: 13px;
+    right: 0; /* 将下拉菜单对齐到右侧 */
+    left: auto;
   }
   
   #header-img {
@@ -233,40 +243,48 @@ video + p a:hover {
   
   #content {
     padding: 15px 10px;
-    margin: 15px 10px; /* 在小屏幕上减少边距 */
+    margin: 20px 10px 60px 10px; /* 在小屏幕上增加底部边距，为固定导航留出空间 */
     max-width: 100%;
   }
   
   #form {
     width: 90%; /* 在小屏幕上使用更大比例的宽度 */
     margin: 20px 5%;
+    padding: 15px;
   }
   
   .content-item {
-    padding: 12px; /* 减少内边距 */
+    padding: 10px 0;
     margin-bottom: 20px;
   }
 }
 
 @media screen and (max-width: 480px) {
   #nav-bar {
-    flex-wrap: wrap; /* 在更小的屏幕上允许换行 */
-    padding: 5px;
+    flex-wrap: nowrap; /* 防止导航项换行 */
+    overflow-x: auto; /* 允许水平滚动 */
+    padding: 8px 5px;
+    justify-content: flex-start; /* 左对齐导航项 */
   }
   
   #nav-bar a {
-    font-size: 13px;
-    padding: 4px 6px; /* 减小内边距 */
+    font-size: 12px;
+    padding: 6px 8px; /* 减小内边距 */
+    flex: 0 0 auto; /* 防止伸缩 */
+  }
+  
+  #nav-bar a:not(:last-child) {
+    margin-right: 5px; /* 设置导航项之间的间距 */
   }
   
   .dropdown-menu {
-    position: fixed; /* 在极小屏幕上改为固定定位 */
-    top: auto;
-    bottom: 50px;
-    left: auto;
-    right: 10px;
-    min-width: 150px;
-    max-height: 200px;
+    position: absolute; /* 恢复绝对定位 */
+    top: 100%;
+    bottom: auto;
+    left: 0;
+    right: auto;
+    min-width: 140px;
+    max-height: 300px;
     overflow-y: auto;
   }
   
@@ -275,26 +293,33 @@ video + p a:hover {
   }
   
   #content {
-    padding: 10px;
-    margin: 10px 5px;
+    padding: 10px 8px;
+    margin: 15px 5px 60px 5px; /* 在小屏幕上增加底部边距 */
   }
   
   #video {
-    width: 95%; /* 确保视频在小屏幕上适应 */
+    width: 100%; /* 确保视频在小屏幕上适应 */
+    max-width: 100%;
     height: auto;
+    aspect-ratio: 16/9; /* 保持宽高比 */
   }
   
   .content-item {
-    padding: 10px;
+    padding: 8px 0;
     margin-bottom: 15px;
   }
   
   #form {
     width: 95%;
-    padding: 15px;
+    padding: 12px;
   }
   
   #email, #submit {
     width: 100%;
+    padding: 10px; /* 确保按钮和输入框有足够的点击区域 */
+  }
+  
+  #email {
+    margin-bottom: 10px;
   }
 }

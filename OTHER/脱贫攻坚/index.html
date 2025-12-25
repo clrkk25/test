@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脱贫攻坚成果展示平台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+<body>
+  <header id="header">
+    <img id="header-img" src="https://ts1.tc.mm.bing.net/th/id/OIP-C.OnDVB17aOvYwiOAxxj4ytwHaEn?w=218&h=128&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" alt="脱贫攻坚 logo">
+    <nav id="nav-bar" aria-label="主导航">
+        <a class="nav-link" href="#video">视频</a>
+        <div class="nav-dropdown">
+          <a class="nav-link dropdown-toggle" href="#content" aria-haspopup="true" aria-expanded="false">正文</a>
+          <div class="dropdown-menu" role="menu">
+            <a class="dropdown-item" href="#overview" role="menuitem">脱贫攻坚 Overview</a>
+            <a class="dropdown-item" href="#achievements" role="menuitem">主要成就</a>
+            <a class="dropdown-item" href="#policies" role="menuitem">扶贫政策</a>
+            <a class="dropdown-item" href="#cases" role="menuitem">典型扶贫案例</a>
+            <a class="dropdown-item" href="#spirit" role="menuitem">脱贫攻坚精神</a>
+            <a class="dropdown-item" href="#rural" role="menuitem">后续乡村振兴</a>
+            <a class="dropdown-item" href="#education" role="menuitem">教育扶贫</a>
+            <a class="dropdown-item" href="#health" role="menuitem">健康扶贫</a>
+            <a class="dropdown-item" href="#industry" role="menuitem">产业扶贫</a>
+            <a class="dropdown-item" href="#collaboration" role="menuitem">东西部扶贫协作</a>
+            <a class="dropdown-item" href="#society" role="menuitem">社会扶贫</a>
+            <a class="dropdown-item" href="#awards" role="menuitem">脱贫攻坚表彰</a>
+            <a class="dropdown-item" href="#infrastructure" role="menuitem">基础设施建设</a>
+            <a class="dropdown-item" href="#finance" role="menuitem">金融扶贫</a>
+            <a class="dropdown-item" href="#ecology" role="menuitem">生态扶贫</a>
+            <a class="dropdown-item" href="#employment" role="menuitem">就业扶贫</a>
+            <a class="dropdown-item" href="#consumption" role="menuitem">消费扶贫</a>
+            <a class="dropdown-item" href="#technology" role="menuitem">科技扶贫</a>
+            <a class="dropdown-item" href="#culture" role="menuitem">文化扶贫</a>
+            <a class="dropdown-item" href="#international" role="menuitem">国际减贫合作</a>
+          </div>
+        </div>
+        <a class="nav-link" href="#form">联系我们</a>
+    </nav>
+  </header>
+  <video id="video" controls width="400" height="300">
+    <source 
+            src="./src/脱贫攻坚.mp4"
+            type="video/mp4"
+            />
+
+  </video>
+  
+  <p style="text-align:center;">视频来源: <a href="https://www.douyin.com/user/MS4wLjABAAAAgXNtVtVIdL5x7LGGPSrM12kNmbjatgP9Tn2B2hXJM1k?from_tab_name=main&vid=7587054536524238129">@OwenHao</a></p>
+  
+  <script>
+    // 处理正文导航点击事件
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      
+      dropdownToggle.addEventListener('click', function(e) {
+        e.preventDefault(); // 阻止默认跳转行为
+        
+        // 切换下拉菜单显示状态
+        if (dropdownMenu.style.display === 'block') {
+          dropdownMenu.style.display = 'none';
+          this.setAttribute('aria-expanded', 'false');
+        } else {
+          dropdownMenu.style.display = 'block';
+          this.setAttribute('aria-expanded', 'true');
+          
+          // 点击下拉菜单项后隐藏菜单
+          const dropdownItems = dropdownMenu.querySelectorAll('.dropdown-item');
+          dropdownItems.forEach(item => {
+            item.addEventListener('click', function() {
+              dropdownMenu.style.display = 'none';
+              dropdownToggle.setAttribute('aria-expanded', 'false');
+            });
+          });
+        }
+      });
+      
+      // 点击页面其他地方隐藏下拉菜单
+      document.addEventListener('click', function(e) {
+        if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+          dropdownMenu.style.display = 'none';
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  </script>
+  
+  <section id="content">
+    <h2>脱贫攻坚成果展示</h2>
+    <div class="content-container">
+      <div class="content-item" id="overview">
+        <h3>脱贫攻坚 Overview</h3>
+        <p>脱贫攻坚战是中国全面建设小康社会的重要战略举措。自2013年提出精准扶贫理念以来，中国投入大量人力、物力和财力，实施了一系列有针对性的扶贫政策。这一战略旨在消除绝对贫困，确保到2020年实现全面小康社会目标。脱贫攻坚战是中国共产党领导中国人民向贫困宣战的伟大实践，是中华民族历史上规模最大、力度最强、惠及人口最多的扶贫行动。它不仅解决了绝对贫困问题，也为全球减贫事业贡献了中国智慧和中国方案。</p>
+      </div>
+      <div class="content-item" id="achievements">
+        <h3>主要成就</h3>
+        <p>经过8年持续奋斗，中国如期完成了新时代脱贫攻坚目标任务，现行标准下农村贫困人口全部脱贫，贫困县全部摘帽，消除了绝对贫困和区域性整体贫困。全国累计减少农村贫困人口9899万人，年均减贫1200万人以上。这一成就创造了人类减贫史上的奇迹，提前10年实现《联合国2030年可持续发展议程》减贫目标。832个贫困县全部摘帽，12.8万个贫困村全部出列，区域性整体贫困得到解决，完成了消除绝对贫困的艰巨任务。贫困地区农村居民人均可支配收入从2013年的6079元增长到2020年的12588元，年均增长11.6%。</p>
+      </div>
+      <div class="content-item" id="policies">
+        <h3>扶贫政策</h3>
+        <p>通过发展生产、易地搬迁、生态补偿、发展教育、社会保障兜底等"五个一批"措施，因地制宜实施精准扶贫，确保贫困人口如期脱贫。同时，实施了"两不愁三保障"政策，确保贫困人口不愁吃、不愁穿，义务教育、基本医疗、住房安全有保障。"五个一批"是指发展生产脱贫一批、易地搬迁脱贫一批、生态补偿脱贫一批、发展教育脱贫一批、社会保障兜底一批。"两不愁三保障"是指不愁吃、不愁穿，义务教育、基本医疗、住房安全有保障。这些政策确保了贫困人口的基本生活需求得到满足，并为可持续发展奠定基础。</p>
+      </div>
+      <div class="content-item" id="cases">
+        <h3>典型扶贫案例</h3>
+        <p>以贵州省为例，通过实施精准扶贫，全省贫困人口从2012年的923万减少到2020年的0，累计减贫923万人，成为全国减贫人数最多的省份。通过发展特色农业、旅游扶贫、电商扶贫等模式，帮助贫困地区群众实现稳定脱贫。此外，甘肃省通过发展特色种植业，形成了"一村一品"格局；四川省凉山州通过易地搬迁，解决了"一方水土养不好一方人"的问题；云南省通过旅游扶贫，将绿水青山转化为金山银山。每个案例都体现了因地制宜、精准施策的扶贫理念，为其他地区提供了可借鉴的经验。</p>
+      </div>
+      <div class="content-item" id="spirit">
+        <h3>脱贫攻坚精神</h3>
+        <p>在脱贫攻坚的伟大实践中，锻造形成了"上下同心、尽锐出战、精准务实、开拓创新、攻坚克难、不负人民"的脱贫攻坚精神。这是中国共产党性质宗旨、中国人民意志品质、中华民族精神的生动写照。脱贫攻坚精神体现了中国共产党以人民为中心的发展思想，彰显了社会主义制度集中力量办大事的政治优势。这一精神激励着广大干部群众在新征程上奋勇前进，为实现中华民族伟大复兴的中国梦而不懈奋斗。</p>
+      </div>
+      <div class="content-item" id="rural">
+        <h3>后续乡村振兴</h3>
+        <p>脱贫攻坚任务完成后，中国建立了防止返贫监测和帮扶机制，实现巩固拓展脱贫攻坚成果同乡村振兴有效衔接。通过发展乡村产业、改善基础设施、提升公共服务等方式，确保脱贫群众不返贫，持续增收致富。建立健全巩固拓展脱贫攻坚成果长效机制，设立5年过渡期，保持主要帮扶政策总体稳定。乡村振兴战略的实施，将进一步改善农村生产生活条件，提升农民生活品质，推动农业农村现代化。</p>
+      </div>
+      <div class="content-item" id="education">
+        <h3>教育扶贫</h3>
+        <p>教育扶贫是阻断贫困代际传递的根本之策。通过实施"雨露计划"、营养改善计划、特岗计划等，提升贫困地区教育水平。全国累计资助贫困学生超过2亿人次，帮助数百万贫困家庭子女接受教育，实现人生转折。改善贫困地区义务教育薄弱学校办学条件，实施营养改善计划，惠及3700万学生。实施"一村一名大学生"计划，培养本土人才。建立从学前教育到高等教育的全程资助体系，确保不让一个学生因家庭经济困难而失学。教师队伍建设方面，实施乡村教师支持计划，提高乡村教师待遇，吸引优秀人才到乡村从教。</p>
+      </div>
+      <div class="content-item" id="health">
+        <h3>健康扶贫</h3>
+        <p>实施健康扶贫工程，保障贫困人口享有基本医疗卫生服务。通过建立基本医保、大病保险、医疗救助等多重保障制度，有效防止因病致贫、因病返贫现象。累计救治贫困患者2000多万人次，贫困患者医疗费用实际报销比例达到80%以上。加强贫困地区医疗卫生服务能力建设，每个县至少有一所医院达到二级医院标准，每个乡镇有一所卫生院，每个行政村有一所卫生室。实施大病专项救治，对儿童白血病、先天性心脏病等30种大病患者进行集中救治。开展慢病签约服务，对高血压、糖尿病等慢性病患者提供健康管理服务。建立远程医疗系统，让贫困地区群众享受优质医疗资源。</p>
+      </div>
+      <div class="content-item" id="industry">
+        <h3>产业扶贫</h3>
+        <p>产业扶贫是稳定脱贫的根本措施。因地制宜发展特色优势产业，形成"一村一品"、"一县一业"的产业发展格局。全国建成各类特色产业基地超过30万个，90%以上的贫困户参与特色产业发展，带动贫困户户均年增收3000元以上。发展特色种植业，如高原蔬菜、特色水果、中药材等；发展特色养殖业，如生态养殖、林下养殖等；发展农产品加工业，延长产业链，提高附加值；发展乡村旅游，将自然风光、民族风情转化为经济优势；发展电商扶贫，让农产品"飞"出大山。通过合作社、龙头企业等新型经营主体，建立利益联结机制，确保贫困户稳定受益。</p>
+      </div>
+      <div class="content-item" id="collaboration">
+        <h3>东西部扶贫协作</h3>
+        <p>建立东西部扶贫协作机制，东部地区对口帮扶西部贫困地区。累计投入财政援助资金超过2000亿元，帮助中西部地区建设扶贫车间、产业园区等项目，带动贫困人口就业增收。参与帮扶的东部企业超过3万家。东部地区在资金、技术、人才、市场等方面具有优势，西部地区在资源、劳动力等方面具有潜力，通过优势互补实现共同发展。东部省市选派干部和技术人员到西部地区挂职和支教支医，西部地区选派干部到东部地区挂职学习，促进观念互通、思路互动、技术互学、作风互鉴。</p>
+      </div>
+      <div class="content-item" id="society">
+        <h3>社会扶贫</h3>
+        <p>构建专项扶贫、行业扶贫、社会扶贫等多方力量、多种举措有机结合的"三位一体"大扶贫格局。开展"万企帮万村"行动，12.7万家民营企业精准帮扶13.91万个村，带动和惠及贫困人口1800多万人。充分发挥社会组织、爱心企业、爱心人士等社会力量的作用，形成全社会共同参与脱贫攻坚的浓厚氛围。实施"中国社会扶贫网"项目，搭建社会力量与贫困户对接平台。开展"扶贫日"活动，营造全社会关注扶贫、支持扶贫、参与扶贫的良好氛围。设立扶贫公益基金，为贫困地区提供资金支持。</p>
+      </div>
+      <div class="content-item" id="awards">
+        <h3>脱贫攻坚表彰</h3>
+        <p>2021年2月25日，全国脱贫攻坚总结表彰大会举行，习近平总书记庄严宣告：我国脱贫攻坚战取得了全面胜利。大会表彰了1981名脱贫攻坚先进个人和1501个先进集体，彰显了脱贫攻坚的伟大成就和精神力量。黄文秀、张桂梅、黄大发、毛相林等先进典型人物的事迹感动了亿万人民，他们是脱贫攻坚战中的杰出代表。这些先进个人和集体在脱贫攻坚一线倾情投入、奉献自我，用实际行动诠释了共产党人的初心使命，展现了新时代奋斗者的精神风貌。</p>
+      </div>
+      <div class="content-item" id="infrastructure">
+        <h3>基础设施建设</h3>
+        <p>贫困地区基础设施建设取得显著进展，为脱贫攻坚提供了有力支撑。新增和改造农村公路110万公里，解决1700多万贫困人口饮水安全问题，贫困地区供电可靠率达到99%，4G网络覆盖率超过98%。建设了一大批农田水利设施，提高了农业抗灾能力。实施农村电网改造升级工程，满足了农村生产生活用电需求。推进农村信息基础设施建设，缩小了城乡数字鸿沟。这些基础设施的改善，为贫困地区产业发展、民生改善创造了良好条件。</p>
+      </div>
+      <div class="content-item" id="finance">
+        <h3>金融扶贫</h3>
+        <p>创新金融扶贫产品和服务，累计投放扶贫小额信贷7500亿元，支持1500多万户贫困户发展产业。建立风险补偿机制，降低金融机构放贷风险。推广"政银企户保"等金融扶贫模式，扩大金融扶贫覆盖面。实施易地扶贫搬迁专项贷款，支持搬迁群众建设安置住房。开展农业保险扶贫，降低贫困户生产经营风险。完善农村支付体系，提高金融服务便民水平。通过金融手段，有效解决了贫困户发展产业的资金短缺问题。</p>
+      </div>
+      <div class="content-item" id="ecology">
+        <h3>生态扶贫</h3>
+        <p>坚持生态优先、绿色发展，实现生态保护与脱贫攻坚双赢。中西部22个省份实施生态扶贫，选聘生态护林员110万名，带动300多万贫困人口脱贫。实施退耕还林还草、石漠化治理、水土保持等生态工程，增加贫困人口收入。发展生态产业，如林下经济、生态旅游等，实现经济效益与生态效益双丰收。建立生态补偿机制，让保护生态的贫困人口获得合理回报。通过生态扶贫，既改善了生态环境，又促进了贫困人口增收。</p>
+      </div>
+      <div class="content-item" id="employment">
+        <h3>就业扶贫</h3>
+        <p>通过就业扶贫，帮助有劳动能力的贫困人口实现稳定就业。建设扶贫车间3.2万个，开发公益性岗位415万个，转移就业贫困劳动力1228万人。开展技能培训，提高贫困人口就业能力。组织劳务输出，帮助贫困人口到外地就业。支持返乡创业，带动更多贫困人口就业。建立就业扶贫信息平台，实现供需精准对接。通过就业扶贫，让贫困人口通过劳动获得稳定收入，增强自我发展能力。</p>
+      </div>
+      <div class="content-item" id="consumption">
+        <h3>消费扶贫</h3>
+        <p>动员社会各界力量参与消费扶贫，累计销售扶贫产品超过5000亿元，有力支撑了贫困地区产业发展。建设消费扶贫专馆、专区、专柜，拓宽扶贫产品销售渠道。举办消费扶贫月活动，营造全社会参与消费扶贫的良好氛围。开展直播带货、电商扶贫等，帮助贫困地区农产品进入城市市场。建立扶贫产品认定机制，确保产品质量和安全。通过消费扶贫，解决了贫困地区农产品销售难题，增加了贫困群众收入。</p>
+      </div>
+      <div class="content-item" id="technology">
+        <h3>科技扶贫</h3>
+        <p>充分发挥科技在脱贫攻坚中的重要作用，选派科技特派员289.2万人次，推广应用新品种新技术，提高贫困地区产业发展水平。建设科技特派员工作站，为贫困地区提供技术指导。实施科技扶贫项目，解决产业发展中的技术难题。开展科技培训，提高贫困群众科技素质。推广农业机械化，提高农业生产效率。通过科技扶贫，提升了贫困地区发展的科技含量，增强了可持续发展能力。</p>
+      </div>
+      <div class="content-item" id="culture">
+        <h3>文化扶贫</h3>
+        <p>加强贫困地区公共文化服务体系建设，建设综合性文化服务中心，丰富贫困群众精神文化生活。开展文化下乡活动，传播先进文化。保护和传承贫困地区优秀传统文化，发展文化产业。加强精神文明建设，培育文明乡风。通过文化扶贫，提升了贫困群众的文化素养，激发了内生动力，为脱贫攻坚提供了精神支撑。</p>
+      </div>
+      <div class="content-item" id="international">
+        <h3>国际减贫合作</h3>
+        <p>中国在致力于自身减贫的同时，积极参与国际减贫合作，为全球减贫事业作出重要贡献。通过"一带一路"倡议，帮助沿线国家改善基础设施，促进经济发展。向发展中国家提供减贫援助，分享减贫经验。举办减贫与发展高层论坛，搭建国际减贫交流合作平台。设立南南合作援助基金，支持发展中国家减贫项目。中国的减贫经验为其他发展中国家提供了有益借鉴，体现了负责任大国的担当。</p>
+      </div>
+    </div>
+  </section>
+  
+  <form id="form" action="https://www.freecodecamp.org/email-submit">
+    <input id="email" placeholder="加入我们，填写邮箱" type="email" name="email" required>
+    <input id="submit" type="submit" value="提交">
+  </form>
+
+  <footer id="footer">脱贫攻坚成果展示平台 &copy; 2025</footer>
+</body>
+
+</html>

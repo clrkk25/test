@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript键值对处理方法</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+        .example {
+            margin: 15px 0;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            background-color: white;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            color: #e74c3c;
+        }
+        pre {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+        /* 代码语法高亮 */
+        pre code .keyword {
+            color: #61dafb;
+        }
+        pre code .string {
+            color: #98c379;
+        }
+        pre code .number {
+            color: #d19a66;
+        }
+        pre code .comment {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        p {
+            margin: 10px 0;
+            color: #555;
+        }
+        /* 表格样式 */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript键值对处理方法</h1>
+    
+    <h2>1. 对象（Object）</h2>
+    <p>对象是最常用的键值对数据结构。</p>
+    
+    <div class="example">
+        <h3>创建对象</h3>
+        <pre><code>const obj = {
+    name: "张三",
+    age: 25,
+    city: "北京"
+};
+
+// 或者使用构造函数
+const obj2 = new Object();
+obj2.name = "李四";
+obj2.age = 30;</code></pre>
+    </div>
+    
+    <div class="example">
+        <h3>访问键值对</h3>
+        <pre><code>// 点号访问
+console.log(obj.name); // "张三"
+
+// 方括号访问
+console.log(obj["age"]); // 25
+
+// 解构赋值
+const { name, age } = obj;
+console.log(name); // "张三"</code></pre>
+    </div>
+    
+    <div class="example">
+        <h3>添加/修改键值对</h3>
+        <pre><code>// 点号赋值
+obj.job = "工程师";
+
+// 方括号赋值
+obj["salary"] = 8000;
+
+// Object.assign()
+Object.assign(obj, { hobby: "编程" });
+
+// 扩展运算符
+obj = { ...obj, country: "中国" };</code></pre>
+    </div>
+    
+    <div class="example">
+        <h3>删除键值对</h3>
+        <pre><code>// delete操作符
+delete obj.age;
+
+// 扩展运算符（创建新对象）
+const { age: removed, ...newObj } = obj;</code></pre>
+    </div>
+    
+    <h2>2. Map对象</h2>
+    <p>Map是ES6引入的键值对集合，键可以是任意类型。</p>
+    
+    <div class="example">
+        <h3>创建和使用Map</h3>
+        <pre><code>const myMap = new Map();
+
+// 设置键值对
+myMap.set("name", "王五");
+myMap.set(1, "数字键");
+myMap.set({ id: 1 }, "对象键");
+
+// 获取值
+console.log(myMap.get("name")); // "王五"
+
+// 检查是否存在
+console.log(myMap.has("name")); // true
+
+// 删除
+myMap.delete("name");
+
+// 获取大小
+console.log(myMap.size); // 2</code></pre>
+    </div>
+    
+    <div class="example">
+        <h3>Map的遍历方法</h3>
+        <pre><code>// 遍历键值对
+myMap.forEach((value, key) => {
+    console.log(key, value);
+});
+
+// 使用entries()
+for (let [key, value] of myMap.entries()) {
+    console.log(key, value);
+}
+
+// 遍历键
+for (let key of myMap.keys()) {
+    console.log(key);
+}
+
+// 遍历值
+for (let value of myMap.values()) {
+    console.log(value);
+}</code></pre>
+    </div>
+    
+    <h2>3. 对象遍历方法</h2>
+    
+    <div class="example">
+        <h3>Object.keys(), Object.values(), Object.entries()</h3>
+        <pre><code>const user = {
+    name: "赵六",
+    age: 28,
+    city: "上海"
+};
+
+// 获取所有键
+console.log(Object.keys(user)); // ["name", "age", "city"]
+
+// 获取所有值
+console.log(Object.values(user)); // ["赵六", 28, "上海"]
+
+// 获取键值对数组
+console.log(Object.entries(user)); 
+// [["name", "赵六"], ["age", 28], ["city", "上海"]]</code></pre>
+    </div>
+    
+    <div class="example">
+        <h3>for...in循环</h3>
+        <pre><code>for (let key in user) {
+    if (user.hasOwnProperty(key)) {
+        console.log(key, user[key]);
+    }
+}</code></pre>
+    </div>
+    
+    <h2>4. 常用键值对操作</h2>
+    
+    <div class="example">
+        <h3>合并对象</h3>
+        <pre><code>const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+
+// Object.assign()
+const merged1 = Object.assign({}, obj1, obj2);
+
+// 扩展运算符
+const merged2 = { ...obj1, ...obj2 };</code></pre>
+    </div>
+    
+    <div class="example">
+        <h3>过滤对象</h3>
+        <pre><code>const obj = { a: 1, b: 2, c: 3, d: 4 };
+
+// 过滤出值大于2的键值对
+const filtered = Object.fromEntries(
+    Object.entries(obj).filter(([key, value]) => value > 2)
+);
+// 结果: { c: 3, d: 4 }</code></pre>
+    </div>
+    
+    <div class="example">
+        <h3>转换对象</h3>
+        <pre><code>const obj = { a: 1, b: 2, c: 3 };
+
+// 将所有值乘以2
+const doubled = Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => [key, value * 2])
+);
+// 结果: { a: 2, b: 4, c: 6 }</code></pre>
+    </div>
+    
+    <h2>5. 检查键值对</h2>
+    
+    <div class="example">
+        <h3>检查属性存在</h3>
+        <pre><code>const obj = { name: "孙七", age: 35 };
+
+// in操作符（检查自有属性和继承属性）
+console.log("name" in obj); // true
+
+// hasOwnProperty（仅检查自有属性）
+console.log(obj.hasOwnProperty("name")); // true
+
+// undefined检查
+console.log(obj.name !== undefined); // true</code></pre>
+    </div>
+    
+    <script>
+        // 运行一些示例代码
+        console.log("=== 对象示例 ===");
+        const obj = {
+            name: "张三",
+            age: 25,
+            city: "北京"
+        };
+        
+        console.log("原始对象:", obj);
+        
+        // 添加键值对
+        obj.job = "工程师";
+        console.log("添加job后:", obj);
+        
+        // 使用Object方法
+        console.log("键:", Object.keys(obj));
+        console.log("值:", Object.values(obj));
+        console.log("键值对:", Object.entries(obj));
+        
+        // Map示例
+        console.log("\n=== Map示例 ===");
+        const myMap = new Map();
+        myMap.set("name", "王五");
+        myMap.set(1, "数字键");
+        console.log("Map内容:", myMap);
+        
+        myMap.forEach((value, key) => {
+            console.log("键:", key, "值:", value);
+        });
+    </script>
+</body>
+</html>

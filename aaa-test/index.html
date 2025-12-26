@@ -41,7 +41,7 @@
   </header>
   <video id="video" controls width="400" height="300">
     <source 
-            src="./src/111.mp4"
+            src="./src/脱贫攻坚.mp4"
             type="video/mp4"
             />
 
@@ -141,6 +141,77 @@
   </form>
 
   <footer id="footer">脱贫攻坚成果展示平台 &copy; 2025</footer>
+  
+  <script>
+    // 移动端下拉菜单交互优化
+    document.addEventListener('DOMContentLoaded', function() {
+      // 检测是否为移动设备
+      const isMobile = window.innerWidth <= 768;
+      
+      if (isMobile) {
+        // 获取所有下拉菜单容器
+        const dropdowns = document.querySelectorAll('.nav-dropdown');
+        
+        dropdowns.forEach(function(dropdown) {
+          const toggle = dropdown.querySelector('.dropdown-toggle');
+          const menu = dropdown.querySelector('.dropdown-menu');
+          
+          // 点击下拉按钮时切换菜单显示/隐藏
+          toggle.addEventListener('click', function(e) {
+            // 在移动端阻止默认的链接跳转行为
+            if (window.innerWidth <= 768) {
+              e.preventDefault();
+              
+              // 切换菜单显示状态
+              const isVisible = menu.style.display === 'block';
+              menu.style.display = isVisible ? 'none' : 'block';
+            }
+          });
+          
+          // 点击其他地方时隐藏菜单
+          document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target)) {
+              menu.style.display = 'none';
+            }
+          });
+        });
+      }
+      
+      // 窗口大小改变时重新调整事件
+      window.addEventListener('resize', function() {
+        const isCurrentlyMobile = window.innerWidth <= 768;
+        
+        if (isCurrentlyMobile) {
+          // 重新绑定移动端事件
+          const dropdowns = document.querySelectorAll('.nav-dropdown');
+          
+          dropdowns.forEach(function(dropdown) {
+            const toggle = dropdown.querySelector('.dropdown-toggle');
+            const menu = dropdown.querySelector('.dropdown-menu');
+            
+            // 移除可能已存在的移动端事件
+            toggle.removeEventListener('click', handleDropdownClick);
+            
+            // 添加移动端事件
+            toggle.addEventListener('click', handleDropdownClick);
+            
+            function handleDropdownClick(e) {
+              e.preventDefault();
+              const isVisible = menu.style.display === 'block';
+              menu.style.display = isVisible ? 'none' : 'block';
+            }
+            
+            // 点击其他地方时隐藏菜单
+            document.addEventListener('click', function(e) {
+              if (!dropdown.contains(e.target)) {
+                menu.style.display = 'none';
+              }
+            });
+          });
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

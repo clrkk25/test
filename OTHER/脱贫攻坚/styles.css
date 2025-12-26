@@ -92,16 +92,16 @@ body {
 }
 
 #video {
-  display: block;
-  margin: 20px auto;
-  width: 100%;
-  max-width: 800px; /* 限制最大宽度 */
-  height: auto;
-  aspect-ratio: 16/9; /* 设置宽高比为16:9 */
-  border-radius: 8px; /* 添加圆角 */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 添加阴影提升视觉效果 */
-  background-color: #000; /* 设置视频背景为黑色 */
-}
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 800px; /* 限制最大宽度 */
+    height: auto;
+    aspect-ratio: 16/9; /* 设置宽高比为16:9 */
+    border-radius: 8px; /* 添加圆角 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 添加阴影提升视觉效果 */
+    background-color: #000; /* 设置视频背景为黑色 */
+  }
 
 /* 视频来源链接样式优化 */
 video + p {
@@ -138,24 +138,29 @@ video + p a:hover {
 }
 
 .content-item {
-  margin-bottom: 20px;
-  line-height: 1.6;
-  padding: 10px 0;
-}
+    margin-bottom: 20px;
+    line-height: 1.6;
+    padding: 15px; /* 增加内边距以提高可读性 */
+    background-color: #fafafa; /* 添加浅色背景 */
+    border-radius: 6px; /* 添加圆角 */
+    border-left: 3px solid #3498db; /* 添加左侧边框以增加视觉层次 */
+  }
 
-.content-item h3 {
-  color: #2c3e50;
-  margin-top: 0;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 5px;
-}
+  .content-item h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px; /* 增加底部填充 */
+    font-size: 1.2em; /* 在移动端稍微增大标题字体 */
+  }
 
-.content-item p {
-  margin-bottom: 10px;
-  color: #34495e;
-  line-height: 1.6;
-}
+  .content-item p {
+    margin-bottom: 10px;
+    color: #34495e;
+    line-height: 1.6;
+    font-size: 15px; /* 稍微增大字体以提高可读性 */
+  }
 
 #form {
   display: flex;
@@ -171,29 +176,31 @@ video + p a:hover {
 }
 
 #email {
-  padding: 10px; /* 增加内边距 */
+  padding: 12px; /* 在移动端增加内边距以提高点击区域 */
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #ddd; /* 添加边框 */
-  border-radius: 4px; /* 添加圆角 */
-  font-size: 14px; /* 确保字体大小合适 */
+  border-radius: 6px; /* 增加圆角以提高视觉效果 */
+  font-size: 16px; /* 在移动端使用更大字体以提高可读性 */
+  min-height: 44px; /* 确保足够的触摸目标大小 */
 }
 
 #email:focus {
   outline: none;
   border-color: #3498db; /* 聚焦时的边框颜色 */
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2); /* 聚焦时的阴影 */
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25); /* 聚焦时的阴影 */
 }
 
 #submit {
-  padding: 10px 20px; /* 增加内边距 */
+  padding: 12px 20px; /* 在移动端增加内边距以提高点击区域 */
   background-color: #3498db; /* 使用更现代的颜色 */
   color: white;
   border: none;
-  border-radius: 4px; /* 添加圆角 */
+  border-radius: 6px; /* 增加圆角以提高视觉效果 */
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px; /* 在移动端使用更大字体以提高可读性 */
   transition: background-color 0.2s; /* 添加过渡效果 */
+  min-height: 44px; /* 确保足够的触摸目标大小 */
 }
 
 #submit:hover {
@@ -216,41 +223,53 @@ video + p a:hover {
     top: 0;
     left: 0; /* 在小屏幕上从左边开始 */
     right: 0;
-    padding: 8px 12px;
-    justify-content: space-around; /* 在小屏幕上均匀分布导航项 */
+    padding: 10px 12px;
+    justify-content: flex-start; /* 在小屏幕上左对齐导航项，为滚动做准备 */
     gap: 5px;
     flex-wrap: nowrap; /* 防止导航项换行 */
     background-color: rgba(255, 255, 255, 0.95); /* 半透明背景 */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 1002; /* 确保导航栏在最顶层 */
+    overflow-x: auto; /* 允许水平滚动 */
   }
   
   #nav-bar a {
     font-size: 13px; /* 在小屏幕上使用合适字体 */
-    padding: 6px 8px;
+    padding: 8px 10px;
     white-space: nowrap; /* 防止文本换行 */
+    min-width: 60px; /* 确保有足够点击区域 */
+    text-align: center;
+    flex: 0 0 auto; /* 防止伸缩 */
   }
   
   .dropdown-menu {
-    min-width: 150px; /* 在小屏幕上调整下拉菜单宽度 */
+    min-width: 160px; /* 在小屏幕上调整下拉菜单宽度 */
     font-size: 13px;
     right: 0; /* 将下拉菜单对齐到右侧 */
     left: auto;
+    top: 100%;
+    margin-top: 2px;
   }
   
   #header-img {
     height: 120px; /* 在小屏幕上减小图片高度 */
+    margin: 0 auto 10px auto;
   }
   
   #content {
     padding: 15px 10px;
-    margin: 20px 10px 60px 10px; /* 在小屏幕上增加底部边距，为固定导航留出空间 */
+    margin: 70px 10px 60px 10px; /* 在小屏幕上增加顶部边距，为固定导航留出空间 */
     max-width: 100%;
+    background-color: white; /* 添加背景色以提高可读性 */
+    border-radius: 8px; /* 添加圆角 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 添加轻微阴影 */
   }
   
   #form {
     width: 90%; /* 在小屏幕上使用更大比例的宽度 */
     margin: 20px 5%;
-    padding: 15px;
+    padding: 18px; /* 增加内边距以提高可读性 */
+    border-radius: 10px; /* 增加圆角以提高视觉效果 */
   }
   
   .content-item {
@@ -261,10 +280,17 @@ video + p a:hover {
 
 @media screen and (max-width: 480px) {
   #nav-bar {
-    flex-wrap: nowrap; /* 防止导航项换行 */
-    overflow-x: auto; /* 允许水平滚动 */
+    position: fixed;
+    top: 0;
+    left: 0; /* 移动到左边，不再固定在右上角 */
+    right: 0;
     padding: 8px 5px;
     justify-content: flex-start; /* 左对齐导航项 */
+    flex-wrap: nowrap; /* 防止导航项换行 */
+    background-color: rgba(255, 255, 255, 0.95); /* 半透明背景 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    z-index: 1002; /* 确保导航栏在最顶层 */
+    overflow-x: auto; /* 允许水平滚动 */
   }
   
   #nav-bar a {
@@ -302,21 +328,31 @@ video + p a:hover {
     max-width: 100%;
     height: auto;
     aspect-ratio: 16/9; /* 保持宽高比 */
+    margin: 15px auto; /* 在小屏幕上减小边距 */
+    border-radius: 6px; /* 在小屏幕上调整圆角 */
   }
   
   .content-item {
-    padding: 8px 0;
+    padding: 12px; /* 在小屏幕上增加内边距 */
     margin-bottom: 15px;
+    font-size: 14px; /* 在小屏幕上稍微减小字体 */
   }
   
   #form {
     width: 95%;
-    padding: 12px;
+    padding: 15px;
+    margin: 15px 2.5%; /* 调整边距 */
   }
   
   #email, #submit {
     width: 100%;
-    padding: 10px; /* 确保按钮和输入框有足够的点击区域 */
+    padding: 14px; /* 增加内边距以提高点击区域 */
+    font-size: 16px; /* 确保在小屏幕上字体足够大 */
+    margin-bottom: 10px; /* 增加元素间距 */
+  }
+  
+  #submit {
+    margin-top: 5px; /* 调整提交按钮的顶部间距 */
   }
   
   #email {

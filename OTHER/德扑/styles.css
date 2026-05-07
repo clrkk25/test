@@ -397,20 +397,63 @@ body {
     box-shadow: 0 3px 10px rgba(212, 175, 55, 0.4);
 }
 
-.bet-controls {
-    display: flex;
+.all-in-btn {
+    background: linear-gradient(45deg, #ff4444, #ff6666) !important;
+    color: #fff !important;
+}
+
+.all-in-btn:not(:disabled):hover {
+    box-shadow: 0 3px 10px rgba(255, 68, 68, 0.6) !important;
+}
+
+.cancel-btn {
+    background: linear-gradient(45deg, #666, #888) !important;
+    color: #fff !important;
+}
+
+.bet-input-section {
+    display: none;
     align-items: center;
     justify-content: center;
     gap: 10px;
     margin-bottom: 15px;
     flex-wrap: wrap;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
 }
 
-.bet-controls label {
+.bet-input-section label {
     color: #ffd700;
+    font-weight: bold;
 }
 
+.bet-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #d4af37;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 150px;
+    text-align: center;
+}
 
+.bet-input:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.bet-input::-webkit-inner-spin-button,
+.bet-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.bet-input[type=number] {
+    -moz-appearance: textfield;
+}
 
 .game-log {
     background: rgba(0, 0, 0, 0.5);

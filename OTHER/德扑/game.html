@@ -83,31 +83,18 @@
         <!-- 操作区域 -->
         <footer class="game-controls">
             <div class="action-buttons">
-                <button id="betBtn" class="action-btn" disabled>下注</button>
                 <button id="checkBtn" class="action-btn" disabled>过牌</button>
                 <button id="callBtn" class="action-btn" disabled>跟注</button>
+                <button id="betBtn" class="action-btn" disabled>下注</button>
                 <button id="raiseBtn" class="action-btn" disabled>加注</button>
+                <button id="allInBtn" class="action-btn all-in-btn" disabled>All-in</button>
                 <button id="foldBtn" class="action-btn" disabled>弃牌</button>
             </div>
             
-
-            
-            <div class="bet-controls">
-                <!-- 砝码显示区域 -->
-                <div class="chips-display">
-                    <div class="chips-total">下注总额: <span id="betTotal">0</span></div>
-                    <div class="chips-container" id="chipsContainer">
-                        <!-- 砝码图标将动态显示在这里 -->
-                    </div>
-                </div>
-                
-                <!-- 砝码选择按钮 -->
-                <div class="chips-selection">
-                    <button class="chip-btn" data-value="10">10</button>
-                    <button class="chip-btn" data-value="20">20</button>
-                    <button class="chip-btn" data-value="50">50</button>
-                    <button class="chip-btn" data-value="100">100</button>
-                </div>
+            <div class="bet-input-section" style="display: none;">
+                <label>金额：</label>
+                <input type="number" id="betAmountInput" class="bet-input" min="10" step="10" placeholder="输入金额">
+                <button id="cancelBetBtn" class="action-btn cancel-btn">取消</button>
             </div>
             
             <div class="game-log">

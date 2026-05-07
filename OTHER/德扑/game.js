@@ -1,4 +1,4 @@
-// 游戏主逻辑（最新修复版）
+// 游戏主逻辑（重新实现下注逻辑版）
 class TexasHoldemGame {
     constructor() {
         this.pokerLogic = new PokerLogic();
@@ -23,98 +23,78 @@ class TexasHoldemGame {
         this.bindElements();
         this.bindEvents();
         
-        // 页面加载后1秒自动开始游戏
         setTimeout(() => {
             this.startNewGame();
         }, 1000);
     }
 
     bindElements() {
-        // 游戏信息元素
         this.gameStageElement = document.getElementById('gameStage');
         this.potAmountElement = document.getElementById('potAmount');
         this.currentPlayerElement = document.getElementById('currentPlayer');
         
-        // 玩家元素
         this.playerElements = [
             document.getElementById('player1'),
             document.getElementById('player2'),
             document.getElementById('player3')
         ];
         
-        // 操作按钮
-        this.betBtn = document.getElementById('betBtn');
         this.checkBtn = document.getElementById('checkBtn');
         this.callBtn = document.getElementById('callBtn');
-        this.raiseBtn = document.getElementById('raiseBtn');
+        this.allInBtn = document.getElementById('allInBtn');
         this.foldBtn = document.getElementById('foldBtn');
-
-
+        this.betBtn = document.getElementById('betBtn');
+        this.raiseBtn = document.getElementById('raiseBtn');
+        this.cancelBetBtn = document.getElementById('cancelBetBtn');
+        this.betInputSection = document.querySelector('.bet-input-section');
+        this.betAmountInput = document.getElementById('betAmountInput');
         
-        // 加注额度选择界面元素
         this.raiseOptionsModal = document.getElementById('raiseOptions');
         this.minRaiseAmountElement = document.getElementById('minRaiseAmount');
         this.tripleRaiseAmountElement = document.getElementById('tripleRaiseAmount');
         this.quintupleRaiseAmountElement = document.getElementById('quintupleRaiseAmount');
         this.cancelRaiseBtn = document.getElementById('cancelRaise');
         
-        // 砝码相关元素
         this.betTotalElement = document.getElementById('betTotal');
         this.chipsContainer = document.getElementById('chipsContainer');
         this.chipButtons = document.querySelectorAll('.chip-btn');
         
-        // 公共牌区域
         this.communityCardsElement = document.querySelector('.community-cards');
         
-        // 日志区域
         this.logMessagesElement = document.getElementById('logMessages');
         
-        // 游戏结束显示元素
         this.gameOverDisplay = document.getElementById('gameOverDisplay');
         this.winnerTitle = document.getElementById('winnerTitle');
         this.winnerInfo = document.getElementById('winnerInfo');
         this.playAgainBtn = document.getElementById('playAgain');
         this.backToMenuBtn = document.getElementById('backToMenuFromGame');
         
-        // 返回菜单按钮
         this.backToMenuBtn = document.getElementById('backToMenu');
         
-        // 砝码数据
         this.selectedChips = [];
     }
 
     bindEvents() {
-        // 操作按钮事件
-        this.betBtn?.addEventListener('click', () => this.showBetControls());
         this.checkBtn?.addEventListener('click', () => this.playerAction('CHECK'));
         this.callBtn?.addEventListener('click', () => this.playerAction('CALL'));
-        this.raiseBtn?.addEventListener('click', () => this.showRaiseOptions());
+        this.allInBtn?.addEventListener('click', () => this.playerAction('ALL-IN'));
         this.foldBtn?.addEventListener('click', () => this.playerAction('FOLD'));
-
+        this.betBtn?.addEventListener('click', () => this.executeBet());
+        this.raiseBtn?.addEventListener('click', () => this.executeRaise());
+        this.cancelBetBtn?.addEventListener('click', () => this.hideBetInputSection());
         
-        // 砝码按钮事件
-        this.chipButtons?.forEach(button => {
-            button.addEventListener('click', () => this.addChip(parseInt(button.dataset.value)));
-        });
-        
-
-        
-        // 模态框按钮事件
         this.playAgainBtn?.addEventListener('click', () => this.startNewGame());
         this.backToMenuBtn?.addEventListener('click', () => window.location.href = 'index.html');
         
-        // 键盘快捷键
         document.addEventListener('keydown', (e) => {
             if (!this.isHumanTurn()) return;
             
             switch(e.key) {
-                case '1': case 'b': this.showBetControls(); break;
-                case '2': case 'c': this.playerAction('CHECK'); break;
-                case '3': case 'l': this.playerAction('CALL'); break;
-                case '4': case 'r': this.showRaiseOptions(); break;
-                case '5': case 'f': this.playerAction('FOLD'); break;
-
-                case 'Escape': this.hideBetControls(); break;
+                case '1': case 'c': this.playerAction('CHECK'); break;
+                case '2': case 'l': this.playerAction('CALL'); break;
+                case '3': case 'a': this.playerAction('ALL-IN'); break;
+                case '4': case 'f': this.playerAction('FOLD'); break;
+                case 'Escape': this.hideBetInputSection(); break;
             }
         });
     }
@@ -125,16 +105,16 @@ class TexasHoldemGame {
         this.dealCards();
         this.startBettingRound();
         this.addLog('游戏开始！按照用户1→用户2→用户3的顺序轮流行动');
-        
-        // 隐藏新的一局按钮
+        this.updateGameInfo();
+        this.updatePlayerDisplays();
         this.hideNewGameButton();
     }
 
     resetGameState() {
         this.gameState = {
             currentStage: 'PREFLOP',
-            currentPlayerIndex: 0, // 总是从用户1开始
-            humanPlayerPosition: 0, // 固定用户1为人类玩家
+            currentPlayerIndex: 0,
+            humanPlayerPosition: 0,
             pot: 0,
             currentBet: 0,
             deck: this.pokerLogic.createDeck(),
@@ -142,24 +122,21 @@ class TexasHoldemGame {
             players: [],
             gameStarted: true,
             lastAction: null,
-            aiTimer: null, // AI操作倒计时
-            aiTimeLeft: 3 // AI操作剩余时间
+            aiTimer: null,
+            aiTimeLeft: 3,
+            bettingRoundData: null
         };
         
-        // 重置UI
-        this.updateGameInfo();
         this.hideBetControls();
         this.clearCommunityCards();
         this.clearLog();
         this.hideGameOverDisplay();
         
-        // 重置玩家UI
         this.playerElements.forEach((element, index) => {
             element.classList.remove('active', 'folded', 'winner');
             const statusElement = element.querySelector('.player-status');
             if (statusElement) statusElement.textContent = '等待中...';
             
-            // 重置手牌显示
             const cardElements = element.querySelectorAll('.card');
             cardElements.forEach(card => {
                 card.className = 'card back';
@@ -170,7 +147,6 @@ class TexasHoldemGame {
     }
 
     setupPlayers() {
-        // 从localStorage读取玩家筹码值
         let humanChips = 1000;
         let ai1Chips = 1000;
         let ai2Chips = 1000;
@@ -195,9 +171,11 @@ class TexasHoldemGame {
                 currentBet: 0,
                 cards: [],
                 folded: false,
+                allIn: false,
                 isHuman: true,
                 personality: 'balanced',
-                actions: []
+                actions: [],
+                hasActedThisRound: false
             },
             {
                 name: '玩家2',
@@ -206,9 +184,11 @@ class TexasHoldemGame {
                 currentBet: 0,
                 cards: [],
                 folded: false,
+                allIn: false,
                 isHuman: false,
                 personality: 'aggressive',
-                actions: []
+                actions: [],
+                hasActedThisRound: false
             },
             {
                 name: '玩家3',
@@ -217,16 +197,16 @@ class TexasHoldemGame {
                 currentBet: 0,
                 cards: [],
                 folded: false,
+                allIn: false,
                 isHuman: false,
                 personality: 'balanced',
-                actions: []
+                actions: [],
+                hasActedThisRound: false
             }
         ];
         
-        // 设置底注为$10
         this.gameState.blindAmount = 10;
         
-        // 更新玩家名称显示
         this.playerElements.forEach((element, index) => {
             const nameElement = element.querySelector('.player-name');
             if (nameElement) {
@@ -234,19 +214,22 @@ class TexasHoldemGame {
             }
         });
         
-        // 扣除底注
         this.gameState.players.forEach(player => {
             player.chips -= 10;
             player.currentBet = 10;
         });
         this.gameState.pot = 30;
         this.gameState.currentBet = 10;
+        this.gameState.bettingRoundData = {
+            lastRaiserIndex: 0,
+            playersToAct: new Set(),
+            minRaise: 10
+        };
         
         this.updatePlayerDisplays();
     }
 
     dealCards() {
-        // 给每个玩家发两张牌
         for (let i = 0; i < 2; i++) {
             this.gameState.players.forEach(player => {
                 if (this.gameState.deck.length > 0) {
@@ -255,7 +238,6 @@ class TexasHoldemGame {
             });
         }
         
-        // 更新手牌显示（只显示人类玩家的牌）
         this.gameState.players.forEach((player, index) => {
             if (player.isHuman) {
                 this.updatePlayerCardsDisplay(index, player.cards);
@@ -264,14 +246,33 @@ class TexasHoldemGame {
     }
 
     startBettingRound() {
-        this.gameState.currentPlayerIndex = 0;
+        this.gameState.bettingRoundData = {
+            lastRaiserIndex: -1,
+            playersToAct: new Set(),
+            minRaise: this.gameState.blindAmount
+        };
+        
+        const activePlayers = this.getActivePlayers();
+        activePlayers.forEach(player => {
+            const index = this.gameState.players.indexOf(player);
+            this.gameState.players[index].hasActedThisRound = false;
+            this.gameState.bettingRoundData.playersToAct.add(index);
+        });
+        
+        if (this.gameState.currentStage === 'PREFLOP') {
+            this.gameState.currentPlayerIndex = 0;
+        } else {
+            this.gameState.currentPlayerIndex = this.getFirstActivePlayerIndex();
+        }
+        
+        this.updateGameInfo();
         this.processPlayerTurn();
     }
 
     processPlayerTurn() {
         const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
         
-        if (currentPlayer.folded) {
+        if (currentPlayer.folded || currentPlayer.allIn) {
             this.nextPlayer();
             return;
         }
@@ -279,19 +280,17 @@ class TexasHoldemGame {
         this.updateActivePlayer();
         
         if (currentPlayer.isHuman) {
-            // 人类玩家回合
             this.updateButtonStates(true);
             this.addLog('轮到您行动了');
-            this.clearAITimer(); // 清除AI倒计时显示
+            this.clearAITimer();
         } else {
-            // CPU玩家回合
             this.updateButtonStates(false);
             this.startAITimer(currentPlayer);
         }
     }
 
     startAITimer(player) {
-        this.clearAITimer(); // 先清除之前的计时器
+        this.clearAITimer();
         
         this.gameState.aiTimeLeft = 3;
         this.gameState.aiTimer = setInterval(() => {
@@ -328,7 +327,6 @@ class TexasHoldemGame {
             this.gameState.aiTimer = null;
         }
         
-        // 重置状态显示
         this.playerElements.forEach((element, index) => {
             const statusElement = element.querySelector('.player-status');
             if (statusElement && !this.gameState.players[index]?.folded) {
@@ -339,7 +337,7 @@ class TexasHoldemGame {
     
     cpuPlayerAction() {
         const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
-        if (!currentPlayer || currentPlayer.folded) return;
+        if (!currentPlayer || currentPlayer.folded || currentPlayer.allIn) return;
         
         const situation = this.aiHelper.evaluateSituation(
             currentPlayer.cards,
@@ -351,67 +349,51 @@ class TexasHoldemGame {
             currentPlayer.personality
         );
         
-        const action = this.decideCPUAction(currentPlayer);
+        const action = this.decideCPUAction(currentPlayer, situation);
         
         if (action === 'BET' || action === 'RAISE') {
-            // AI下注金额计算（基于几何与概率模型）
             let betAmount;
             const pFinal = situation.finalProbability;
             
             if (action === 'BET') {
-                // 初始下注金额
                 if (currentPlayer.personality === 'aggressive') {
-                    betAmount = Math.floor(Math.random() * 31) + 20; // 20-50
+                    betAmount = Math.floor(Math.random() * 31) + 20;
                 } else {
-                    betAmount = Math.floor(Math.random() * 11) + 10; // 10-20
+                    betAmount = Math.floor(Math.random() * 11) + 10;
                 }
-            } else { // RAISE
+            } else {
                 const currentBet = this.gameState.currentBet;
+                const minRaise = this.gameState.bettingRoundData.minRaise;
                 
-                // 基于最终概率的加注倍数选择
                 if (currentPlayer.personality === 'aggressive') {
-                    // 激进AI加注倍数
                     if (pFinal > 0.9) {
-                        // 5倍或All-in
                         betAmount = Math.random() < 0.7 ? currentBet * 5 : currentPlayer.chips;
                     } else if (pFinal > 0.7) {
-                        // 3-5倍
                         betAmount = currentBet * (Math.floor(Math.random() * 3) + 3);
                     } else if (pFinal > 0.5) {
-                        // 2-3倍
                         betAmount = currentBet * (Math.floor(Math.random() * 2) + 2);
                     } else if (pFinal > 0.3) {
-                        // 最小加注或Bluff
                         betAmount = Math.random() < 0.6 ? currentBet * 2 : currentBet * 3;
                     } else {
-                        // Bluff或Fold（这里已经是RAISE，所以选择Bluff）
-                        betAmount = currentBet * 2; // 最小加注进行Bluff
+                        betAmount = currentBet * 2;
                     }
                 } else {
-                    // 保守AI加注倍数
                     if (pFinal > 0.9) {
-                        // 3-5倍
                         betAmount = currentBet * (Math.floor(Math.random() * 3) + 3);
                     } else if (pFinal > 0.7) {
-                        // 2-3倍
                         betAmount = currentBet * (Math.floor(Math.random() * 2) + 2);
                     } else if (pFinal > 0.5) {
-                        // 最小加注
                         betAmount = currentBet * 2;
                     } else if (pFinal > 0.3) {
-                        // 最小加注
                         betAmount = currentBet * 2;
                     } else {
-                        // Fold（这里已经是RAISE，所以选择最小加注）
                         betAmount = currentBet * 2;
                     }
                 }
                 
-                // 确保符合最小加注规则
-                betAmount = Math.max(betAmount, currentBet * 2);
+                betAmount = Math.max(betAmount, currentBet + minRaise);
             }
             
-            // 确保为$10的整数倍且不超过玩家筹码
             betAmount = Math.floor(betAmount / 10) * 10;
             betAmount = Math.min(betAmount, currentPlayer.chips);
             
@@ -421,31 +403,18 @@ class TexasHoldemGame {
         }
     }
 
-    decideCPUAction(player) {
-        const situation = this.aiHelper.evaluateSituation(
-            player.cards,
-            this.gameState.communityCards,
-            this.gameState.pot,
-            this.gameState.currentBet,
-            player.chips,
-            player.actions,
-            player.personality
-        );
-        
+    decideCPUAction(player, situation) {
         const callAmount = this.gameState.currentBet - player.currentBet;
         const canCheck = callAmount === 0;
         
-        // 弃牌判断
-        if (situation.shouldFold) {
+        if (situation.shouldFold && !canCheck) {
             return 'FOLD';
         }
         
-        // 根据最终概率和个性决定行动
         const pFinal = situation.finalProbability;
         let action;
         
         if (player.personality === 'aggressive') {
-            // 激进AI行为概率映射
             if (pFinal > 0.8) {
                 action = Math.random() < 0.7 ? 'RAISE' : 'BET';
             } else if (pFinal > 0.6) {
@@ -460,17 +429,16 @@ class TexasHoldemGame {
                 else action = 'RAISE';
             } else if (pFinal > 0.2) {
                 const rand = Math.random();
-                if (rand < 0.5) action = 'RAISE'; // Bluff Raise
+                if (rand < 0.5) action = 'RAISE';
                 else if (rand < 0.8) action = 'CALL';
                 else action = 'FOLD';
             } else {
                 const rand = Math.random();
-                if (rand < 0.4) action = 'RAISE'; // Bluff Raise
+                if (rand < 0.4) action = 'RAISE';
                 else if (rand < 0.8) action = 'FOLD';
                 else action = 'CALL';
             }
         } else {
-            // 保守AI行为概率映射
             if (pFinal > 0.8) {
                 const rand = Math.random();
                 if (rand < 0.5) action = 'BET';
@@ -497,7 +465,6 @@ class TexasHoldemGame {
             }
         }
         
-        // 确保行动合法
         if (action === 'CHECK' && !canCheck) {
             action = 'CALL';
         }
@@ -506,23 +473,44 @@ class TexasHoldemGame {
             action = 'RAISE';
         }
         
+        if ((action === 'BET' || action === 'RAISE') && player.chips <= 0) {
+            action = canCheck ? 'CHECK' : 'CALL';
+        }
+        
         return action;
     }
 
     playerAction(action) {
         if (!this.isHumanTurn()) return;
         
-        if (action === 'BET') {
-            this.showBetControls();
-            return;
-        }
-        
-        if (action === 'RAISE') {
-            this.showRaiseOptions();
+        if (action === 'ALL-IN') {
+            this.executeAllIn();
             return;
         }
         
         this.executeAction(action, null);
+    }
+    
+    executeAllIn() {
+        const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
+        const allInAmount = currentPlayer.chips;
+        
+        if (allInAmount === 0) {
+            this.addLog('您已经没有筹码了');
+            return;
+        }
+        
+        const totalBet = currentPlayer.currentBet + allInAmount;
+        const maxBet = this.gameState.currentBet;
+        
+        if (totalBet > maxBet) {
+            this.gameState.bettingRoundData.minRaise = Math.max(
+                this.gameState.bettingRoundData.minRaise,
+                totalBet - maxBet
+            );
+        }
+        
+        this.executeAction('ALL-IN', allInAmount);
     }
 
     executeAction(action, betAmount) {
@@ -545,76 +533,106 @@ class TexasHoldemGame {
             case 'CALL':
                 amount = this.gameState.currentBet - currentPlayer.currentBet;
                 if (amount > currentPlayer.chips) {
-                    amount = currentPlayer.chips; // All-in
+                    amount = currentPlayer.chips;
                 }
                 currentPlayer.chips -= amount;
                 currentPlayer.currentBet += amount;
                 this.gameState.pot += amount;
                 message = currentPlayer.name + ' 跟注 ' + amount + '筹码';
+                
+                if (currentPlayer.chips === 0) {
+                    currentPlayer.allIn = true;
+                    message += ' (ALL-IN)';
+                }
                 break;
                 
             case 'BET':
             case 'RAISE':
+            case 'ALL-IN':
                 amount = betAmount || 50;
-                if (action === 'RAISE') {
-                    amount += this.gameState.currentBet - currentPlayer.currentBet;
-                }
                 
                 if (amount > currentPlayer.chips) {
-                    amount = currentPlayer.chips; // All-in
+                    amount = currentPlayer.chips;
                 }
                 
                 currentPlayer.chips -= amount;
                 currentPlayer.currentBet += amount;
                 this.gameState.pot += amount;
-                this.gameState.currentBet = currentPlayer.currentBet;
                 
-                message = currentPlayer.name + (action === 'BET' ? ' 下注 ' : ' 加注 ') + amount + '筹码';
+                if (currentPlayer.currentBet > this.gameState.currentBet) {
+                    const raiseDiff = currentPlayer.currentBet - this.gameState.currentBet;
+                    this.gameState.bettingRoundData.minRaise = Math.max(
+                        this.gameState.bettingRoundData.minRaise,
+                        raiseDiff
+                    );
+                    this.gameState.currentBet = currentPlayer.currentBet;
+                    this.gameState.bettingRoundData.lastRaiserIndex = this.gameState.currentPlayerIndex;
+                    
+                    this.resetPlayersToAct();
+                }
+                
+                if (action === 'ALL-IN') {
+                    message = currentPlayer.name + ' ALL-IN ' + amount + '筹码';
+                } else {
+                    message = currentPlayer.name + (action === 'BET' ? ' 下注 ' : ' 加注 ') + amount + '筹码';
+                }
+                
+                if (currentPlayer.chips === 0) {
+                    currentPlayer.allIn = true;
+                    if (action !== 'ALL-IN') {
+                        message += ' (ALL-IN)';
+                    }
+                }
                 break;
         }
         
-        // 记录行动
         currentPlayer.actions.push(action);
+        currentPlayer.hasActedThisRound = true;
         this.gameState.lastAction = action;
+        this.gameState.bettingRoundData.playersToAct.delete(this.gameState.currentPlayerIndex);
         
         this.addLog(message);
         this.updateGameInfo();
         this.updatePlayerDisplays();
-        this.hideBetControls();
+        this.hideBetInputSection();
         
-        // 检查回合是否结束
         if (this.isBettingRoundComplete()) {
             this.advanceToNextStage();
         } else {
             this.nextPlayer();
             
-            // 如果下一个玩家是AI，立即开始AI思考
             const nextPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
-            if (!nextPlayer.isHuman && !nextPlayer.folded) {
+            if (!nextPlayer.isHuman && !nextPlayer.folded && !nextPlayer.allIn) {
                 this.startAITimer(nextPlayer);
             }
         }
     }
 
-
+    resetPlayersToAct() {
+        const activePlayers = this.getActivePlayers();
+        this.gameState.bettingRoundData.playersToAct = new Set();
+        
+        activePlayers.forEach(player => {
+            if (!player.allIn) {
+                const index = this.gameState.players.indexOf(player);
+                this.gameState.bettingRoundData.playersToAct.add(index);
+            }
+        });
+        
+        const currentIndex = this.gameState.currentPlayerIndex;
+        this.gameState.bettingRoundData.playersToAct.delete(currentIndex);
+    }
 
     nextPlayer() {
-        // 按照用户1→用户2→用户3的顺序轮流行动
-        let nextIndex = (this.gameState.currentPlayerIndex + 1) % 3;
+        const nextIndex = this.getNextActivePlayerIndex(this.gameState.currentPlayerIndex);
         
-        // 如果下一个玩家已弃牌，继续寻找下一个未弃牌的玩家
-        while (this.gameState.players[nextIndex].folded && !this.isBettingRoundComplete()) {
-            nextIndex = (nextIndex + 1) % 3;
-            
-            // 防止无限循环
-            if (nextIndex === this.gameState.currentPlayerIndex) {
-                break;
-            }
+        if (nextIndex === -1) {
+            this.advanceToNextStage();
+            return;
         }
         
         this.gameState.currentPlayerIndex = nextIndex;
         
-        // 如果所有玩家都弃牌或行动完成，结束回合
         if (this.isBettingRoundComplete()) {
             this.advanceToNextStage();
         } else {
@@ -623,24 +641,68 @@ class TexasHoldemGame {
     }
 
     isBettingRoundComplete() {
-        const activePlayers = this.gameState.players.filter(p => !p.folded);
+        const activePlayers = this.getActivePlayers();
         
         if (activePlayers.length <= 1) {
-            return true; // 只剩一个玩家，直接获胜
+            return true;
         }
         
-        // 检查所有活跃玩家是否都跟注了当前下注
-        const allCalled = activePlayers.every(player => 
+        const nonAllInPlayers = activePlayers.filter(p => !p.allIn);
+        
+        if (nonAllInPlayers.length === 0) {
+            return true;
+        }
+        
+        const allBetEqual = nonAllInPlayers.every(player => 
             player.currentBet === this.gameState.currentBet
         );
         
-        // 检查是否所有玩家都行动过一轮
-        const lastActionPlayer = this.gameState.lastAction ? 
-            this.gameState.players.find(p => p.actions.length > 0 && 
-                p.actions[p.actions.length - 1] === this.gameState.lastAction) : null;
+        if (!allBetEqual) {
+            return false;
+        }
         
-        return allCalled && lastActionPlayer && 
-            this.gameState.players.indexOf(lastActionPlayer) === this.gameState.currentPlayerIndex;
+        const allActed = nonAllInPlayers.every(player => player.hasActedThisRound);
+        
+        if (!allActed) {
+            return false;
+        }
+        
+        if (this.gameState.bettingRoundData.playersToAct.size === 0) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    getNextActivePlayerIndex(fromIndex) {
+        const totalPlayers = this.gameState.players.length;
+        let nextIndex = (fromIndex + 1) % totalPlayers;
+        let loopCount = 0;
+        
+        while (loopCount < totalPlayers) {
+            const player = this.gameState.players[nextIndex];
+            if (!player.folded && !player.allIn) {
+                return nextIndex;
+            }
+            nextIndex = (nextIndex + 1) % totalPlayers;
+            loopCount++;
+        }
+        
+        return -1;
+    }
+    
+    getFirstActivePlayerIndex() {
+        for (let i = 0; i < this.gameState.players.length; i++) {
+            const player = this.gameState.players[i];
+            if (!player.folded && !player.allIn) {
+                return i;
+            }
+        }
+        return 0;
+    }
+    
+    getActivePlayers() {
+        return this.gameState.players.filter(p => !p.folded);
     }
 
     advanceToNextStage() {
@@ -666,14 +728,16 @@ class TexasHoldemGame {
             case 'RIVER':
                 this.gameState.currentStage = 'SHOWDOWN';
                 this.determineWinner();
-                return; // 游戏结束
+                return;
         }
         
-        // 重置当前下注，开始新一轮下注
         this.gameState.currentBet = 0;
         this.gameState.players.forEach(player => {
             player.currentBet = 0;
+            player.hasActedThisRound = false;
         });
+        this.gameState.bettingRoundData.lastRaiserIndex = -1;
+        this.gameState.bettingRoundData.minRaise = this.gameState.blindAmount;
         
         this.updateGameInfo();
         this.startBettingRound();
@@ -692,12 +756,10 @@ class TexasHoldemGame {
         const activePlayers = this.gameState.players.filter(p => !p.folded);
         
         if (activePlayers.length === 1) {
-            // 只有一个玩家未弃牌，直接获胜
             this.declareWinner(activePlayers[0], '所有对手弃牌');
             return;
         }
         
-        // 比较所有活跃玩家的牌型
         let winners = [];
         let bestHand = null;
         
@@ -728,7 +790,6 @@ class TexasHoldemGame {
         const playerIndex = this.gameState.players.indexOf(player);
         this.playerElements[playerIndex].classList.add('winner');
         
-        // 显示所有玩家的牌
         this.gameState.players.forEach((p, index) => {
             this.updatePlayerCardsDisplay(index, p.cards);
         });
@@ -736,13 +797,10 @@ class TexasHoldemGame {
         const winnerText = player.isHuman ? '恭喜您获胜！' : player.displayName + ' 获胜！';
         const resultMessage = winnerText + ' 赢得 ' + this.gameState.pot + ' 筹码，牌型：' + handType;
         
-        // 直接在通知栏显示结果
         this.addLog(resultMessage);
         
-        // 显示新的一局按钮
         this.showNewGameButton(resultMessage);
         
-        // 保存游戏统计和玩家筹码
         this.savePlayerChips();
         if (player.isHuman) {
             this.saveGameStats('win');
@@ -761,17 +819,13 @@ class TexasHoldemGame {
         const playerNames = players.map(p => p.displayName).join('、');
         const resultMessage = '平局！' + playerNames + ' 平分底池，各得 ' + potPerPlayer + ' 筹码，牌型：' + handType;
         
-        // 直接在通知栏显示结果
         this.addLog(resultMessage);
         
-        // 显示新的一局按钮
         this.showNewGameButton(resultMessage);
         
-        // 保存玩家筹码
         this.savePlayerChips();
     }
 
-    // UI更新方法
     updateGameInfo() {
         if (this.gameStageElement) {
             const stageNames = {
@@ -823,6 +877,8 @@ class TexasHoldemGame {
             if (statusElement) {
                 if (player.folded) {
                     statusElement.textContent = '已弃牌';
+                } else if (player.allIn) {
+                    statusElement.textContent = 'ALL-IN';
                 } else if (index === this.gameState.currentPlayerIndex) {
                     statusElement.textContent = '行动中...';
                 } else {
@@ -846,7 +902,6 @@ class TexasHoldemGame {
                 cardElement.setAttribute('data-suit', card.suit);
                 cardElement.textContent = card.rank + card.suit;
                 
-                // 移除动画类
                 setTimeout(() => {
                     cardElement.classList.remove('dealing');
                 }, 500);
@@ -857,10 +912,8 @@ class TexasHoldemGame {
     updateCommunityCardsDisplay() {
         if (!this.communityCardsElement) return;
         
-        // 清空现有显示
         this.communityCardsElement.innerHTML = '';
         
-        // 创建新的牌显示
         this.gameState.communityCards.forEach(card => {
             const cardElement = document.createElement('div');
             cardElement.className = `card front ${card.color} dealing`;
@@ -869,13 +922,11 @@ class TexasHoldemGame {
             cardElement.textContent = card.rank + card.suit;
             this.communityCardsElement.appendChild(cardElement);
             
-            // 移除动画类
             setTimeout(() => {
                 cardElement.classList.remove('dealing');
             }, 500);
         });
         
-        // 添加占位符
         const remainingCards = 5 - this.gameState.communityCards.length;
         for (let i = 0; i < remainingCards; i++) {
             const placeholder = document.createElement('div');
@@ -889,7 +940,6 @@ class TexasHoldemGame {
         if (this.communityCardsElement) {
             this.communityCardsElement.innerHTML = '';
             
-            // 添加5个占位符
             for (let i = 0; i < 5; i++) {
                 const placeholder = document.createElement('div');
                 placeholder.className = 'card-placeholder';
@@ -901,123 +951,161 @@ class TexasHoldemGame {
 
     updateButtonStates(isHumanTurn) {
         const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
-        if (!currentPlayer || currentPlayer.folded) {
+        if (!currentPlayer || currentPlayer.folded || currentPlayer.allIn) {
             isHumanTurn = false;
         }
         
         const callAmount = this.gameState.currentBet - currentPlayer.currentBet;
-        const canCheck = callAmount === 0;
+        const isPreFlop = this.gameState.currentStage === 'PREFLOP';
+        const blindsOnly = isPreFlop && this.gameState.currentBet === this.gameState.blindAmount;
         
-        // 情况1：无人下注时显示 [Check] [Bet] [Fold]
-        // 情况2：有人下注时显示 [Call $X] [Raise] [Fold]
-        if (canCheck) {
-            // 无人下注或已跟注
-            if (this.betBtn) this.betBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
+        this.hideBetInputSection();
+        
+        if (callAmount === 0 && !blindsOnly) {
             if (this.checkBtn) this.checkBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
             if (this.callBtn) this.callBtn.style.display = 'none';
+            if (this.betBtn) this.betBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
             if (this.raiseBtn) this.raiseBtn.style.display = 'none';
-        } else {
-            // 有人下注，需要跟注
-            if (this.betBtn) this.betBtn.style.display = 'none';
+        } else if (callAmount === 0 && blindsOnly) {
             if (this.checkBtn) this.checkBtn.style.display = 'none';
-            if (this.callBtn) this.callBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
-            if (this.raiseBtn) this.raiseBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
-            
-            // 更新跟注金额显示
             if (this.callBtn) {
-                this.callBtn.textContent = '跟注 (' + callAmount + ')';
+                this.callBtn.textContent = '跟注';
+                this.callBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
             }
+            if (this.betBtn) this.betBtn.style.display = 'none';
+            if (this.raiseBtn) this.raiseBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
+        } else {
+            if (this.checkBtn) this.checkBtn.style.display = 'none';
+            if (this.callBtn) {
+                this.callBtn.textContent = '跟注 ' + callAmount;
+                this.callBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
+            }
+            if (this.betBtn) this.betBtn.style.display = 'none';
+            if (this.raiseBtn) this.raiseBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
+        }
+        
+        if (this.allInBtn) {
+            const allInText = currentPlayer.chips > this.gameState.currentBet ? 
+                'All-in (' + currentPlayer.chips + ')' : 'All-in';
+            this.allInBtn.textContent = allInText;
+            this.allInBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
         }
         
         if (this.foldBtn) this.foldBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
         
-        // 禁用非人类玩家按钮
         if (!isHumanTurn) {
-            if (this.betBtn) this.betBtn.disabled = true;
             if (this.checkBtn) this.checkBtn.disabled = true;
             if (this.callBtn) this.callBtn.disabled = true;
-            if (this.raiseBtn) this.raiseBtn.disabled = true;
+            if (this.allInBtn) this.allInBtn.disabled = true;
             if (this.foldBtn) this.foldBtn.disabled = true;
+            if (this.betBtn) this.betBtn.disabled = true;
+            if (this.raiseBtn) this.raiseBtn.disabled = true;
         } else {
-            if (this.betBtn) this.betBtn.disabled = false;
             if (this.checkBtn) this.checkBtn.disabled = false;
             if (this.callBtn) this.callBtn.disabled = false;
-            if (this.raiseBtn) this.raiseBtn.disabled = false;
+            if (this.allInBtn) this.allInBtn.disabled = false;
             if (this.foldBtn) this.foldBtn.disabled = false;
+            if (this.betBtn) this.betBtn.disabled = false;
+            if (this.raiseBtn) this.raiseBtn.disabled = false;
         }
-    }
-
-    showBetControls() {
-        if (!this.isHumanTurn()) return;
-        
-        const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
-        const minBet = this.gameState.currentBet > 0 ? 
-            (this.gameState.currentBet - currentPlayer.currentBet) * 2 : 10;
-        
-        // 检查是否有砝码被选择
-        const totalBet = this.selectedChips.reduce((sum, chip) => sum + chip, 0);
-        
-        if (totalBet === 0) {
-            this.addLog('请先选择砝码金额，然后点击下注按钮');
-            return;
-        }
-        
-        // 检查下注金额是否符合规则
-        if (totalBet < minBet) {
-            this.addLog('下注金额 ' + totalBet + ' 小于最小下注额 ' + minBet + '，请重新选择砝码');
-            return;
-        }
-        
-        if (totalBet > currentPlayer.chips) {
-            this.addLog('下注金额 ' + totalBet + ' 超过您的筹码 ' + currentPlayer.chips + '，请重新选择砝码');
-            return;
-        }
-        
-        // 执行下注操作
-        this.executeAction('BET', totalBet);
     }
     
-    showRaiseOptions() {
-         if (!this.isHumanTurn()) return;
-         
-         const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
-         const currentBet = this.gameState.currentBet;
-         const playerBet = currentPlayer.currentBet;
-         const callAmount = currentBet - playerBet;
-         
-         // 检查是否有砝码被选择
-         const totalBet = this.selectedChips.reduce((sum, chip) => sum + chip, 0);
-         
-         if (totalBet === 0) {
-             this.addLog('请先选择砝码金额，然后点击加注按钮');
-             return;
-         }
-         
-         // 计算最小加注金额（当前下注额的2倍）
-         const minRaise = currentBet * 2;
-         
-         // 检查加注金额是否符合规则
-         const raiseAmount = totalBet + callAmount;
-         
-         if (raiseAmount < minRaise) {
-             this.addLog('加注金额 ' + raiseAmount + ' 小于最小加注额 ' + minRaise + '，请重新选择砝码');
-             return;
-         }
-         
-         if (raiseAmount > currentPlayer.chips) {
-             this.addLog('加注金额 ' + raiseAmount + ' 超过您的筹码 ' + currentPlayer.chips + '，请重新选择砝码');
-             return;
-         }
-         
-         // 执行加注操作
-         this.executeAction('RAISE', totalBet);
-     }
-     
-     // 加注选项界面已移除，改为使用砝码选择方式
+    showBetInputSection(isRaise) {
+        if (!this.betInputSection) return;
+        
+        this.betInputSection.style.display = 'flex';
+        
+        const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
+        const minAmount = isRaise ? 
+            (this.gameState.currentBet + this.gameState.bettingRoundData.minRaise) : 
+            (this.gameState.currentBet > 0 ? this.gameState.currentBet + this.gameState.bettingRoundData.minRaise : 10);
+        
+        if (this.betAmountInput) {
+            this.betAmountInput.min = minAmount;
+            this.betAmountInput.value = minAmount;
+            this.betAmountInput.max = currentPlayer.chips + currentPlayer.currentBet;
+            this.betAmountInput.focus();
+        }
+    }
+    
+    hideBetInputSection() {
+        if (this.betInputSection) {
+            this.betInputSection.style.display = 'none';
+        }
+        if (this.betAmountInput) {
+            this.betAmountInput.value = '';
+        }
+    }
+
+    executeBet() {
+        const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
+        
+        if (this.betInputSection?.style.display === 'none' || !this.betInputSection) {
+            this.showBetInputSection(false);
+            return;
+        }
+        
+        const minBet = this.gameState.currentBet > 0 ? 
+            this.gameState.currentBet + this.gameState.bettingRoundData.minRaise : 10;
+        
+        const inputAmount = parseInt(this.betAmountInput?.value) || 0;
+        const totalBet = inputAmount;
+        
+        if (totalBet === 0) {
+            this.addLog('请输入下注金额');
+            return;
+        }
+        
+        if (totalBet < minBet && this.gameState.currentBet > 0) {
+            this.addLog('下注金额 ' + totalBet + ' 小于最小下注额 ' + minBet);
+            return;
+        }
+        
+        if (totalBet > currentPlayer.chips + currentPlayer.currentBet) {
+            this.addLog('下注金额 ' + totalBet + ' 超过您的筹码 ' + (currentPlayer.chips + currentPlayer.currentBet));
+            return;
+        }
+        
+        const actualBet = Math.min(totalBet, currentPlayer.chips + currentPlayer.currentBet);
+        this.executeAction('BET', actualBet - currentPlayer.currentBet);
+    }
+    
+    executeRaise() {
+        const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
+        
+        if (this.betInputSection?.style.display === 'none' || !this.betInputSection) {
+            this.showBetInputSection(true);
+            return;
+        }
+        
+        const currentBet = this.gameState.currentBet;
+        const playerBet = currentPlayer.currentBet;
+        const minRaise = currentBet + this.gameState.bettingRoundData.minRaise;
+        
+        const inputAmount = parseInt(this.betAmountInput?.value) || 0;
+        const totalBet = inputAmount;
+        
+        if (totalBet === 0) {
+            this.addLog('请输入加注金额');
+            return;
+        }
+        
+        if (totalBet < minRaise) {
+            this.addLog('加注金额 ' + totalBet + ' 小于最小加注额 ' + minRaise);
+            return;
+        }
+        
+        if (totalBet > currentPlayer.chips + playerBet) {
+            this.addLog('加注金额 ' + totalBet + ' 超过您的筹码 ' + (currentPlayer.chips + playerBet));
+            return;
+        }
+        
+        const actualRaise = Math.min(totalBet, currentPlayer.chips + playerBet);
+        this.executeAction('RAISE', actualRaise - playerBet);
+    }
 
     hideBetControls() {
-        // 清空砝码显示
-        this.clearChips();
+        this.hideBetInputSection();
     }
 
     addLog(message) {
@@ -1027,10 +1115,8 @@ class TexasHoldemGame {
         logEntry.textContent = '[' + new Date().toLocaleTimeString() + '] ' + message;
         this.logMessagesElement.appendChild(logEntry);
         
-        // 自动滚动到底部
         this.logMessagesElement.scrollTop = this.logMessagesElement.scrollHeight;
         
-        // 限制日志数量
         if (this.logMessagesElement.children.length > 50) {
             this.logMessagesElement.removeChild(this.logMessagesElement.firstChild);
         }
@@ -1043,7 +1129,6 @@ class TexasHoldemGame {
     }
 
     showNewGameButton(message) {
-        // 创建或显示新的一局按钮
         if (!this.newGameButton) {
             this.newGameButton = document.createElement('button');
             this.newGameButton.id = 'newGameBtn';
@@ -1051,23 +1136,18 @@ class TexasHoldemGame {
             this.newGameButton.textContent = '新的一局';
             this.newGameButton.addEventListener('click', () => this.startNewGame());
             
-            // 将按钮添加到操作区域
             const gameControls = document.querySelector('.game-controls');
             if (gameControls) {
                 gameControls.appendChild(this.newGameButton);
             }
         }
         
-        // 显示按钮
         this.newGameButton.style.display = 'block';
         
-        // 禁用其他操作按钮
         this.disableActionButtons();
         
-        // 隐藏原来的游戏结束弹窗
         this.hideGameOverDisplay();
         
-        // 在通知栏显示结果
         this.addLog('游戏结束：' + message);
     }
 
@@ -1076,7 +1156,6 @@ class TexasHoldemGame {
             this.newGameButton.style.display = 'none';
         }
         
-        // 重新启用操作按钮
         this.enableActionButtons();
     }
 
@@ -1124,10 +1203,9 @@ class TexasHoldemGame {
         }
     }
 
-    // 工具方法
     isHumanTurn() {
         const currentPlayer = this.gameState.players[this.gameState.currentPlayerIndex];
-        return currentPlayer && currentPlayer.isHuman && !currentPlayer.folded;
+        return currentPlayer && currentPlayer.isHuman && !currentPlayer.folded && !currentPlayer.allIn;
     }
 
     saveGameStats(result) {
@@ -1143,48 +1221,8 @@ class TexasHoldemGame {
             console.log('无法保存游戏统计数据');
         }
     }
-
-    // 砝码相关方法
-    addChip(value) {
-        if (!this.isHumanTurn()) return;
-        
-        this.selectedChips.push(value);
-        this.updateChipsDisplay();
-    }
-
-    removeChip(index) {
-        if (!this.isHumanTurn()) return;
-        
-        this.selectedChips.splice(index, 1);
-        this.updateChipsDisplay();
-    }
-
-    updateChipsDisplay() {
-        if (!this.chipsContainer || !this.betTotalElement) return;
-        
-        // 计算总额
-        const total = this.selectedChips.reduce((sum, chip) => sum + chip, 0);
-        this.betTotalElement.textContent = total;
-        
-        // 更新砝码显示
-        this.chipsContainer.innerHTML = '';
-        
-        this.selectedChips.forEach((chip, index) => {
-            const chipElement = document.createElement('div');
-            chipElement.className = `chip chip-${chip}`;
-            chipElement.textContent = chip;
-            chipElement.addEventListener('click', () => this.removeChip(index));
-            this.chipsContainer.appendChild(chipElement);
-        });
-    }
-
-    clearChips() {
-        this.selectedChips = [];
-        this.updateChipsDisplay();
-    }
 }
 
-// 页面加载完成后初始化游戏
 document.addEventListener('DOMContentLoaded', () => {
     new TexasHoldemGame();
 });

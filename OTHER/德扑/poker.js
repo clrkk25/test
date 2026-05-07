@@ -1,4 +1,4 @@
-// 扑克牌逻辑核心
+// 扑克牌逻辑核心（修复版）
 class PokerLogic {
     constructor() {
         this.suits = ['♠', '♥', '♦', '♣'];
@@ -9,7 +9,6 @@ class PokerLogic {
         ];
     }
 
-    // 创建一副新牌
     createDeck() {
         const deck = [];
         for (let suit of this.suits) {
@@ -25,7 +24,6 @@ class PokerLogic {
         return this.shuffleDeck(deck);
     }
 
-    // 洗牌
     shuffleDeck(deck) {
         const shuffled = [...deck];
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -35,7 +33,6 @@ class PokerLogic {
         return shuffled;
     }
 
-    // 获取牌面值
     getCardValue(rank) {
         const values = {
             '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, 
@@ -44,7 +41,6 @@ class PokerLogic {
         return values[rank];
     }
 
-    // 评估手牌强度（从7张牌中找出最佳5张牌组合）
     evaluateHand(cards) {
         if (cards.length < 5) return null;
         
@@ -61,7 +57,6 @@ class PokerLogic {
         return bestHand;
     }
 
-    // 获取所有可能的组合
     getCombinations(arr, k) {
         const result = [];
         
@@ -81,138 +76,131 @@ class PokerLogic {
         return result;
     }
 
-    // 评分手牌
     scoreHand(cards) {
-        // 按牌面值排序
         const sortedCards = [...cards].sort((a, b) => b.value - a.value);
         const values = sortedCards.map(card => card.value);
         const suits = sortedCards.map(card => card.suit);
         
-        // 检查各种牌型
         const isFlush = this.isFlush(suits);
         const isStraight = this.isStraight(values);
         const rankCounts = this.getRankCounts(values);
+        const kickers = this.getKickercards(values, rankCounts);
         
-        // 皇家同花顺
         if (isFlush && isStraight && values[0] === 14 && values[4] === 10) {
             return {
                 rank: 9,
                 name: '皇家同花顺',
                 cards: sortedCards,
-                highCard: 14
+                kickers: [14]
             };
         }
         
-        // 同花顺
         if (isFlush && isStraight) {
+            const highCard = values[0] === 14 && values[1] === 5 ? 5 : values[0];
             return {
                 rank: 8,
                 name: '同花顺',
                 cards: sortedCards,
-                highCard: values[0]
+                kickers: [highCard]
             };
         }
         
-        // 四条
         if (rankCounts[4]) {
             return {
                 rank: 7,
                 name: '四条',
                 cards: sortedCards,
-                highCard: rankCounts[4][0]
+                kickers: [rankCounts[4][0], ...kickers.filter(v => v !== rankCounts[4][0])]
             };
         }
         
-        // 葫芦
         if (rankCounts[3] && rankCounts[2]) {
             return {
                 rank: 6,
                 name: '葫芦',
                 cards: sortedCards,
-                highCard: rankCounts[3][0]
+                kickers: [rankCounts[3][0], rankCounts[2][0]]
             };
         }
         
-        // 同花
         if (isFlush) {
             return {
                 rank: 5,
                 name: '同花',
                 cards: sortedCards,
-                highCard: values[0]
+                kickers: values.slice(0, 5)
             };
         }
         
-        // 顺子
         if (isStraight) {
+            const highCard = values[0] === 14 && values[1] === 5 ? 5 : values[0];
             return {
                 rank: 4,
                 name: '顺子',
                 cards: sortedCards,
-                highCard: values[0]
+                kickers: [highCard]
             };
         }
         
-        // 三条
         if (rankCounts[3]) {
             return {
                 rank: 3,
                 name: '三条',
                 cards: sortedCards,
-                highCard: rankCounts[3][0]
+                kickers: [rankCounts[3][0], ...kickers.filter(v => v !== rankCounts[3][0]).slice(0, 2)]
             };
         }
         
-        // 两对
         if (rankCounts[2] && rankCounts[2].length >= 2) {
+            const pairs = rankCounts[2].sort((a, b) => b - a);
             return {
                 rank: 2,
                 name: '两对',
                 cards: sortedCards,
-                highCard: Math.max(...rankCounts[2])
+                kickers: [...pairs, ...kickers.filter(v => !pairs.includes(v)).slice(0, 1)]
             };
         }
         
-        // 一对
         if (rankCounts[2]) {
             return {
                 rank: 1,
                 name: '一对',
                 cards: sortedCards,
-                highCard: rankCounts[2][0]
+                kickers: [rankCounts[2][0], ...kickers.filter(v => v !== rankCounts[2][0]).slice(0, 3)]
             };
         }
         
-        // 高牌
         return {
             rank: 0,
             name: '高牌',
             cards: sortedCards,
-            highCard: values[0]
+            kickers: values.slice(0, 5)
         };
     }
 
-    // 检查是否同花
     isFlush(suits) {
         return suits.every(suit => suit === suits[0]);
     }
 
-    // 检查是否顺子
     isStraight(values) {
-        // 处理A-2-3-4-5的特殊情况
-        if (JSON.stringify(values) === JSON.stringify([14, 5, 4, 3, 2])) {
+        const uniqueValues = [...new Set(values)].sort((a, b) => b - a);
+        
+        if (uniqueValues.length < 5) return false;
+        
+        if (uniqueValues[0] - uniqueValues[4] === 4 && 
+            uniqueValues.every((v, i) => i === 0 || uniqueValues[i-1] - v === 1)) {
             return true;
         }
         
-        for (let i = 0; i < values.length - 1; i++) {
-            if (values[i] - values[i + 1] !== 1) {
-                return false;
-            }
+        if (uniqueValues.includes(14) && uniqueValues.includes(2) && 
+            uniqueValues.includes(3) && uniqueValues.includes(4) && 
+            uniqueValues.includes(5)) {
+            return true;
         }
-        return true;
+        
+        return false;
     }
 
-    // 获取牌面值计数
     getRankCounts(values) {
         const counts = {};
         for (let value of values) {
@@ -228,49 +216,43 @@ class PokerLogic {
         return result;
     }
 
-    // 比较两手牌
+    getKickercards(values, rankCounts) {
+        return values.sort((a, b) => b - a);
+    }
+
     compareHands(hand1, hand2) {
         if (hand1.rank !== hand2.rank) {
             return hand1.rank - hand2.rank;
         }
         
-        // 相同牌型，比较高牌
-        if (hand1.highCard !== hand2.highCard) {
-            return hand1.highCard - hand2.highCard;
-        }
+        const kickers1 = hand1.kickers || [];
+        const kickers2 = hand2.kickers || [];
         
-        // 如果高牌也相同，比较次高牌（这里简化处理）
-        const values1 = hand1.cards.map(card => card.value).sort((a, b) => b - a);
-        const values2 = hand2.cards.map(card => card.value).sort((a, b) => b - a);
-        
-        for (let i = 0; i < values1.length; i++) {
-            if (values1[i] !== values2[i]) {
-                return values1[i] - values2[i];
+        for (let i = 0; i < Math.max(kickers1.length, kickers2.length); i++) {
+            const v1 = kickers1[i] || 0;
+            const v2 = kickers2[i] || 0;
+            if (v1 !== v2) {
+                return v1 - v2;
             }
         }
         
-        return 0; // 完全平手
+        return 0;
     }
 
-    // 计算手牌胜率（简化版）
     calculateWinProbability(playerCards, communityCards, opponentsCount) {
-        // 这里实现一个简化的胜率计算
         const allCards = [...playerCards, ...communityCards];
         const handScore = this.evaluateHand(allCards);
         
-        if (!handScore) return 0.5; // 默认50%胜率
+        if (!handScore) return 0.5;
         
-        // 根据牌型给出基础胜率
         const baseProbabilities = [0.1, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 1.0];
         let probability = baseProbabilities[handScore.rank] || 0.5;
         
-        // 根据对手数量调整
         probability = Math.pow(probability, 1 / opponentsCount);
         
         return Math.max(0.05, Math.min(0.95, probability));
     }
 
-    // 获取手牌描述
     getHandDescription(cards) {
         if (cards.length < 2) return '等待发牌...';
         
@@ -280,49 +262,44 @@ class PokerLogic {
         return handScore.name;
     }
 
-    // 格式化牌面显示
     formatCard(card) {
         return `${card.rank}${card.suit}`;
     }
 
-    // 获取牌型排名
     getHandRankName(rank) {
         return this.handRanks[rank] || '未知牌型';
     }
 }
 
-// AI决策辅助类（基于几何与概率混合评估方法）
+// AI决策辅助类（修复版）
 class AIHelper {
     constructor(pokerLogic) {
         this.pokerLogic = pokerLogic;
     }
 
-    // 基础牌力评分（基于cos(x)函数）
     calculateBaseHandStrength(handRank) {
-        // 将牌型映射到x区间 (0, 1)
         const xRanges = [
-            [0.20, 0.50], // 高牌
-            [0.50, 0.60], // 对子
-            [0.60, 0.65], // 两对
-            [0.65, 0.70], // 三条
-            [0.70, 0.75], // 顺子
-            [0.75, 0.80], // 同花
-            [0.80, 0.85], // 葫芦
-            [0.85, 0.90], // 四条
-            [0.90, 0.95], // 同花顺
-            [0.95, 1.00]  // 皇家同花顺
+            [0.20, 0.50],
+            [0.50, 0.60],
+            [0.60, 0.65],
+            [0.65, 0.70],
+            [0.70, 0.75],
+            [0.75, 0.80],
+            [0.80, 0.85],
+            [0.85, 0.90],
+            [0.90, 0.95],
+            [0.95, 1.00]
         ];
         
         if (handRank < 0 || handRank >= xRanges.length) {
-            return 0.5; // 默认值
+            return 0.5;
         }
         
         const [minX, maxX] = xRanges[handRank];
-        const x = (minX + maxX) / 2; // 取区间中点
-        return Math.cos(x); // P_base = cos(x)
+        const x = (minX + maxX) / 2;
+        return Math.cos(x);
     }
 
-    // 计算潜在牌力
     calculatePotentialStrength(playerCards, communityCards, handRank) {
         const remainingCards = 5 - communityCards.length;
         if (remainingCards === 0) return this.calculateBaseHandStrength(handRank);
@@ -330,157 +307,44 @@ class AIHelper {
         const allCards = [...playerCards, ...communityCards];
         const baseStrength = this.calculateBaseHandStrength(handRank);
         
-        // 检测听牌类型
         const drawTypes = this.detectDrawTypes(allCards);
         let maxPotential = baseStrength;
         
-        // 计算每种听牌的潜在牌力
         for (const drawType of drawTypes) {
             const z = this.calculateDrawProbability(drawType, allCards);
-            const potential = baseStrength * Math.pow(1 - z, remainingCards);
+            const potential = baseStrength + (1 - baseStrength) * z * (remainingCards / 5);
             maxPotential = Math.max(maxPotential, potential);
         }
         
         return maxPotential;
     }
 
-    // 检测听牌类型
     detectDrawTypes(cards) {
         const drawTypes = [];
         
-        // 同花听牌检测
         const suitCounts = {};
         cards.forEach(card => {
             suitCounts[card.suit] = (suitCounts[card.suit] || 0) + 1;
         });
         
         for (const suit in suitCounts) {
-            if (suitCounts[suit] >= 4) {
+            if (suitCounts[suit] === 4) {
                 drawTypes.push('FLUSH_DRAW');
                 break;
             }
         }
         
-        // 顺子听牌检测（简化版）
         const values = cards.map(card => card.value).sort((a, b) => a - b);
-        for (let i = 0; i < values.length - 1; i++) {
-            if (values[i + 1] - values[i] === 1 && i < values.length - 2 && values[i + 2] - values[i + 1] === 1) {
+        const uniqueValues = [...new Set(values)];
+        
+        for (let i = 0; i <= uniqueValues.length - 4; i++) {
+            const gap = uniqueValues[i + 3] - uniqueValues[i];
+            if (gap <= 4 && gap >= 3) {
                 drawTypes.push('STRAIGHT_DRAW');
                 break;
             }
         }
         
-        return drawTypes;
-    }
-
-    // 计算听牌达成概率
-    calculateDrawProbability(drawType, cards) {
-        const totalCards = 52;
-        const knownCards = cards.length;
-        const remainingCards = totalCards - knownCards;
-        
-        switch (drawType) {
-            case 'FLUSH_DRAW':
-                // 计算同花听牌概率
-                const suitCounts = {};
-                cards.forEach(card => {
-                    suitCounts[card.suit] = (suitCounts[card.suit] || 0) + 1;
-                });
-                
-                let maxSuitCount = 0;
-                for (const suit in suitCounts) {
-                    maxSuitCount = Math.max(maxSuitCount, suitCounts[suit]);
-                }
-                
-                if (maxSuitCount >= 4) {
-                    const neededCards = 5 - maxSuitCount;
-                    const availableCards = 13 - maxSuitCount; // 剩余同花色牌
-                    return neededCards / remainingCards;
-                }
-                break;
-                
-            case 'STRAIGHT_DRAW':
-                // 简化版顺子听牌概率
-                return 0.2; // 近似值
-        }
-        
-        return 0.1; // 默认概率
-    }
-
-    // 评估当前局势（新版本）
-    evaluateSituation(playerCards, communityCards, potSize, currentBet, playerChips, opponentActions, personality) {
-        const allCards = [...playerCards, ...communityCards];
-        const handStrength = this.pokerLogic.evaluateHand(allCards);
-        
-        if (!handStrength) {
-            return {
-                finalProbability: 0.3,
-                baseStrength: 0.3,
-                potentialStrength: 0.3,
-                shouldFold: false,
-                potOdds: currentBet > 0 ? currentBet / (potSize + currentBet) : 0
-            };
-        }
-        
-        // 基础牌力
-        const baseStrength = this.calculateBaseHandStrength(handStrength.rank);
-        
-        // 潜在牌力
-        const potentialStrength = this.calculatePotentialStrength(playerCards, communityCards, handStrength.rank);
-        
-        // 最终概率计算
-        let finalProbability;
-        if (personality === 'aggressive') {
-            // 激进AI：取最大值
-            finalProbability = Math.max(baseStrength, potentialStrength);
-        } else {
-            // 保守AI：取平均值
-            finalProbability = (baseStrength + potentialStrength) / 2;
-        }
-        
-        // 弃牌判断
-        const callAmount = currentBet;
-        const shouldFold = callAmount > playerChips * 0.5 && 
-                          (1 - finalProbability * 0.6 - baseStrength * 0.4) > 0.7;
-        
-        return {
-            finalProbability: finalProbability,
-            baseStrength: baseStrength,
-            potentialStrength: potentialStrength,
-            shouldFold: shouldFold,
-            potOdds: currentBet > 0 ? currentBet / (potSize + currentBet) : 0
-        };
-    }
-
-    // 增强听牌检测功能
-    detectDrawTypes(cards) {
-        const drawTypes = [];
-        
-        // 同花听牌检测
-        const suitCounts = {};
-        cards.forEach(card => {
-            suitCounts[card.suit] = (suitCounts[card.suit] || 0) + 1;
-        });
-        
-        for (const suit in suitCounts) {
-            if (suitCounts[suit] >= 4) {
-                drawTypes.push('FLUSH_DRAW');
-                break;
-            }
-        }
-        
-        // 顺子听牌检测（增强版）
-        const values = cards.map(card => card.value).sort((a, b) => a - b);
-        
-        // 检测开放式顺子听牌
-        for (let i = 0; i < values.length - 2; i++) {
-            if (values[i + 1] - values[i] === 1 && values[i + 2] - values[i + 1] === 1) {
-                drawTypes.push('STRAIGHT_DRAW');
-                break;
-            }
-        }
-        
-        // 检测葫芦潜力（三条+对子潜力）
         const valueCounts = {};
         values.forEach(value => {
             valueCounts[value] = (valueCounts[value] || 0) + 1;
@@ -500,7 +364,6 @@ class AIHelper {
         return drawTypes;
     }
 
-    // 增强听牌概率计算
     calculateDrawProbability(drawType, cards) {
         const totalCards = 52;
         const knownCards = cards.length;
@@ -508,7 +371,6 @@ class AIHelper {
         
         switch (drawType) {
             case 'FLUSH_DRAW':
-                // 计算同花听牌概率
                 const suitCounts = {};
                 cards.forEach(card => {
                     suitCounts[card.suit] = (suitCounts[card.suit] || 0) + 1;
@@ -519,27 +381,60 @@ class AIHelper {
                     maxSuitCount = Math.max(maxSuitCount, suitCounts[suit]);
                 }
                 
-                if (maxSuitCount >= 4) {
-                    const neededCards = 5 - maxSuitCount;
-                    const availableCards = 13 - maxSuitCount; // 剩余同花色牌
-                    return Math.min(0.9, availableCards / remainingCards);
+                if (maxSuitCount === 4) {
+                    const availableCards = 13 - maxSuitCount;
+                    return availableCards / remainingCards;
                 }
                 break;
                 
             case 'STRAIGHT_DRAW':
-                // 开放式顺子听牌概率
-                return 0.32; // 近似值，实际约为32%
+                return 0.32;
                 
             case 'FULL_HOUSE_POTENTIAL':
-                // 葫芦潜力概率
-                return 0.15; // 简化概率
+                return 0.15;
         }
         
-        return 0.1; // 默认概率
+        return 0.1;
+    }
+
+    evaluateSituation(playerCards, communityCards, potSize, currentBet, playerChips, opponentActions, personality) {
+        const allCards = [...playerCards, ...communityCards];
+        const handStrength = this.pokerLogic.evaluateHand(allCards);
+        
+        if (!handStrength) {
+            return {
+                finalProbability: 0.3,
+                baseStrength: 0.3,
+                potentialStrength: 0.3,
+                shouldFold: false,
+                potOdds: currentBet > 0 ? currentBet / (potSize + currentBet) : 0
+            };
+        }
+        
+        const baseStrength = this.calculateBaseHandStrength(handStrength.rank);
+        const potentialStrength = this.calculatePotentialStrength(playerCards, communityCards, handStrength.rank);
+        
+        let finalProbability;
+        if (personality === 'aggressive') {
+            finalProbability = Math.max(baseStrength, potentialStrength);
+        } else {
+            finalProbability = (baseStrength + potentialStrength) / 2;
+        }
+        
+        const callAmount = currentBet;
+        const potOdds = callAmount > 0 ? callAmount / (potSize + callAmount) : 0;
+        const shouldFold = callAmount > playerChips * 0.6 && finalProbability < 0.3;
+        
+        return {
+            finalProbability: finalProbability,
+            baseStrength: baseStrength,
+            potentialStrength: potentialStrength,
+            shouldFold: shouldFold,
+            potOdds: potOdds
+        };
     }
 }
 
-// 导出类供其他模块使用
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { PokerLogic, AIHelper };
 }

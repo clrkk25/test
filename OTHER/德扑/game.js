@@ -240,7 +240,9 @@ class TexasHoldemGame {
         
         this.gameState.players.forEach((player, index) => {
             if (player.isHuman) {
-                this.updatePlayerCardsDisplay(index, player.cards);
+                this.updatePlayerCardsDisplay(index, player.cards, true);
+            } else {
+                this.updatePlayerCardsDisplay(index, player.cards, false);
             }
         });
     }
@@ -791,7 +793,9 @@ class TexasHoldemGame {
         this.playerElements[playerIndex].classList.add('winner');
         
         this.gameState.players.forEach((p, index) => {
-            this.updatePlayerCardsDisplay(index, p.cards);
+            if (!p.folded) {
+                this.updatePlayerCardsDisplay(index, p.cards, true);
+            }
         });
         
         const winnerText = player.isHuman ? '恭喜您获胜！' : player.displayName + ' 获胜！';
@@ -888,7 +892,7 @@ class TexasHoldemGame {
         });
     }
 
-    updatePlayerCardsDisplay(playerIndex, cards) {
+    updatePlayerCardsDisplay(playerIndex, cards, showFace = true) {
         const element = this.playerElements[playerIndex];
         if (!element) return;
         
@@ -897,10 +901,17 @@ class TexasHoldemGame {
         cards.forEach((card, index) => {
             if (cardElements[index]) {
                 const cardElement = cardElements[index];
-                cardElement.className = `card front ${card.color} dealing`;
-                cardElement.setAttribute('data-rank', card.rank);
-                cardElement.setAttribute('data-suit', card.suit);
-                cardElement.textContent = card.rank + card.suit;
+                if (showFace) {
+                    cardElement.className = `card front ${card.color} dealing`;
+                    cardElement.setAttribute('data-rank', card.rank);
+                    cardElement.setAttribute('data-suit', card.suit);
+                    cardElement.textContent = card.rank + card.suit;
+                } else {
+                    cardElement.className = 'card back';
+                    cardElement.removeAttribute('data-rank');
+                    cardElement.removeAttribute('data-suit');
+                    cardElement.textContent = '';
+                }
                 
                 setTimeout(() => {
                     cardElement.classList.remove('dealing');
@@ -956,22 +967,12 @@ class TexasHoldemGame {
         }
         
         const callAmount = this.gameState.currentBet - currentPlayer.currentBet;
-        const isPreFlop = this.gameState.currentStage === 'PREFLOP';
-        const blindsOnly = isPreFlop && this.gameState.currentBet === this.gameState.blindAmount;
         
         this.hideBetInputSection();
         
-        if (callAmount === 0 && !blindsOnly) {
+        if (callAmount === 0) {
             if (this.checkBtn) this.checkBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
             if (this.callBtn) this.callBtn.style.display = 'none';
-            if (this.betBtn) this.betBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
-            if (this.raiseBtn) this.raiseBtn.style.display = 'none';
-        } else if (callAmount === 0 && blindsOnly) {
-            if (this.checkBtn) this.checkBtn.style.display = 'none';
-            if (this.callBtn) {
-                this.callBtn.textContent = '跟注';
-                this.callBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
-            }
             if (this.betBtn) this.betBtn.style.display = 'none';
             if (this.raiseBtn) this.raiseBtn.style.display = isHumanTurn ? 'inline-block' : 'none';
         } else {
